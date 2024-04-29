@@ -134,11 +134,9 @@ namespace ProjectNoName
             // 아이템 리스트 표기
             for(int i = 1; i < inventoryItems.Count; i++)
             {
+                Console.Write("-");
                 if (type == InventoryType.idx)
-                    Console.Write($"- {i} ");
-                else
-                    Console.Write("- ");
-
+                    Console.Write($" {i} ");
                 inventoryItems[i].ShowItem(menuType);
             }
         }

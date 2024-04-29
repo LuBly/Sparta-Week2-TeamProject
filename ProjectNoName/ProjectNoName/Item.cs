@@ -60,6 +60,7 @@
         public void EquipItem()
         {
             Player player = DataManager.Instance().Player;
+            
             switch (itemType)
             {
                 // 무기 장착
@@ -82,7 +83,6 @@
 
                     // 공통 작업(수치 변경)
                     player.SetIncreaseAttack(attackPowerIncrease);
-                    
                     break;
 
                 case ItemType.Armor:
