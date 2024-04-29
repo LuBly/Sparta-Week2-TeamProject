@@ -13,8 +13,6 @@
         // 최초 생성 시 false이므로 false로 초기화 
         // 차후 Save, Load 제작 시 해당 부분 변경 가능
         
-        // item의 키값
-        int keyIdx;
         // 구매 여부
         bool isUsable = false;
         // 장착 여부
@@ -38,9 +36,10 @@
         // 추가 효과(ex. 회복물약)
         // int? healthIncrease, ManaIncrease
 
-        public Item(int keyIdx, string name, ItemType itemType, int increaseData, string description, float price)
+        // index값을 맞추기 위한 더미데이터 생성용 OverLoading
+        public Item() { }
+        public Item(string name, ItemType itemType, int increaseData, string description, float price)
         {
-            this.keyIdx = keyIdx;
             this.name = name;
             this.itemType = itemType;
             switch (itemType)
@@ -79,8 +78,11 @@
                     else
                     {
                         player.Waepon = this;
-                        player.IncreaseAttack = attackPowerIncrease;
                     }
+
+                    // 공통 작업(수치 변경)
+                    player.SetIncreaseAttack(attackPowerIncrease);
+                    
                     break;
 
                 case ItemType.Armor:
@@ -96,8 +98,14 @@
                     }
 
                     // 장착된 오브젝트가 없다면 장착
-                    player.Armor = this;
-                    player.IncreaseDefense = defencePowerIncrease;
+                    else
+                    {
+                        player.Armor = this;
+                    }
+                    
+                    // 공통 작업 (수치 변경)
+                    player.SetIncreaseAttack(defencePowerIncrease);
+                    
                     break;
             }
 
@@ -128,10 +136,6 @@
             if (isEquiped)
             {
                 Console.Write("[E]");
-            }
-            else
-            {
-                Console.Write(" - ");
             }
             // 이름
             Console.Write($"{name}");
@@ -172,7 +176,7 @@
 
         public bool canBuy()
         {
-            return DataManager.Instance().Player.ShowPlayerGold() >= price;
+            return DataManager.Instance().Player.GetPlayerGold() >= price;
         }
 
 
@@ -181,7 +185,7 @@
         {
             isUsable = true;
             DataManager.Instance().Player.UseGold(price);
-            DataManager.Instance().Player.Inventory.AddItem(keyIdx, this);
+            DataManager.Instance().Player.Inventory.AddItem(this);
             Console.WriteLine($"{name}를 구매했습니다.");
         }
 
@@ -190,7 +194,7 @@
         {
             isUsable = false;
             DataManager.Instance().Player.EarnGold(price);
-            DataManager.Instance().Player.Inventory.RemoveItem(keyIdx);
+            DataManager.Instance().Player.Inventory.RemoveItem(this);
             Console.WriteLine($"{name}를 {price * 0.85f}에 판매했습니다.");
         }
     }

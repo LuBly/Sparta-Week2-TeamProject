@@ -23,8 +23,8 @@ namespace ProjectNoName
         float gold;
 
         // 장비 장착 class에서 사용
-        public float IncreaseAttack;
-        public float IncreaseDefense;
+        float IncreaseAttack;
+        float IncreaseDefense;
 
         // 장착하고 있는 무기, 방어구
         // 한개씩만 장착할 수 있다.
@@ -45,6 +45,8 @@ namespace ProjectNoName
             defensePower = 5;
             health = 100;
             gold = 2500f;
+            // idx맞추기용 더미데이터 입력.
+            Inventory.AddItem(new Item());
         }
 
         // Player 정보를 입력해주는 함수
@@ -86,13 +88,33 @@ namespace ProjectNoName
             Console.WriteLine($"Gold : {gold}");
         }
 
-        public float ShowPlayerGold()
+
+        // Get 호출 함수
+        public float GetPlayerGold()
         {
             Console.WriteLine($"{gold} G\n");
 
             return gold;
         }
 
+        public float GetPlayerAttack()
+        {
+            return attackPower + IncreaseAttack;
+        }
+
+        public float GetPlayerDefence()
+        {
+            return defensePower + IncreaseDefense;
+        }
+
+        public float GetPlayerHealth()
+        {
+            return health;
+        }
+
+        // Set 저장 함수
+
+        //[GOLD]
         public void UseGold(float price)
         {
             gold -= price;
@@ -101,6 +123,35 @@ namespace ProjectNoName
         public void EarnGold(float price)
         {
             gold += price;
+        }
+
+
+
+
+        // 기타 함수
+
+        // Player의 health가 변동됐을 때
+        /// 전투 매커니즘에 따라 함수 변형필요
+        public float TakeDamage()
+        {
+            health /= 2;
+            return health;
+        }
+
+        public float TakeDamageValue(float damage)
+        {
+            health -= damage;
+            return health;
+        }
+
+        public void SetIncreaseAttack(float value)
+        {
+            IncreaseAttack = value;
+        }
+
+        public void SetIncreaseDefense(float value)
+        {
+            IncreaseDefense = value;
         }
     }
 }

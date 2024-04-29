@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace ProjectNoName
 {
@@ -16,14 +17,17 @@ namespace ProjectNoName
         // 초기 화면 설정(맨 처음 실행했을 때)
         MenuType curMenu = MenuType.Start;
         Player player = DataManager.Instance().Player;
+        Store store = DataManager.Instance().Store;
+        Dungeon dungeon = DataManager.Instance().Dungeon;
         // [추가 사항]
-        //UIManager - 각 메뉴들을 호출, 꾸미기 기능
         //DataManager - 게임의 모든 정보들을 저장하고 있을 Manager (static)
         public void StartGame()
         {
+            bool isGameOver = false;
             // 게임화면
-            while (true)
+            while (!isGameOver)
             {
+                Console.Clear();
                 // 각 씬별 동작
                 switch (curMenu)
                 {
@@ -32,23 +36,19 @@ namespace ProjectNoName
                         break;
 
                     case MenuType.Status:
-                        //LoadStatusMenu();
+                        LoadStatusMenu();
                         break;
 
                     case MenuType.Inventory:
-                        //LoadInventoryMenu();
+                        LoadInventoryMenu();
                         break;
 
                     case MenuType.Store:
-                        //LoadStoreMenu();
+                        LoadStoreMenu();
                         break;
 
                     case MenuType.Dungeon:
-                        //LoadDungeonMenu();
-                        break;
-
-                    case MenuType.Rest:
-                        //LoadRestMenu();
+                        LoadDungeonMenu();
                         break;
 
                     default:
@@ -61,25 +61,100 @@ namespace ProjectNoName
             }
         }
 
+        // StartMenu
         void LoadStartMenu()
         {
             Console.WriteLine("안녕?");
             Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 정할 수 있어\n");
 
-            Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 휴식하기");
+            Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
             curMenu = (MenuType)int.Parse(Console.ReadLine());
         }
-
+        
+        // Status 메뉴
         void LoadStatusMenu()
         {
             player.ShowStatus();
-            Console.WriteLine("\n0. 나가기");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            curMenu = (MenuType)int.Parse(Console.ReadLine());
+            curMenu = (MenuType)Utill.EndMenu();
         }
 
+        // 인벤토리 기본 메뉴
+        void LoadInventoryMenu()
+        {
+            // Inventory 초기 화면
+            player.Inventory.ShowInventory();
+            while (true)
+            {
+                bool isContinue = true;
+                int choiceIdx = int.Parse(Console.ReadLine());
+                switch (choiceIdx)
+                {
+                    case 0:
+                        isContinue = false;
+                        curMenu = 0;
+                        break;
+                    case 1:
+                        LoadEquipMenu();
+                        break;
+                }
+
+                if (!isContinue) break;
+            }
+        }
+
+        // 인벤토리 세부 매뉴
+        void LoadEquipMenu()
+        {
+            player.Inventory.EquipInventory();
+        }
+
+        // 상점 메뉴
+        void LoadStoreMenu()
+        {
+            store.ShowStore();
+            while (true)
+            {
+                bool isContinue = true;
+                StoreType choiceIdx = (StoreType)int.Parse(Console.ReadLine());
+                switch (choiceIdx)
+                {
+                    case 0:
+                        isContinue = false;
+                        curMenu = 0;
+                        break;
+                    case StoreType.Buy:
+                        store.UseStore(StoreType.Buy);
+                        break;
+                    case StoreType.Sell:
+                        store.UseStore(StoreType.Sell);
+                        break;
+                }
+
+                if (!isContinue) break;
+            }
+        }
+
+        void LoadDungeonMenu()
+        {
+            while (true)
+            {
+                int choiceIdx = dungeon.ShowDungeon();
+                bool isContinue = true;
+                switch (choiceIdx)
+                {
+                    case 0:
+                        isContinue = false;
+                        curMenu = 0;
+                        break;
+                    default:
+                        dungeon.ShowStage(choiceIdx);
+                        break;
+                }
+
+                if (!isContinue) break;
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@
         
         public Player Player = new Player();
         public Store Store = new Store();
-
+        public Dungeon Dungeon = new Dungeon();
         // dataManager에 store랑 player를 꽃아놨는데
         // store 초기화될때 또 dataManager를 불러와서 초기화를 한다.
 

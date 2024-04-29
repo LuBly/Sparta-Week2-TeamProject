@@ -13,22 +13,21 @@
         // . . . .호출
         void D_addStoreItem()
         {
-            
-            // [임시]DataBase List -> Dictionary
-            Dictionary<int, Item> items = new Dictionary<int, Item>()
-            {
-                { 1, new Item(1, "수련자 갑옷", ItemType.Armor, 5, "수련에 도움을 주는 갑옷입니다.", 1000) },
-                { 2, new Item(2, "무쇠갑옷", ItemType.Armor, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 1500) },
-                { 3, new Item(3, "스파르타의 갑옷", ItemType.Armor, 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500) },
-                { 4, new Item(4, "낡은 검", ItemType.Weapon, 2, "쉽게 볼 수 있는 낡은 검 입니다. ", 600) },
-                { 5, new Item(5, "청동 도끼", ItemType.Weapon, 5, "어디선가 사용됐던거 같은 도끼입니다.", 1500) },
-                { 6, new Item(6, "스파르타의 창", ItemType.Weapon, 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 4000) },
-                { 7, new Item(7, "AK47", ItemType.Weapon, 47, "전설의 외할머니가 사용하던 무기입니다.", 4747) },
+            // [임시]DataBase
+            List<Item> items = new List<Item>() {
+                new Item(),
+                new Item("수련자 갑옷", ItemType.Armor, 5, "수련에 도움을 주는 갑옷입니다.", 1000),
+                new Item("무쇠갑옷", ItemType.Armor, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 1500),
+                new Item("스파르타의 갑옷", ItemType.Armor, 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500),
+                new Item("낡은 검", ItemType.Weapon, 2, "쉽게 볼 수 있는 낡은 검 입니다. ", 600),
+                new Item("청동 도끼", ItemType.Weapon, 5, "어디선가 사용됐던거 같은 도끼입니다.", 1500),
+                new Item("스파르타의 창", ItemType.Weapon, 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 4000),
+                new Item("AK47", ItemType.Weapon, 47, "전설의 외할머니가 사용하던 무기입니다.", 4747),
             };
 
-            foreach (KeyValuePair<int,Item> item in items)
+            foreach (Item item in items)
             {
-                storeInventory.AddItem(item.Key, item.Value);
+                storeInventory.AddItem(item);
             }
         }
         // ShowStore(Player)
@@ -45,7 +44,7 @@
             // Player 골드 출력
             Console.WriteLine("[상점]\n");
             Console.WriteLine("[보유 골드]");
-            DataManager.Instance().Player.ShowPlayerGold();
+            DataManager.Instance().Player.GetPlayerGold();
 
             // Store에 들어갈 Item List 불러오기
             storeInventory.ShowItemList(InventoryType.noneIdx, MenuType.Store);
@@ -59,17 +58,17 @@
             Console.Write(">> ");
         }
 
-        public void UseStore(int type)
+        public void UseStore(StoreType storeType)
         {
-            switch (type)
+            switch (storeType)
             {
                 // Buy
-                case 1:
+                case StoreType.Buy:
                     // 아이템 구매 함수 불러오기
                     BuyItem();
                     break;
                 // Sell
-                case 2:
+                case StoreType.Sell:
                     // 아이템 판매 함수 불러오기
                     SellItem();
                     break;
@@ -89,7 +88,7 @@
                 // Player 골드 출력
                 Console.WriteLine("[상점]\n");
                 Console.WriteLine("[보유 골드]");
-                player.ShowPlayerGold();
+                player.GetPlayerGold();
                 storeInventory.ShowItemList(InventoryType.idx, MenuType.Store);
 
                 Console.WriteLine();
@@ -151,7 +150,7 @@
                 // Player 골드 출력
                 Console.WriteLine("[상점]\n");
                 Console.WriteLine("[보유 골드]");
-                player.ShowPlayerGold();
+                player.GetPlayerGold();
                 playerInventory.ShowItemList(InventoryType.idx, MenuType.Store);
 
                 Console.WriteLine();
