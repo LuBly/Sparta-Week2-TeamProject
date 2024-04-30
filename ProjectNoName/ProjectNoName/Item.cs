@@ -1,4 +1,6 @@
-﻿namespace ProjectNoName
+﻿using System.Numerics;
+
+namespace ProjectNoName
 {
     public enum ItemType
     {
@@ -74,7 +76,7 @@
             return Data;
         }
 
-        public void EquipItem()
+        public void ManageItem()
         {
             Player player = DataManager.Instance().Player;
             
@@ -83,63 +85,106 @@
                 // 무기 장착
                 case ItemType.Weapon:
                     // 장착된 오브젝트가 있다면 교체
-                    if (player.Weapon != null)
+                    if (player.Data.Weapon != null)
                     {
-                        // 기존 장착 무기 장착 해제
-                        player.Weapon.isEquiped = false;
-
-                        // 기존 장착 무기 장착 해제
-                        player.Weapon = this;
-                        break;
+                        // 지금 착용 중인 무기와 다른 무기라면 교체
+                        if (player.Data.Weapon != this)
+                        {
+                            // 교체 메세지 출력
+                            Console.WriteLine($"{player.Data.Weapon.name} => {name} 교체했습니다.");
+                            // 기존 무기 장착 해제
+                            player.Data.Weapon.isEquiped = false;
+                            // 신규 무기 장착
+                            EquipItem(ItemType.Weapon);
+                        }
+                        // 지금 착용 중인 무기와 같은 무기라면 해제
+                        else
+                        {
+                            // 기존 장착 무기 장착 해제
+                            UnEquipItem(ItemType.Weapon);
+                        }
                     }
                     // 장착된 오브젝트가 없다면 장착
                     else
                     {
-                        player.Weapon = this;
+                        EquipItem(ItemType.Weapon);
+                        Console.WriteLine($"{name}을 장착했습니다.");
                     }
-
-                    // 공통 작업(수치 변경)
-                    player.SetIncreaseAttack(attackPowerIncrease);
                     break;
 
                 case ItemType.Armor:
                     // 장착된 오브젝트가 있다면 교체
-                    if (player.Armor != null)
+                    if (player.Data.Armor != null)
                     {
-                        // 기존 방어구 장착 해제
-                        player.Armor.isEquiped = false;
-
-                        // 신규 방어구 장착
-                        player.Armor = this;
-                        break;
+                        // 지금 착용 중인 방어구와 다른 방어구라면
+                        if (player.Data.Armor != this)
+                        {
+                            // 교체 메세지 출력
+                            Console.WriteLine($"{player.Data.Armor.name} => {name} 교체했습니다.");
+                            // 기존 무기 장착 해제
+                            player.Data.Armor.isEquiped = false;
+                            // 신규 방어구 장착
+                            EquipItem(ItemType.Armor);
+                        }
+                        // 지금 착용 중인 방어구와 같은 방어구라면 해제
+                        else
+                        {
+                            // 기존 방어구 장착 해제
+                            UnEquipItem(ItemType.Armor);
+                        }
                     }
-
                     // 장착된 오브젝트가 없다면 장착
                     else
                     {
-                        player.Armor = this;
+                        EquipItem(ItemType.Armor);
+                        Console.WriteLine($"{name}을 장착했습니다.");
                     }
-                    
-                    // 공통 작업 (수치 변경)
-                    player.SetIncreaseDefense(defencePowerIncrease);
-                    
                     break;
-            }
-
-            // 장착 중일 때
-            if (isEquiped)
-            {
-                Console.WriteLine($"{this.name}을 해제하였습니다.");
-                isEquiped = false;
-            }
-            // 장착 중이 아닐 때
-            else
-            {
-                Console.WriteLine($"{this.name}을 장착했습니다.");
-                isEquiped = true;
             }
         }
 
+        // 장비 장착
+        void EquipItem(ItemType itemType)
+        {
+            Player player = DataManager.Instance().Player;
+            switch (itemType)
+            {
+                case ItemType.Weapon:
+                    isEquiped = true;
+                    player.Data.Weapon = this;
+                    player.Data.IncreaseAttack = attackPowerIncrease;
+                    break;
+
+                case ItemType.Armor:
+                    isEquiped = true;
+                    player.Data.Armor = this;
+                    player.Data.IncreaseDefense = defencePowerIncrease;
+                    break;
+            }
+        }
+
+        void UnEquipItem(ItemType itemType)
+        {
+            Player player = DataManager.Instance().Player;
+            switch (itemType)
+            {
+                case ItemType.Weapon:
+                    // 기존 무기 장착 해제
+                    isEquiped = false;
+                    player.Data.IncreaseAttack = 0;
+                    player.Data.Weapon = null;
+                    Console.WriteLine($"{name}을 해제하였습니다.");
+                    break;
+
+                case ItemType.Armor:
+                    // 기존 방어구 장착 해제
+                    isEquiped = false;
+                    player.Data.IncreaseDefense = 0;
+                    player.Data.Armor = null;
+                    Console.WriteLine($"{name}을 해제하였습니다.");
+                    break;
+            }
+        }
         /// <summary>
         /// MenuType에 따른 Item 표현 방식을 구분
         /// </summary>
@@ -193,7 +238,7 @@
 
         public bool canBuy()
         {
-            return DataManager.Instance().Player.GetPlayerGold() >= price;
+            return DataManager.Instance().Player.Data.Gold >= price;
         }
 
 
@@ -201,8 +246,8 @@
         public void BuyItem()
         {
             isUsable = true;
-            DataManager.Instance().Player.UseGold(price);
-            DataManager.Instance().Player.Inventory.AddItem(this);
+            DataManager.Instance().Player.Data.Gold -= price;
+            DataManager.Instance().Player.Data.Inventory.AddItem(this);
             Console.WriteLine($"{name}를 구매했습니다.");
         }
 
@@ -210,8 +255,8 @@
         public void SellItem()
         {
             isUsable = false;
-            DataManager.Instance().Player.EarnGold(price);
-            DataManager.Instance().Player.Inventory.RemoveItem(this);
+            DataManager.Instance().Player.Data.Gold += price;
+            DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
             Console.WriteLine($"{name}를 {price * 0.85f}에 판매했습니다.");
         }
     }

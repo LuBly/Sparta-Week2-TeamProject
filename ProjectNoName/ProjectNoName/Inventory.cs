@@ -88,7 +88,7 @@ namespace ProjectNoName
                 else
                 {
                     // 장비 장착 및 해제
-                    inventoryItems[equipIdx].EquipItem();
+                    inventoryItems[equipIdx].ManageItem();
                 }
 
                 // 약간의 Delay 부여
@@ -127,7 +127,7 @@ namespace ProjectNoName
                 else
                 {
                     // 장비 장착 및 해제
-                    inventoryItems[equipIdx].EquipItem();
+                    inventoryItems[equipIdx].ManageItem();
                 }
 
                 // 약간의 Delay 부여
