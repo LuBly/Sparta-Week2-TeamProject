@@ -20,13 +20,47 @@ namespace ProjectNoName
             }
             return staticDataManager;
         }
+
         
-        public Player Player = new Player();
+        public Player Player; 
         public Store Store = new Store();
         public Dungeon Dungeon = new Dungeon();
 
+
         string playerDataPath = @"D:\스파르탄\Sparta-Week2-TeamProject\ProjectNoName\ProjectNoName\Data\SaveData\PlayerData.json";
         string storeDataPath = @"D:\스파르탄\Sparta-Week2-TeamProject\ProjectNoName\ProjectNoName\Data\SaveData\StoreData.json";
+
+        // 플레이어 생성
+        public void CreatePlayer()
+        {
+            Console.Clear();
+            Console.WriteLine("플레이어를 생성합니다.\n");
+
+            Console.Write("플레이어 이름을 입력하세요: ");
+            string playerName = Console.ReadLine();
+
+            Console.WriteLine("\n직업을 선택하세요:");
+            Console.WriteLine("\n1. 전사\n2. 궁수\n3. 마법사\n");
+            Console.Write(">> ");
+            int jobChoice;
+            if (int.TryParse(Console.ReadLine(), out jobChoice) && jobChoice >= 1 && jobChoice <= 3)
+            {
+                ClassType selectedClass = (ClassType)(jobChoice);
+                Console.WriteLine($"플레이어 {playerName}이(가) {selectedClass}로 생성되었습니다!");
+                Thread.Sleep(2000);
+                // Player 클래스에 이름과 직업을 전달
+                Player = new Player(playerName, selectedClass);
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                Thread.Sleep(1000);
+                CreatePlayer();
+            }
+        }
+
+        // dataManager에 store랑 player를 꽃아놨는데
+        // store 초기화될때 또 dataManager를 불러와서 초기화를 한다.
 
         // 데이터 저장 함수
         // PlayerData 

@@ -24,6 +24,7 @@ namespace ProjectNoName
         //DataManager - 게임의 모든 정보들을 저장하고 있을 Manager (static)
         public void StartGame()
         {
+            DataManager.Instance().CreatePlayer();
             bool isGameOver = false;
             // 게임화면
             while (!isGameOver)
@@ -83,7 +84,7 @@ namespace ProjectNoName
         // Status 메뉴
         void LoadStatusMenu()
         {
-            player.ShowStatus();
+            DataManager.Instance().Player.ShowStatus();
             curMenu = (MenuType)Utill.EndMenu();
         }
 
@@ -91,7 +92,7 @@ namespace ProjectNoName
         void LoadInventoryMenu()
         {
             // Inventory 초기 화면
-            player.Inventory.ShowInventory();
+            DataManager.Instance().Player.Inventory.ShowInventory();
             while (true)
             {
                 bool isContinue = true;
@@ -114,7 +115,7 @@ namespace ProjectNoName
         // 인벤토리 세부 매뉴
         void LoadEquipMenu()
         {
-            player.Inventory.EquipInventory();
+            DataManager.Instance().Player.Inventory.EquipInventory();
         }
 
         // 상점 메뉴

@@ -4,7 +4,7 @@
     // 차후 클래스 선택
     public enum ClassType
     {
-        Warrior,
+        Warrior = 1,
         Archar,
         Magician
     }
@@ -32,12 +32,12 @@
 
         public PlayerData Data = new PlayerData();
         // 최초 선언
-        public Player()
+        public Player(string playerName, ClassType selectClass)
         {
             level = 1;
             levelPoint = 0;
-            name = "Player";
-            classType = ClassType.Warrior;
+            name = playerName;//플레이어 생성창에서 유저가 입력한 이름 값이 들어갈것
+            classType = selectClass;//플레이어 생성창에서 유저가 선택한 직업 타입이 들어갈것.
             attackPower = 10;
             defensePower = 5;
             health = 100;
@@ -46,19 +46,13 @@
             Inventory.AddItem(new Item());
         }
 
-        // Player 정보를 입력해주는 함수
-        public void SetPlayer(/*매개변수 입력*/)
-        {
-            
-        }
-
         public void ShowStatus()
         {
             Console.WriteLine("[상태 보기]");
             // Lv
             Console.WriteLine($"Lv. {level}");
             // 직업
-            Console.WriteLine($"Chad : {classType}");
+            Console.WriteLine($"{name} : {classType}");
             // 공격력
             Console.Write($"공격력 : {attackPower}");
             if (IncreaseAttack > 0)
