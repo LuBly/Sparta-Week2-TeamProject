@@ -31,9 +31,9 @@ namespace ProjectNoName
         public Dungeon Dungeon = new Dungeon();
 
 
-        string playerDataPath = @"D:\스파르탄\Sparta-Week2-TeamProject\ProjectNoName\ProjectNoName\Data\SaveData\PlayerData.json";
-        string storeDataPath = @"D:\스파르탄\Sparta-Week2-TeamProject\ProjectNoName\ProjectNoName\Data\SaveData\StoreData.json";
-        string originStoreDataPath = @"D:\스파르탄\Sparta-Week2-TeamProject\ProjectNoName\ProjectNoName\Data\SaveData\OriginStoreData.json";
+        string playerDataPath = @"..\..\..\Data\SaveData\PlayerData.json";
+        string storeDataPath = @"..\..\..\Data\SaveData\StoreData.json";
+        string originStoreDataPath = @"..\..\..\Data\SaveData\OriginStoreData.json";
         // 플레이어 생성
         public void CreatePlayer()
         {
