@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     // 직업 종류
     // 차후 클래스 선택
@@ -28,12 +26,11 @@ namespace ProjectNoName
 
         // 장착하고 있는 무기, 방어구
         // 한개씩만 장착할 수 있다.
-        public Item Waepon;
+        public Item Weapon;
         public Item Armor;
-
-
         public Inventory Inventory = new Inventory();
 
+        public PlayerData Data = new PlayerData();
         // 최초 선언
         public Player()
         {
@@ -86,6 +83,29 @@ namespace ProjectNoName
             Console.WriteLine($"체 력 : {health}");
             // 소유 gold
             Console.WriteLine($"Gold : {gold}");
+        }
+
+        // 데이터 저장 및 로드를 위한 함수
+        public void GetPlayerData()
+        {
+            Data.Level = level;
+            Data.LevelPoint = levelPoint;
+            Data.Name = name;
+            Data.ClassType = classType;
+            Data.AttackPower = attackPower;
+            Data.DefensePower = defensePower;
+            Data.Health = health;
+            Data.Gold = gold;
+            Data.IncreaseAttack = IncreaseAttack;
+            Data.IncreaseDefense = IncreaseDefense;
+
+            // 아이템 객체들에 대한 public화가 필요하다.
+            if(Weapon != null)
+                Data.Weapon = Weapon.GetItemData();
+            if(Armor != null)
+                Data.Armor = Armor.GetItemData();
+            if(Inventory.CountInventory() != 0)
+                Data.Inventory = Inventory.GetInventoryData();
         }
 
 

@@ -30,6 +30,8 @@
         // 설명
         string description;
 
+
+        public ItemData Data = new ItemData();
         /// <summary>
         /// 필요시 추가
         /// </summary>
@@ -57,6 +59,21 @@
             this.price = price; 
         }
 
+        // 데이터 저장 및 로드를 위한 함수
+        public ItemData GetItemData()
+        {
+            Data.IsUsable = isUsable;
+            Data.IsEquiped = isEquiped;
+            Data.Name = name;
+            Data.Price = price;
+            Data.ItemType = itemType;
+            Data.AttackPowerIncrease = attackPowerIncrease;
+            Data.DefencePowerIncrease = defencePowerIncrease;
+            Data.Description = description;
+
+            return Data;
+        }
+
         public void EquipItem()
         {
             Player player = DataManager.Instance().Player;
@@ -66,19 +83,19 @@
                 // 무기 장착
                 case ItemType.Weapon:
                     // 장착된 오브젝트가 있다면 교체
-                    if (player.Waepon != null)
+                    if (player.Weapon != null)
                     {
                         // 기존 장착 무기 장착 해제
-                        player.Waepon.isEquiped = false;
+                        player.Weapon.isEquiped = false;
 
                         // 기존 장착 무기 장착 해제
-                        player.Waepon = this;
+                        player.Weapon = this;
                         break;
                     }
                     // 장착된 오브젝트가 없다면 장착
                     else
                     {
-                        player.Waepon = this;
+                        player.Weapon = this;
                     }
 
                     // 공통 작업(수치 변경)
@@ -104,7 +121,7 @@
                     }
                     
                     // 공통 작업 (수치 변경)
-                    player.SetIncreaseAttack(defencePowerIncrease);
+                    player.SetIncreaseDefense(defencePowerIncrease);
                     
                     break;
             }

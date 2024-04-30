@@ -1,4 +1,6 @@
-﻿namespace ProjectNoName
+﻿using ProjectNoName.Data;
+
+namespace ProjectNoName
 {
     public enum StoreType
     {
@@ -9,7 +11,10 @@
     {
         bool isFirst = true;
         Inventory storeInventory = new Inventory();
-
+        
+        
+        public StoreData Data = new StoreData();
+        
         // . . . .호출
         void D_addStoreItem()
         {
@@ -30,6 +35,14 @@
                 storeInventory.AddItem(item);
             }
         }
+
+        // 데이터 Save Load에 관한 함수
+        public void GetStoreData()
+        {
+            if (storeInventory.CountInventory() != 0)
+                Data.StoreInventory = storeInventory.GetInventoryData();
+        }
+
         // ShowStore(Player)
         public void ShowStore()
         {

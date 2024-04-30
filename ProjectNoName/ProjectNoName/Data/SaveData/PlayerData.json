@@ -1,0 +1,28 @@
+{
+  "Level": 1,
+  "LevelPoint": 0,
+  "Name": "Player",
+  "ClassType": 0,
+  "AttackPower": 10.0,
+  "DefensePower": 5.0,
+  "Health": 100.0,
+  "Gold": 2500.0,
+  "IncreaseAttack": 0.0,
+  "IncreaseDefense": 0.0,
+  "Weapon": null,
+  "Armor": null,
+  "Inventory": {
+    "InventoryItems": [
+      {
+        "IsUsable": false,
+        "IsEquiped": false,
+        "Name": null,
+        "Price": 0.0,
+        "ItemType": 0,
+        "AttackPowerIncrease": 0.0,
+        "DefencePowerIncrease": 0.0,
+        "Description": null
+      }
+    ]
+  }
+}

@@ -11,10 +11,19 @@ namespace ProjectNoName
     {
         // inventory에 보유하고 있는 아이템 
         List<Item> inventoryItems = new List<Item>();
-        /// <summary>
-        /// Inventory 관련 함수 모음
-        /// </summary>
-        /// <returns></returns>
+
+        // 데이터 Save Load에 관한 함수
+        public InventoryData Data = new InventoryData();
+
+        public InventoryData GetInventoryData() 
+        { 
+            foreach(Item item in inventoryItems)
+            {
+                Data.InventoryItems.Add(item.GetItemData());
+            }
+            return Data; 
+        }
+        // Inventory 관련 함수 모음
         public int CountInventory()
         {
             return inventoryItems.Count;

@@ -11,6 +11,7 @@ namespace ProjectNoName
         Store,
         Dungeon,
         Rest,
+        Quit = 100,
     }
     internal class GameManager
     {
@@ -49,6 +50,12 @@ namespace ProjectNoName
 
                     case MenuType.Dungeon:
                         LoadDungeonMenu();
+                        break;
+
+                    case MenuType.Quit:
+                        DataManager.Instance().GetData();
+                        DataManager.Instance().SaveData();
+                        isGameOver = true;
                         break;
 
                     default:
