@@ -1,38 +1,16 @@
 {
   "Level": 1,
   "LevelPoint": 0,
-  "Name": "eqwr",
-  "ClassType": 2,
+  "Name": "hyun",
+  "ClassType": 1,
   "AttackPower": 10.0,
   "DefensePower": 5.0,
   "Health": 100.0,
-  "Gold": 900.0,
-  "IncreaseAttack": 2.0,
-  "IncreaseDefense": 5.0,
-  "Weapon": {
-    "Data": {
-      "IsPurchased": true,
-      "IsEquiped": true,
-      "Name": "낡은 검",
-      "Price": 600.0,
-      "ItemType": 1,
-      "AttackPowerIncrease": 2.0,
-      "DefencePowerIncrease": 0.0,
-      "Description": "쉽게 볼 수 있는 낡은 검 입니다. "
-    }
-  },
-  "Armor": {
-    "Data": {
-      "IsPurchased": true,
-      "IsEquiped": true,
-      "Name": "수련자 갑옷",
-      "Price": 1000.0,
-      "ItemType": 2,
-      "AttackPowerIncrease": 0.0,
-      "DefencePowerIncrease": 5.0,
-      "Description": "수련에 도움을 주는 갑옷입니다."
-    }
-  },
+  "Gold": 2500.0,
+  "IncreaseAttack": 0.0,
+  "IncreaseDefense": 0.0,
+  "Weapon": null,
+  "Armor": null,
   "Inventory": {
     "Data": {
       "InventoryItems": [
@@ -46,30 +24,6 @@
             "AttackPowerIncrease": 0.0,
             "DefencePowerIncrease": 0.0,
             "Description": null
-          }
-        },
-        {
-          "Data": {
-            "IsPurchased": true,
-            "IsEquiped": true,
-            "Name": "수련자 갑옷",
-            "Price": 1000.0,
-            "ItemType": 2,
-            "AttackPowerIncrease": 0.0,
-            "DefencePowerIncrease": 5.0,
-            "Description": "수련에 도움을 주는 갑옷입니다."
-          }
-        },
-        {
-          "Data": {
-            "IsPurchased": true,
-            "IsEquiped": true,
-            "Name": "낡은 검",
-            "Price": 600.0,
-            "ItemType": 1,
-            "AttackPowerIncrease": 2.0,
-            "DefencePowerIncrease": 0.0,
-            "Description": "쉽게 볼 수 있는 낡은 검 입니다. "
           }
         }
       ]

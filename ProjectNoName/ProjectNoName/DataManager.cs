@@ -1,4 +1,8 @@
 ﻿using Newtonsoft.Json;
+using ProjectNoName.Data;
+using System.Diagnostics;
+using System.Runtime.Serialization.Formatters.Binary;
+
 namespace ProjectNoName
 {
     // 싱글톤으로 생성하여 어느 클래스에서든 접근 가능
@@ -29,7 +33,7 @@ namespace ProjectNoName
 
         string playerDataPath = @"D:\스파르탄\Sparta-Week2-TeamProject\ProjectNoName\ProjectNoName\Data\SaveData\PlayerData.json";
         string storeDataPath = @"D:\스파르탄\Sparta-Week2-TeamProject\ProjectNoName\ProjectNoName\Data\SaveData\StoreData.json";
-
+        string originStoreDataPath = @"D:\스파르탄\Sparta-Week2-TeamProject\ProjectNoName\ProjectNoName\Data\SaveData\OriginStoreData.json";
         // 플레이어 생성
         public void CreatePlayer()
         {
@@ -67,9 +71,6 @@ namespace ProjectNoName
         //  - 스텟, 골드
         //  - Player Inventory Data (List)
         // Store Inventory Data (List)
-
-        // Private로 선언된 객체 내부의 자료들을 public 변수들로 이뤄진 Data클래스로 전환
-        // json에 저장할 수 있는 형태로 전환
         
         public void SaveData()
         {
@@ -77,6 +78,7 @@ namespace ProjectNoName
             string playerJson = JsonConvert.SerializeObject(Player.Data, Formatting.Indented);
             File.WriteAllText(playerDataPath, playerJson);
 
+            // storeData 저장
             string storeJson = JsonConvert.SerializeObject(Store.Data, Formatting.Indented);
             File.WriteAllText(storeDataPath, storeJson);
         }
@@ -84,9 +86,23 @@ namespace ProjectNoName
         // 데이터 불러오기 함수
         // PlayerData
         // PlayerInventory 
+
+        // 최초 실행시에 반드시 로드되어야 하는 값들을 작성해줘야한다.
         public void LoadData()
         {
+            string? playerJson = File.ReadAllText(playerDataPath);
+            PlayerData? player = JsonConvert.DeserializeObject<PlayerData>(playerJson);
+            if(player != null)
+            {
+                Player.Data = player;
+            }
 
+            string? storeJson = File.ReadAllText(storeDataPath);
+            StoreData? store = JsonConvert.DeserializeObject<StoreData>(storeJson);
+            if(store != null)
+            {
+                Store.Data.StoreInventory = store.StoreInventory;
+            }
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Numerics;
-using static System.Formats.Asn1.AsnWriter;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     public enum MenuType
     {
@@ -12,6 +9,7 @@ namespace ProjectNoName
         Dungeon,
         Rest,
         Quit = 100,
+        Load = 200,
     }
     internal class GameManager
     {
@@ -56,6 +54,11 @@ namespace ProjectNoName
                     case MenuType.Quit:
                         DataManager.Instance().SaveData();
                         isGameOver = true;
+                        break;
+
+                    case MenuType.Load:
+                        DataManager.Instance().LoadData();
+                        curMenu = MenuType.Start;
                         break;
 
                     default:
