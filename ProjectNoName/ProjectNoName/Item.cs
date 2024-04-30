@@ -12,27 +12,6 @@ namespace ProjectNoName
     internal class Item
     {
         //[각 아이템별 정보]
-        // 최초 생성 시 false이므로 false로 초기화 
-        // 차후 Save, Load 제작 시 해당 부분 변경 가능
-        
-        // 구매 여부
-        bool isUsable = false;
-        // 장착 여부
-        bool isEquiped = false;
-        // 이름
-        string name;
-        // 가격
-        float price;
-        // 장비 타입 (무기, 방어구, +회복(제작 시 enum 추가 필요)
-        ItemType itemType;
-        // 무기 공격력 증가(방어구일 경우 null 값 가능)
-        float attackPowerIncrease = 0;
-        // 방어력 증가(무기일 경우 null값 가능)
-        float defencePowerIncrease = 0;
-        // 설명
-        string description;
-
-
         public ItemData Data = new ItemData();
         /// <summary>
         /// 필요시 추가
@@ -44,56 +23,42 @@ namespace ProjectNoName
         public Item() { }
         public Item(string name, ItemType itemType, int increaseData, string description, float price)
         {
-            this.name = name;
-            this.itemType = itemType;
+            Data.Name = name;
+            Data.ItemType = itemType;
             switch (itemType)
             {
                 case ItemType.Weapon:
-                    attackPowerIncrease = increaseData;
+                    Data.AttackPowerIncrease = increaseData;
                     break;
                 case ItemType.Armor:
-                    defencePowerIncrease = increaseData;
+                    Data.DefencePowerIncrease = increaseData;
                     break;
                 // itemType별 적용 데이터 추가
 
             }
-            this.description = description;
-            this.price = price; 
+            Data.Description = description;
+            Data.Price = price; 
         }
 
         // 데이터 저장 및 로드를 위한 함수
-        public ItemData GetItemData()
-        {
-            Data.IsUsable = isUsable;
-            Data.IsEquiped = isEquiped;
-            Data.Name = name;
-            Data.Price = price;
-            Data.ItemType = itemType;
-            Data.AttackPowerIncrease = attackPowerIncrease;
-            Data.DefencePowerIncrease = defencePowerIncrease;
-            Data.Description = description;
-
-            return Data;
-        }
-
         public void ManageItem()
         {
-            Player player = DataManager.Instance().Player;
+            PlayerData playerData = DataManager.Instance().Player.Data;
             
-            switch (itemType)
+            switch (Data.ItemType)
             {
                 // 무기 장착
                 case ItemType.Weapon:
                     // 장착된 오브젝트가 있다면 교체
-                    if (player.Data.Weapon != null)
+                    if (playerData.Weapon != null)
                     {
                         // 지금 착용 중인 무기와 다른 무기라면 교체
-                        if (player.Data.Weapon != this)
+                        if (playerData.Weapon != this)
                         {
                             // 교체 메세지 출력
-                            Console.WriteLine($"{player.Data.Weapon.name} => {name} 교체했습니다.");
+                            Console.WriteLine($"{playerData.Weapon.Data.Name} => {Data.Name} 교체했습니다.");
                             // 기존 무기 장착 해제
-                            player.Data.Weapon.isEquiped = false;
+                            playerData.Weapon.Data.IsEquiped = false;
                             // 신규 무기 장착
                             EquipItem(ItemType.Weapon);
                         }
@@ -108,21 +73,21 @@ namespace ProjectNoName
                     else
                     {
                         EquipItem(ItemType.Weapon);
-                        Console.WriteLine($"{name}을 장착했습니다.");
+                        Console.WriteLine($"{Data.Name}을 장착했습니다.");
                     }
                     break;
 
                 case ItemType.Armor:
                     // 장착된 오브젝트가 있다면 교체
-                    if (player.Data.Armor != null)
+                    if (playerData.Armor != null)
                     {
                         // 지금 착용 중인 방어구와 다른 방어구라면
-                        if (player.Data.Armor != this)
+                        if (playerData.Armor != this)
                         {
                             // 교체 메세지 출력
-                            Console.WriteLine($"{player.Data.Armor.name} => {name} 교체했습니다.");
+                            Console.WriteLine($"{playerData.Armor.Data.Name} => {Data.Name} 교체했습니다.");
                             // 기존 무기 장착 해제
-                            player.Data.Armor.isEquiped = false;
+                            playerData.Armor.Data.IsEquiped = false;
                             // 신규 방어구 장착
                             EquipItem(ItemType.Armor);
                         }
@@ -137,7 +102,7 @@ namespace ProjectNoName
                     else
                     {
                         EquipItem(ItemType.Armor);
-                        Console.WriteLine($"{name}을 장착했습니다.");
+                        Console.WriteLine($"{Data.Name}을 장착했습니다.");
                     }
                     break;
             }
@@ -150,15 +115,15 @@ namespace ProjectNoName
             switch (itemType)
             {
                 case ItemType.Weapon:
-                    isEquiped = true;
+                    Data.IsEquiped = true;
                     player.Data.Weapon = this;
-                    player.Data.IncreaseAttack = attackPowerIncrease;
+                    player.Data.IncreaseAttack = Data.AttackPowerIncrease;
                     break;
 
                 case ItemType.Armor:
-                    isEquiped = true;
+                    Data.IsEquiped = true;
                     player.Data.Armor = this;
-                    player.Data.IncreaseDefense = defencePowerIncrease;
+                    player.Data.IncreaseDefense = Data.DefencePowerIncrease;
                     break;
             }
         }
@@ -170,18 +135,18 @@ namespace ProjectNoName
             {
                 case ItemType.Weapon:
                     // 기존 무기 장착 해제
-                    isEquiped = false;
+                    Data.IsEquiped = false;
                     player.Data.IncreaseAttack = 0;
                     player.Data.Weapon = null;
-                    Console.WriteLine($"{name}을 해제하였습니다.");
+                    Console.WriteLine($"{Data.Name}을 해제하였습니다.");
                     break;
 
                 case ItemType.Armor:
                     // 기존 방어구 장착 해제
-                    isEquiped = false;
+                    Data.IsEquiped = false;
                     player.Data.IncreaseDefense = 0;
                     player.Data.Armor = null;
-                    Console.WriteLine($"{name}을 해제하였습니다.");
+                    Console.WriteLine($"{Data.Name}을 해제하였습니다.");
                     break;
             }
         }
@@ -195,69 +160,63 @@ namespace ProjectNoName
         {
             int originRow = Console.CursorTop;
             // 장착중인 아이템이라면 인벤토리에 [E] 표시
-            if (isEquiped)
+            if (Data.IsEquiped)
             {
                 Console.Write("[E]");
             }
             // 이름
-            Console.Write($"{name}");
+            Console.Write($"{Data.Name}");
             // 수치
             Console.SetCursorPosition(20, originRow);
-            switch (itemType)
+            switch (Data.ItemType)
             {
                 case ItemType.Weapon:
-                    Console.Write($"| 공격력 + {attackPowerIncrease} ");
+                    Console.Write($"| 공격력 + {Data.AttackPowerIncrease} ");
                     break;
                 case ItemType.Armor:
-                    Console.Write($"| 방어력 + {defencePowerIncrease} ");
+                    Console.Write($"| 방어력 + {Data.DefencePowerIncrease} ");
                     break;
 
             }
             // 설명
             Console.SetCursorPosition(35, originRow);
-            Console.WriteLine($"| {description}");
+            Console.WriteLine($"| {Data.Description}");
 
             // 스토어에서 구매 및 판매결정을 할 때만 해당 내용 출력
             if (menuType == MenuType.Store)
             {
                 Console.SetCursorPosition(100, originRow);
-                if (isUsable)
+                if (Data.IsPurchased)
                 {
                     Console.WriteLine("| 구매완료");
                 }
                 else
-                    Console.WriteLine($"| {price} G");
+                    Console.WriteLine($"| {Data.Price} G");
             }
         }
 
-        // 상점 관련
-        public bool isBuy()
+        public bool CanBuy()
         {
-            return isUsable;
-        }
-
-        public bool canBuy()
-        {
-            return DataManager.Instance().Player.Data.Gold >= price;
+            return DataManager.Instance().Player.Data.Gold >= Data.Price;
         }
 
 
         // 구매 관련
         public void BuyItem()
         {
-            isUsable = true;
-            DataManager.Instance().Player.Data.Gold -= price;
+            Data.IsPurchased = true;
+            DataManager.Instance().Player.Data.Gold -= Data.Price;
             DataManager.Instance().Player.Data.Inventory.AddItem(this);
-            Console.WriteLine($"{name}를 구매했습니다.");
+            Console.WriteLine($"{Data.Name}를 구매했습니다.");
         }
 
         // 판매 관련
         public void SellItem()
         {
-            isUsable = false;
-            DataManager.Instance().Player.Data.Gold += price;
+            Data.IsPurchased = false;
+            DataManager.Instance().Player.Data.Gold += Data.Price;
             DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
-            Console.WriteLine($"{name}를 {price * 0.85f}에 판매했습니다.");
+            Console.WriteLine($"{Data.Name}를 {Data.Price * 0.85f}에 판매했습니다.");
         }
     }
 }

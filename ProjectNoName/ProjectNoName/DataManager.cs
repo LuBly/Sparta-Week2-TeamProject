@@ -70,11 +70,6 @@ namespace ProjectNoName
 
         // Private로 선언된 객체 내부의 자료들을 public 변수들로 이뤄진 Data클래스로 전환
         // json에 저장할 수 있는 형태로 전환
-        public void GetData()
-        {
-            Player.GetPlayerData();
-            Store.GetStoreData();
-        }
         
         public void SaveData()
         {

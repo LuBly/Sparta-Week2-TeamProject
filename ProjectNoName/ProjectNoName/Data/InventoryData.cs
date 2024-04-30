@@ -2,6 +2,6 @@
 {
     internal class InventoryData
     {
-        public List<ItemData> InventoryItems = new List<ItemData>();
+        public List<Item> InventoryItems = new List<Item>();
     }
 }

@@ -10,9 +10,6 @@ namespace ProjectNoName
     internal class Store
     {
         bool isFirst = true;
-        Inventory storeInventory = new Inventory();
-        
-        
         public StoreData Data = new StoreData();
         
         // . . . .호출
@@ -32,17 +29,9 @@ namespace ProjectNoName
 
             foreach (Item item in items)
             {
-                storeInventory.AddItem(item);
+                Data.StoreInventory.AddItem(item);
             }
         }
-
-        // 데이터 Save Load에 관한 함수
-        public void GetStoreData()
-        {
-            if (storeInventory.CountInventory() != 0)
-                Data.StoreInventory = storeInventory.GetInventoryData();
-        }
-
         // ShowStore(Player)
         public void ShowStore()
         {
@@ -57,10 +46,11 @@ namespace ProjectNoName
             // Player 골드 출력
             Console.WriteLine("[상점]\n");
             Console.WriteLine("[보유 골드]");
-            DataManager.Instance().Player.GetPlayerGold();
+            Console.WriteLine($"{DataManager.Instance().Player.Data.Gold} G\n");
+            ;
 
             // Store에 들어갈 Item List 불러오기
-            storeInventory.ShowItemList(InventoryType.noneIdx, MenuType.Store);
+            Data.StoreInventory.ShowItemList(InventoryType.noneIdx, MenuType.Store);
 
             Console.WriteLine();
             Console.WriteLine();
@@ -101,8 +91,8 @@ namespace ProjectNoName
                 // Player 골드 출력
                 Console.WriteLine("[상점]\n");
                 Console.WriteLine("[보유 골드]");
-                player.GetPlayerGold();
-                storeInventory.ShowItemList(InventoryType.idx, MenuType.Store);
+                Console.WriteLine($"{player.Data.Gold} G\n");
+                Data.StoreInventory.ShowItemList(InventoryType.idx, MenuType.Store);
 
                 Console.WriteLine();
                 Console.WriteLine();
@@ -110,7 +100,7 @@ namespace ProjectNoName
                 Console.Write(">> ");
                 int choiceIdx = int.Parse(Console.ReadLine());
                 // 범위 밖의 번호를 선택했을 때
-                if (choiceIdx > storeInventory.CountInventory() || choiceIdx < 0)
+                if (choiceIdx > Data.StoreInventory.CountInventory() || choiceIdx < 0)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                     Thread.Sleep(500);
@@ -126,14 +116,14 @@ namespace ProjectNoName
                 // 장비를 선택했을 때
                 else
                 {
-                    Item curItem = storeInventory.ChooceItem(choiceIdx);
+                    Item curItem = Data.StoreInventory.ChooceItem(choiceIdx);
                     // 이미 구매한 아이템이라면
-                    if (curItem.isBuy())
+                    if (curItem.Data.IsPurchased)
                     {
                         Console.WriteLine($"이미 구매한 아이템입니다.");
                     }
                     // 장비 가격보다 보유 gold가 많으면 add
-                    else if (curItem.canBuy())
+                    else if (curItem.CanBuy())
                     {
                         curItem.BuyItem();
                     }
@@ -153,7 +143,6 @@ namespace ProjectNoName
         {
             //Player 정보와 PlayerInventory 호출
             Player player = DataManager.Instance().Player;
-            Inventory playerInventory = DataManager.Instance().Player.Inventory;
             // 장착 메세지 출력
             while (true)
             {
@@ -163,8 +152,8 @@ namespace ProjectNoName
                 // Player 골드 출력
                 Console.WriteLine("[상점]\n");
                 Console.WriteLine("[보유 골드]");
-                player.GetPlayerGold();
-                playerInventory.ShowItemList(InventoryType.idx, MenuType.Store);
+                Console.WriteLine($"{player.Data.Gold} G\n");
+                player.Data.Inventory.ShowItemList(InventoryType.idx, MenuType.Store);
 
                 Console.WriteLine();
                 Console.WriteLine();
@@ -172,7 +161,7 @@ namespace ProjectNoName
                 Console.Write(">> ");
                 int choiceIdx = int.Parse(Console.ReadLine());
                 // 범위 밖의 번호를 선택했을 때
-                if (choiceIdx > playerInventory.CountInventory() || choiceIdx < 0)
+                if (choiceIdx > player.Data.Inventory.CountInventory() || choiceIdx < 0)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                     Thread.Sleep(500);
@@ -188,7 +177,7 @@ namespace ProjectNoName
                 // 장비를 선택했을 때
                 else
                 {
-                    Item curItem = playerInventory.ChooceItem(choiceIdx);
+                    Item curItem = player.Data.Inventory.ChooceItem(choiceIdx);
                     curItem.SellItem();
                 }
 

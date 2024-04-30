@@ -8,6 +8,6 @@ namespace ProjectNoName.Data
 {
     internal class StoreData
     {
-        public InventoryData? StoreInventory;
+        public Inventory StoreInventory = new Inventory();
     }
 }

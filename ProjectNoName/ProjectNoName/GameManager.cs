@@ -54,7 +54,6 @@ namespace ProjectNoName
                         break;
 
                     case MenuType.Quit:
-                        DataManager.Instance().GetData();
                         DataManager.Instance().SaveData();
                         isGameOver = true;
                         break;
@@ -92,7 +91,7 @@ namespace ProjectNoName
         void LoadInventoryMenu()
         {
             // Inventory 초기 화면
-            DataManager.Instance().Player.Inventory.ShowInventory();
+            DataManager.Instance().Player.Data.Inventory.ShowInventory();
             while (true)
             {
                 bool isContinue = true;
@@ -115,7 +114,7 @@ namespace ProjectNoName
         // 인벤토리 세부 매뉴
         void LoadEquipMenu()
         {
-            DataManager.Instance().Player.Inventory.EquipInventory();
+            DataManager.Instance().Player.Data.Inventory.EquipInventory();
         }
 
         // 상점 메뉴

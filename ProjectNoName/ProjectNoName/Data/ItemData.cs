@@ -3,7 +3,7 @@
     internal class ItemData
     {
         // 구매 여부
-        public bool IsUsable;
+        public bool IsPurchased;
         // 장착 여부
         public bool IsEquiped;
         // 이름

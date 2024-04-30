@@ -19,10 +19,8 @@
 
         // 장착하고 있는 무기, 방어구
         // 한개씩만 장착할 수 있다.
-        public ItemData? Weapon;
-        public ItemData? Armor;
-        public InventoryData? Inventory;
-
-
+        public Item? Weapon;
+        public Item? Armor;
+        public Inventory Inventory = new Inventory();
     }
 }

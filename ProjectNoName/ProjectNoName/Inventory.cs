@@ -10,35 +10,27 @@ namespace ProjectNoName
     internal class Inventory
     {
         // inventory에 보유하고 있는 아이템 
-        List<Item> inventoryItems = new List<Item>();
-
-        // 데이터 Save Load에 관한 함수
         public InventoryData Data = new InventoryData();
 
-        public InventoryData GetInventoryData() 
-        { 
-            foreach(Item item in inventoryItems)
-            {
-                Data.InventoryItems.Add(item.GetItemData());
-            }
-            return Data; 
-        }
         // Inventory 관련 함수 모음
         public int CountInventory()
         {
-            return inventoryItems.Count;
+            return Data.InventoryItems.Count;
         }
+
         public void AddItem(Item item)
         {
-            inventoryItems.Add(item);
+            Data.InventoryItems.Add(item);
         }
+
         public void RemoveItem(Item item)
         {
-            inventoryItems.Remove(item);
+            Data.InventoryItems.Remove(item);
         }
+
         public Item ChooceItem(int idx)
         {
-            return inventoryItems[idx];
+            return Data.InventoryItems[idx];
         }
 
         /// <summary>
@@ -72,7 +64,7 @@ namespace ProjectNoName
                 Console.Write(">> ");
                 int equipIdx = int.Parse(Console.ReadLine());
                 // 범위 밖의 번호를 선택했을 때
-                if (equipIdx > inventoryItems.Count || equipIdx < 0)
+                if (equipIdx > CountInventory() || equipIdx < 0)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                     Thread.Sleep(500);
@@ -88,7 +80,7 @@ namespace ProjectNoName
                 else
                 {
                     // 장비 장착 및 해제
-                    inventoryItems[equipIdx].ManageItem();
+                    Data.InventoryItems[equipIdx].ManageItem();
                 }
 
                 // 약간의 Delay 부여
@@ -111,7 +103,7 @@ namespace ProjectNoName
                 Console.Write(">> ");
                 int equipIdx = int.Parse(Console.ReadLine());
                 // 범위 밖의 번호를 선택했을 때
-                if (equipIdx > inventoryItems.Count || equipIdx < 0)
+                if (equipIdx > CountInventory() || equipIdx < 0)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                     Thread.Sleep(500);
@@ -127,7 +119,7 @@ namespace ProjectNoName
                 else
                 {
                     // 장비 장착 및 해제
-                    inventoryItems[equipIdx].ManageItem();
+                    Data.InventoryItems[equipIdx].ManageItem();
                 }
 
                 // 약간의 Delay 부여
@@ -141,12 +133,12 @@ namespace ProjectNoName
             Console.WriteLine("\n[아이템 목록]");
 
             // 아이템 리스트 표기
-            for(int i = 1; i < inventoryItems.Count; i++)
+            for(int i = 1; i < CountInventory(); i++)
             {
                 Console.Write("-");
                 if (type == InventoryType.idx)
                     Console.Write($" {i} ");
-                inventoryItems[i].ShowItem(menuType);
+                Data.InventoryItems[i].ShowItem(menuType);
             }
         }
     }
