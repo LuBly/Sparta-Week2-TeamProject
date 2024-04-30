@@ -84,18 +84,25 @@ namespace ProjectNoName
         // 데이터 불러오기 함수
         public void LoadData()
         {
-            string? playerJson = File.ReadAllText(playerDataPath);
-            PlayerData? player = JsonConvert.DeserializeObject<PlayerData>(playerJson);
-            if(player != null)
+            // 파일이 있는지 찾아보고 있으면 가고
+            if (!File.Exists(playerDataPath) || !File.Exists(storeDataPath))
             {
-                Player.Data = player;
+                Console.WriteLine("저장된 데이터가 없습니다.");
+                Thread.Sleep(1000);
             }
-
-            string? storeJson = File.ReadAllText(storeDataPath);
-            StoreData? store = JsonConvert.DeserializeObject<StoreData>(storeJson);
-            if(store != null)
+            else
             {
-                Store.Data.StoreInventory = store.StoreInventory;
+                string? playerJson = File.ReadAllText(playerDataPath);
+                PlayerData? player = JsonConvert.DeserializeObject<PlayerData>(playerJson);
+                string? storeJson = File.ReadAllText(storeDataPath);
+                StoreData? store = JsonConvert.DeserializeObject<StoreData>(storeJson);
+
+                // 저장된 데이터가 있다
+                if (player != null && store != null)
+                {
+                    Player.Data = player;
+                    Store.Data.StoreInventory = store.StoreInventory;
+                }
             }
         }
     }
