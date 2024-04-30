@@ -29,6 +29,7 @@
             Data.DefensePower = 5;
             Data.Health = 100;
             Data.Gold = 2500f;
+
             // idx맞추기용 더미데이터 입력.
             Data.Inventory.AddItem(new Item());
         }
@@ -62,6 +63,10 @@
             }
             // 체력
             Console.WriteLine($"체 력 : {Data.Health}");
+            
+            // 마나
+            Console.WriteLine($"마 나 : {Data.Mana}");
+
             // 소유 gold
             Console.WriteLine($"Gold : {Data.Gold}");
         }
@@ -76,12 +81,28 @@
             return Data.AttackPower + Data.IncreaseDefense;
         }
 
-        // Player의 health가 변동됐을 때
+        // 기타 함수
         /// 전투 매커니즘에 따라 함수 변형필요
         public float TakeDamage()
         {
             Data.Health /= 2;
             return Data.Health;
+        }
+
+        // 체력 회복
+        public float RecoveryHealth(float healthRecovered)
+        {
+            Data.Health += healthRecovered;
+            Console.WriteLine($"체력을 {healthRecovered} 회복하였습니다.");
+            return Data.Health;
+        }
+
+        // 마나 획복
+        public float RecoveryMana(float manaRecovered)
+        {
+            Data.Mana += manaRecovered;
+            Console.WriteLine($"마나를 {manaRecovered} 회복하였습니다.");
+            return Data.Mana;
         }
     }
 }

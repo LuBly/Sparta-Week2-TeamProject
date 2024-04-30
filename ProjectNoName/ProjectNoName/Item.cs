@@ -1,5 +1,3 @@
-﻿using System.Numerics;
-
 namespace ProjectNoName
 {
     public enum ItemType
@@ -7,12 +5,16 @@ namespace ProjectNoName
         None = 0,
         Weapon,
         Armor,
+        HealthPotion,
+        ManaPotion
     }
 
     internal class Item
     {
         //[각 아이템별 정보]
         public ItemData Data = new ItemData();
+        float healthRecovered;
+        float manaRecovered;
         /// <summary>
         /// 필요시 추가
         /// </summary>
@@ -33,8 +35,13 @@ namespace ProjectNoName
                 case ItemType.Armor:
                     Data.DefencePowerIncrease = increaseData;
                     break;
-                // itemType별 적용 데이터 추가
-
+                case ItemType.HealthPotion:
+                    Data.HealthIncrease = increaseData;
+                    break;
+                case ItemType.ManaPotion:
+                    Data.ManaIncrease = increaseData;
+                    break;
+                    // itemType별 적용 데이터 추가
             }
             Data.Description = description;
             Data.Price = price; 
@@ -43,8 +50,8 @@ namespace ProjectNoName
         // 데이터 저장 및 로드를 위한 함수
         public void ManageItem()
         {
+            Player player = DataManager.Instance().Player;
             PlayerData playerData = DataManager.Instance().Player.Data;
-            
             switch (Data.ItemType)
             {
                 // 무기 장착
@@ -105,6 +112,56 @@ namespace ProjectNoName
                         Console.WriteLine($"{Data.Name}을 장착했습니다.");
                     }
                     break;
+
+                case ItemType.HealthPotion:
+                    // 체력이 100이면 사용 불가
+                    if (player.Data.Health == 100)
+                    {
+                        Console.WriteLine("체력이 100입니다. 아이템을 사용할 수 없습니다.");
+                    }
+                    else
+                    {
+                        // 체력회복시 100을 넘으면 100까지만 회복
+                        if (player.Data.Health + Data.HealthIncrease > 100)
+                        {
+                            healthRecovered = 100 - player.Data.Health;
+                            player.RecoveryHealth(healthRecovered);
+                        }
+                        // 체력회복시 100 미만인 경우
+                        else
+                        {
+                            healthRecovered = Data.HealthIncrease;
+                            player.RecoveryHealth(healthRecovered);
+                        }
+                        // 사용된 아이템 소모처리
+                        DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+                    }
+                    break;
+
+                case ItemType.ManaPotion:
+                    // 마나가 100이면 사용 불가
+                    if (player.Data.Mana == 100)
+                    {
+                        Console.WriteLine("마나가 100입니다. 아이템을 사용할 수 없습니다.");
+                    }
+                    else
+                    {
+                        // 마나 회복시 100을 넘으면 100까지만 회복
+                        if (player.Data.Mana + Data.ManaIncrease > 100)
+                        {
+                            manaRecovered = 100 - player.Data.Mana;
+                            player.RecoveryMana(manaRecovered);
+                        }
+                        // 마나 회복시 100 미만인 경우
+                        else
+                        {
+                            manaRecovered = Data.ManaIncrease;
+                            player.RecoveryMana(manaRecovered);
+                        }
+                        //사용된 아이템 소모처리
+                        DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+                    }
+                    break;
             }
         }
 
@@ -160,7 +217,7 @@ namespace ProjectNoName
         {
             int originRow = Console.CursorTop;
             // 장착중인 아이템이라면 인벤토리에 [E] 표시
-            if (Data.IsEquiped)
+            if (Data.IsEquiped && (Data.ItemType == ItemType.Armor || Data.ItemType == ItemType.Weapon))
             {
                 Console.Write("[E]");
             }
@@ -176,7 +233,12 @@ namespace ProjectNoName
                 case ItemType.Armor:
                     Console.Write($"| 방어력 + {Data.DefencePowerIncrease} ");
                     break;
-
+                case ItemType.HealthPotion:
+                    Console.Write($"| 체  력 + {Data.HealthIncrease} ");
+                    break;
+                case ItemType.ManaPotion:
+                    Console.Write($"| 마  나 + {Data.ManaIncrease} ");
+                    break;
             }
             // 설명
             Console.SetCursorPosition(35, originRow);
@@ -200,11 +262,19 @@ namespace ProjectNoName
             return DataManager.Instance().Player.Data.Gold >= Data.Price;
         }
 
-
         // 구매 관련
         public void BuyItem()
         {
-            Data.IsPurchased = true;
+            // 장비이면 중복구매 불가
+            if (Data.ItemType == ItemType.Weapon || Data.ItemType == ItemType.Armor)
+            {
+                Data.IsPurchased = true;
+            }
+            // 이외 포션은 중복구매 가능
+            else
+            {
+                Data.IsPurchased = false;
+            }
             DataManager.Instance().Player.Data.Gold -= Data.Price;
             DataManager.Instance().Player.Data.Inventory.AddItem(this);
             Console.WriteLine($"{Data.Name}를 구매했습니다.");

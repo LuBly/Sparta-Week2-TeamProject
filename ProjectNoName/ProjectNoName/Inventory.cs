@@ -43,7 +43,7 @@ namespace ProjectNoName
             Console.Clear();
 
             ShowItemList(InventoryType.noneIdx, MenuType.Inventory);
-            Console.WriteLine("\n1. 장착관리");
+            Console.WriteLine("\n1. 장착관리/아이템 사용");
             Console.WriteLine("0. 나가기\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
@@ -60,7 +60,7 @@ namespace ProjectNoName
 
                 ShowItemList(InventoryType.idx, MenuType.Inventory);
 
-                Console.WriteLine("\n장착할 장비를 선택해주세요.(0 : 뒤로가기)");
+                Console.WriteLine("\n장착할 장비 또는 사용할 아이템을 선택해주세요.(0 : 뒤로가기)");
                 Console.Write(">> ");
                 int equipIdx = int.Parse(Console.ReadLine());
                 // 범위 밖의 번호를 선택했을 때
@@ -99,7 +99,7 @@ namespace ProjectNoName
 
                 ShowItemList(InventoryType.idx, MenuType.Inventory);
 
-                Console.WriteLine("\n장착할 장비를 선택해주세요.(0 : 뒤로가기)");
+                Console.WriteLine("\n장착할 장비 또는 사용할 아이템을 선택해주세요.(0 : 뒤로가기)");
                 Console.Write(">> ");
                 int equipIdx = int.Parse(Console.ReadLine());
                 // 범위 밖의 번호를 선택했을 때

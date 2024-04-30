@@ -11,6 +11,7 @@
         public float AttackPower;
         public float DefensePower;
         public float Health;
+        public float Mana;
         public float Gold;
 
         // 장비 장착 class에서 사용

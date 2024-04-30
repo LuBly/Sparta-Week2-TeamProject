@@ -16,6 +16,10 @@
         public float AttackPowerIncrease = 0;
         // 방어력 증가(무기일 경우 null값 가능)
         public float DefencePowerIncrease = 0;
+        // hp 회복
+        public float HealthIncrease;
+        // 마나 회복
+        public float ManaIncrease;
         // 설명
         public string Description;
     }
