@@ -1,7 +1,4 @@
-﻿using System.Numerics;
-using static System.Formats.Asn1.AsnWriter;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     public enum MenuType
     {
@@ -11,6 +8,8 @@ namespace ProjectNoName
         Store,
         Dungeon,
         Rest,
+        Quit = 100,
+        Load = 200,
     }
     internal class GameManager
     {
@@ -23,6 +22,8 @@ namespace ProjectNoName
         //DataManager - 게임의 모든 정보들을 저장하고 있을 Manager (static)
         public void StartGame()
         {
+            DataManager.Instance().CreatePlayer();
+            DataManager.Instance().InitData();
             bool isGameOver = false;
             // 게임화면
             while (!isGameOver)
@@ -51,6 +52,16 @@ namespace ProjectNoName
                         LoadDungeonMenu();
                         break;
 
+                    case MenuType.Quit:
+                        DataManager.Instance().SaveData();
+                        isGameOver = true;
+                        break;
+
+                    case MenuType.Load:
+                        DataManager.Instance().LoadData();
+                        curMenu = MenuType.Start;
+                        break;
+
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
                         curMenu = MenuType.Store;
@@ -76,7 +87,7 @@ namespace ProjectNoName
         // Status 메뉴
         void LoadStatusMenu()
         {
-            player.ShowStatus();
+            DataManager.Instance().Player.ShowStatus();
             curMenu = (MenuType)Utill.EndMenu();
         }
 
@@ -84,7 +95,7 @@ namespace ProjectNoName
         void LoadInventoryMenu()
         {
             // Inventory 초기 화면
-            player.Inventory.ShowInventory();
+            DataManager.Instance().Player.Data.Inventory.ShowInventory();
             while (true)
             {
                 bool isContinue = true;
@@ -107,7 +118,7 @@ namespace ProjectNoName
         // 인벤토리 세부 매뉴
         void LoadEquipMenu()
         {
-            player.Inventory.EquipInventory();
+            DataManager.Instance().Player.Data.Inventory.EquipInventory();
         }
 
         // 상점 메뉴

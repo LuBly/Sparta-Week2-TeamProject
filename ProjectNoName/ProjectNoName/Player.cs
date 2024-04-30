@@ -1,183 +1,101 @@
-﻿using System.Numerics;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     // 직업 종류
     // 차후 클래스 선택
     public enum ClassType
     {
-        Warrior,
+        Warrior = 1,
         Archar,
         Magician
     }
     internal class Player
     {
-        // Player 객체 내에서만 수정해야할 자료들
-        int level;
-        int levelPoint;
-        string name;
-        ClassType classType;
-        float attackPower;
-        float defensePower;
-        float health;
-        float mana;
-        float gold;
-
-        // 장비 장착 class에서 사용
-        float IncreaseAttack;
-        float IncreaseDefense;
-
-        // 장착하고 있는 무기, 방어구
-        // 한개씩만 장착할 수 있다.
-        public Item Waepon;
-        public Item Armor;
-
-
-        public Inventory Inventory = new Inventory();
-
+        public PlayerData Data = new PlayerData();
         // 최초 선언
-        public Player()
+        public Player(string playerName, ClassType selectClass)
         {
-            level = 1;
-            levelPoint = 0;
-            name = "Player";
-            classType = ClassType.Warrior;
-            attackPower = 10;
-            defensePower = 5;
-            health = 70;
-            mana = 100;
-            gold = 2500f;
-            // idx맞추기용 더미데이터 입력.
-            Inventory.AddItem(new Item());
-        }
+            Data.Level = 1;
+            Data.LevelPoint = 0;
+            Data.Name = playerName;//플레이어 생성창에서 유저가 입력한 이름 값이 들어갈것
+            Data.ClassType = selectClass;//플레이어 생성창에서 유저가 선택한 직업 타입이 들어갈것.
+            Data.AttackPower = 10;
+            Data.DefensePower = 5;
+            Data.Health = 100;
+            Data.Gold = 2500f;
 
-        // Player 정보를 입력해주는 함수
-        public void SetPlayer(/*매개변수 입력*/)
-        {
-            
+            // idx맞추기용 더미데이터 입력.
+            Data.Inventory.AddItem(new Item());
         }
 
         public void ShowStatus()
         {
             Console.WriteLine("[상태 보기]");
             // Lv
-            Console.WriteLine($"Lv. {level}");
+            Console.WriteLine($"Lv. {Data.Level}");
             // 직업
-            Console.WriteLine($"Chad : {classType}");
+            Console.WriteLine($"{Data.Name} : {Data.ClassType}");
             // 공격력
-            Console.Write($"공격력 : {attackPower}");
-            if (IncreaseAttack > 0)
+            Console.Write($"공격력 : {Data.AttackPower}");
+            if (Data.IncreaseAttack > 0)
             {
-                Console.WriteLine($" + ({IncreaseAttack})");
+                Console.WriteLine($" + ({Data.IncreaseAttack})");
             }
             else
             {
                 Console.WriteLine();
             }
             // 방어력
-            Console.Write($"방어력 : {defensePower}");
-            if (IncreaseDefense > 0)
+            Console.Write($"방어력 : {Data.DefensePower}");
+            if (Data.IncreaseDefense > 0)
             {
-                Console.WriteLine($" + ({IncreaseDefense})");
+                Console.WriteLine($" + ({Data.IncreaseDefense})");
             }
             else
             {
                 Console.WriteLine();
             }
             // 체력
-            Console.WriteLine($"체 력 : {health}");
-            //마나
-            Console.WriteLine($"마 나 : {mana}");
+            Console.WriteLine($"체 력 : {Data.Health}");
+            
+            // 마나
+            Console.WriteLine($"마 나 : {Data.Mana}");
+
             // 소유 gold
-            Console.WriteLine($"Gold : {gold}");
-        }
-
-
-        // Get 호출 함수
-        public float GetPlayerGold()
-        {
-            Console.WriteLine($"{gold} G\n");
-
-            return gold;
+            Console.WriteLine($"Gold : {Data.Gold}");
         }
 
         public float GetPlayerAttack()
         {
-            return attackPower + IncreaseAttack;
+            return Data.AttackPower + Data.IncreaseAttack;
         }
 
         public float GetPlayerDefence()
         {
-            return defensePower + IncreaseDefense;
+            return Data.AttackPower + Data.IncreaseDefense;
         }
-
-        public float GetPlayerHealth()
-        {
-            return health;
-        }
-
-        // 마나
-        public float GetPlayerMana()
-        {
-            return mana;
-        }
-
-        // Set 저장 함수
-
-        //[GOLD]
-        public void UseGold(float price)
-        {
-            gold -= price;
-        }
-
-        public void EarnGold(float price)
-        {
-            gold += price;
-        }
-
-
-
 
         // 기타 함수
-
-        // Player의 health가 변동됐을 때
         /// 전투 매커니즘에 따라 함수 변형필요
         public float TakeDamage()
         {
-            health /= 2;
-            return health;
-        }
-
-        public float TakeDamageValue(float damage)
-        {
-            health -= damage;
-            return health;
-        }
-
-        public void SetIncreaseAttack(float value)
-        {
-            IncreaseAttack = value;
-        }
-
-        public void SetIncreaseDefense(float value)
-        {
-            IncreaseDefense = value;
+            Data.Health /= 2;
+            return Data.Health;
         }
 
         // 체력 회복
-        public float HealthRecovery(float healthRecovered)
+        public float RecoveryHealth(float healthRecovered)
         {
-            health += healthRecovered;
+            Data.Health += healthRecovered;
             Console.WriteLine($"체력을 {healthRecovered} 회복하였습니다.");
-            return health;
+            return Data.Health;
         }
 
         // 마나 획복
-        public float ManaRecovery(float manaRecovered)
+        public float RecoveryMana(float manaRecovered)
         {
-            mana += manaRecovered;
+            Data.Mana += manaRecovered;
             Console.WriteLine($"마나를 {manaRecovered} 회복하였습니다.");
-            return mana;
+            return Data.Mana;
         }
     }
 }

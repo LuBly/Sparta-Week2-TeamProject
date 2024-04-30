@@ -1,4 +1,9 @@
-﻿namespace ProjectNoName
+﻿using Newtonsoft.Json;
+using ProjectNoName.Data;
+using System.Diagnostics;
+using System.Runtime.Serialization.Formatters.Binary;
+
+namespace ProjectNoName
 {
     // 싱글톤으로 생성하여 어느 클래스에서든 접근 가능
     internal class DataManager
@@ -19,23 +24,86 @@
             }
             return staticDataManager;
         }
+
         
-        public Player Player = new Player();
+        public Player Player; 
         public Store Store = new Store();
         public Dungeon Dungeon = new Dungeon();
-        // dataManager에 store랑 player를 꽃아놨는데
-        // store 초기화될때 또 dataManager를 불러와서 초기화를 한다.
 
-        // 데이터 저장 함수
-        public void SaveData()
+
+        string playerDataPath = @"..\..\..\Data\SaveData\PlayerData.json";
+        string storeDataPath = @"..\..\..\Data\SaveData\StoreData.json";
+        string originStoreDataPath = @"..\..\..\Data\SaveData\OriginStoreData.json";
+        // 플레이어 생성
+        public void CreatePlayer()
         {
-            
+            Console.Clear();
+            Console.WriteLine("플레이어를 생성합니다.\n");
+
+            Console.Write("플레이어 이름을 입력하세요: ");
+            string playerName = Console.ReadLine();
+
+            Console.WriteLine("\n직업을 선택하세요:");
+            Console.WriteLine("\n1. 전사\n2. 궁수\n3. 마법사\n");
+            Console.Write(">> ");
+            int jobChoice;
+            if (int.TryParse(Console.ReadLine(), out jobChoice) && jobChoice >= 1 && jobChoice <= 3)
+            {
+                ClassType selectedClass = (ClassType)(jobChoice);
+                Console.WriteLine($"플레이어 {playerName}이(가) {selectedClass}로 생성되었습니다!");
+                Thread.Sleep(2000);
+                // Player 클래스에 이름과 직업을 전달
+                Player = new Player(playerName, selectedClass);
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
+                Thread.Sleep(1000);
+                CreatePlayer();
+            }
         }
 
+        public void SaveData()
+        {
+            // playerData
+            string playerJson = JsonConvert.SerializeObject(Player.Data, Formatting.Indented);
+            File.WriteAllText(playerDataPath, playerJson);
+
+            // storeData 저장
+            string storeJson = JsonConvert.SerializeObject(Store.Data, Formatting.Indented);
+            File.WriteAllText(storeDataPath, storeJson);
+        }
+
+        // 게임이 실행될때 무조건 실행되어야 하는 함수
+        public void InitData()
+        {
+            string originStoreJson = File.ReadAllText(originStoreDataPath);
+            StoreData store = JsonConvert.DeserializeObject<StoreData>(originStoreJson);
+            Store.Data.StoreInventory = store.StoreInventory;
+        }
         // 데이터 불러오기 함수
         public void LoadData()
         {
+            // 파일이 있는지 찾아보고 있으면 가고
+            if (!File.Exists(playerDataPath) || !File.Exists(storeDataPath))
+            {
+                Console.WriteLine("저장된 데이터가 없습니다.");
+                Thread.Sleep(1000);
+            }
+            else
+            {
+                string? playerJson = File.ReadAllText(playerDataPath);
+                PlayerData? player = JsonConvert.DeserializeObject<PlayerData>(playerJson);
+                string? storeJson = File.ReadAllText(storeDataPath);
+                StoreData? store = JsonConvert.DeserializeObject<StoreData>(storeJson);
 
+                // 저장된 데이터가 있다
+                if (player != null && store != null)
+                {
+                    Player.Data = player;
+                    Store.Data.StoreInventory = store.StoreInventory;
+                }
+            }
         }
     }
 }
