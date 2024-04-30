@@ -39,8 +39,8 @@ namespace ProjectNoName
         {
             level = 1;
             levelPoint = 0;
-            name = "Player";
-            classType = ClassType.Warrior;
+            name = "Player";//플레이어 생성창에서 유저가 입력한 이름 값이 들어갈것
+            classType = ClassType.Warrior;//플레이어 생성창에서 유저가 선택한 직업 타입이 들어갈것
             attackPower = 10;
             defensePower = 5;
             health = 100;

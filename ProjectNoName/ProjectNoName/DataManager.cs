@@ -20,6 +20,8 @@
             return staticDataManager;
         }
         
+        //플레이어 생성 창에서 name 및 ClassType 입력값 불러오기
+
         public Player Player = new Player();
         public Store Store = new Store();
         public Dungeon Dungeon = new Dungeon();
