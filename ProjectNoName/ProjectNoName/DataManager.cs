@@ -63,15 +63,6 @@ namespace ProjectNoName
             }
         }
 
-        // dataManager에 store랑 player를 꽃아놨는데
-        // store 초기화될때 또 dataManager를 불러와서 초기화를 한다.
-
-        // 데이터 저장 함수
-        // PlayerData 
-        //  - 스텟, 골드
-        //  - Player Inventory Data (List)
-        // Store Inventory Data (List)
-        
         public void SaveData()
         {
             // playerData
@@ -83,11 +74,14 @@ namespace ProjectNoName
             File.WriteAllText(storeDataPath, storeJson);
         }
 
+        // 게임이 실행될때 무조건 실행되어야 하는 함수
+        public void InitData()
+        {
+            string originStoreJson = File.ReadAllText(originStoreDataPath);
+            StoreData store = JsonConvert.DeserializeObject<StoreData>(originStoreJson);
+            Store.Data.StoreInventory = store.StoreInventory;
+        }
         // 데이터 불러오기 함수
-        // PlayerData
-        // PlayerInventory 
-
-        // 최초 실행시에 반드시 로드되어야 하는 값들을 작성해줘야한다.
         public void LoadData()
         {
             string? playerJson = File.ReadAllText(playerDataPath);

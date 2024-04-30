@@ -23,6 +23,7 @@
         public void StartGame()
         {
             DataManager.Instance().CreatePlayer();
+            DataManager.Instance().InitData();
             bool isGameOver = false;
             // 게임화면
             while (!isGameOver)

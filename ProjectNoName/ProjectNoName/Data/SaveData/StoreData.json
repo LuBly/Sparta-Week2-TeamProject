@@ -16,7 +16,7 @@
         },
         {
           "Data": {
-            "IsPurchased": false,
+            "IsPurchased": true,
             "IsEquiped": false,
             "Name": "수련자 갑옷",
             "Price": 1000.0,
@@ -64,7 +64,7 @@
         },
         {
           "Data": {
-            "IsPurchased": false,
+            "IsPurchased": true,
             "IsEquiped": false,
             "Name": "청동 도끼",
             "Price": 1500.0,
