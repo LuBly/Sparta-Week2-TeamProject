@@ -20,6 +20,7 @@ namespace ProjectNoName
         float attackPower;
         float defensePower;
         float health;
+        float mana;
         float gold;
 
         // 장비 장착 class에서 사용
@@ -43,7 +44,8 @@ namespace ProjectNoName
             classType = ClassType.Warrior;
             attackPower = 10;
             defensePower = 5;
-            health = 100;
+            health = 70;
+            mana = 100;
             gold = 2500f;
             // idx맞추기용 더미데이터 입력.
             Inventory.AddItem(new Item());
@@ -84,6 +86,8 @@ namespace ProjectNoName
             }
             // 체력
             Console.WriteLine($"체 력 : {health}");
+            //마나
+            Console.WriteLine($"마  나 : {mana}");
             // 소유 gold
             Console.WriteLine($"Gold : {gold}");
         }
@@ -110,6 +114,12 @@ namespace ProjectNoName
         public float GetPlayerHealth()
         {
             return health;
+        }
+
+        // 마나
+        public float GetPlayerMana()
+        {
+            return mana;
         }
 
         // Set 저장 함수
@@ -152,6 +162,22 @@ namespace ProjectNoName
         public void SetIncreaseDefense(float value)
         {
             IncreaseDefense = value;
+        }
+
+        // 체력 회복
+        public float HealthRecovery(float healthRecovered)
+        {
+            health += healthRecovered;
+            Console.WriteLine($"체력을 {healthRecovered} 회복하였습니다.");
+            return health;
+        }
+
+        // 마나 획복
+        public float ManaRecovery(float manaRecovered)
+        {
+            mana += manaRecovered;
+            Console.WriteLine($"마나를 {manaRecovered} 회복하였습니다.");
+            return mana;
         }
     }
 }

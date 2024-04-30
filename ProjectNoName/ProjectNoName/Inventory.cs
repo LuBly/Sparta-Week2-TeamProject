@@ -122,7 +122,7 @@ namespace ProjectNoName
                 }
 
                 // 약간의 Delay 부여
-                Thread.Sleep(500);
+                Thread.Sleep(2000);
             }
         }
 

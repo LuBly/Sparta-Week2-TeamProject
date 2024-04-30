@@ -23,6 +23,12 @@
                 new Item("청동 도끼", ItemType.Weapon, 5, "어디선가 사용됐던거 같은 도끼입니다.", 1500),
                 new Item("스파르타의 창", ItemType.Weapon, 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 4000),
                 new Item("AK47", ItemType.Weapon, 47, "전설의 외할머니가 사용하던 무기입니다.", 4747),
+                new Item("체력포션(小)", ItemType.HealthPotion, 20, "체력을 조금 회복합니다.", 50),
+                new Item("체력포션(中)", ItemType.HealthPotion, 50, "체력을 많이 회복합니다.", 125),
+                new Item("체력포션(大)", ItemType.HealthPotion, 100, "체력을 완전히 회복합니다.", 250),
+                new Item("마나포션(小)", ItemType.ManaPotion, 20, "마나를 조금 회복합니다.", 50),
+                new Item("마나포션(中)", ItemType.ManaPotion, 50, "마나를 많이 회복합니다.", 125),
+                new Item("마나포션(大)", ItemType.ManaPotion, 100, "마나를 완전히 회복합니다.", 250),
             };
 
             foreach (Item item in items)
