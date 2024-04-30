@@ -30,10 +30,10 @@ namespace ProjectNoName
         public Store Store = new Store();
         public Dungeon Dungeon = new Dungeon();
 
-
         string playerDataPath = @"..\..\..\Data\SaveData\PlayerData.json";
         string storeDataPath = @"..\..\..\Data\SaveData\StoreData.json";
         string originStoreDataPath = @"..\..\..\Data\SaveData\OriginStoreData.json";
+
         // 플레이어 생성
         public void CreatePlayer()
         {
