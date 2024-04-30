@@ -87,7 +87,7 @@ namespace ProjectNoName
             // 체력
             Console.WriteLine($"체 력 : {health}");
             //마나
-            Console.WriteLine($"마  나 : {mana}");
+            Console.WriteLine($"마 나 : {mana}");
             // 소유 gold
             Console.WriteLine($"Gold : {gold}");
         }
