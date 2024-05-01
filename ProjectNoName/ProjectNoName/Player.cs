@@ -11,7 +11,14 @@
     internal class Player
     {
         public PlayerData Data = new PlayerData();
-        // 최초 선언
+        
+        // 데이터 로드용 
+        public Player()
+        {
+
+        }
+
+        // 캐릭터 최초 생성용
         public Player(string playerName, ClassType selectClass)
         {
             Data.Level = 1;

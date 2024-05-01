@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     public enum InventoryType
     {

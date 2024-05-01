@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using ProjectNoName.Data;
-using System.Diagnostics;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ProjectNoName
 {
@@ -30,10 +27,10 @@ namespace ProjectNoName
         public Store Store = new Store();
         public Dungeon Dungeon = new Dungeon();
 
-
         string playerDataPath = @"..\..\..\Data\SaveData\PlayerData.json";
         string storeDataPath = @"..\..\..\Data\SaveData\StoreData.json";
         string originStoreDataPath = @"..\..\..\Data\SaveData\OriginStoreData.json";
+
         // 플레이어 생성
         public void CreatePlayer()
         {
@@ -93,14 +90,15 @@ namespace ProjectNoName
             else
             {
                 string? playerJson = File.ReadAllText(playerDataPath);
-                PlayerData? player = JsonConvert.DeserializeObject<PlayerData>(playerJson);
+                PlayerData? playerData = JsonConvert.DeserializeObject<PlayerData>(playerJson);
                 string? storeJson = File.ReadAllText(storeDataPath);
                 StoreData? store = JsonConvert.DeserializeObject<StoreData>(storeJson);
 
                 // 저장된 데이터가 있다
-                if (player != null && store != null)
+                if (playerData != null && store != null)
                 {
-                    Player.Data = player;
+                    Player = new Player();
+                    Player.Data = playerData;
                     Store.Data.StoreInventory = store.StoreInventory;
                 }
             }
