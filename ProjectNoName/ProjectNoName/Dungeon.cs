@@ -8,9 +8,8 @@
         void CreateStage()
         {
             dungeonStage = new List<Stage>() {
-                new Stage("쉬운 던전", 5, 1000f),
-                new Stage("일반 던전", 11, 1700f),
-                new Stage("어려운 던전", 17, 2500f),
+                new TutorialStage("튜토리얼 던전", 5, 1000f), // << 준호님 담당
+                //new MiddleStage("일반 던전", 11, 1700f), // << 제가 담당해서 만들어 보는것
             };
         }
         public int ShowDungeon()

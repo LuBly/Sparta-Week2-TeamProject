@@ -210,7 +210,7 @@ namespace ProjectNoName
         /// <summary>
         /// MenuType에 따른 Item 표현 방식을 구분
         /// </summary>
-        /// <param name="menuType">
+        /// <param stageName="menuType">
         /// Item을 보여주는 MenuType이 무엇인지에 따라 보여지는 정보가 다르다.
         /// </param>
         public void ShowItem(MenuType menuType)
