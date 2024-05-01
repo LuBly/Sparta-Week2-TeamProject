@@ -6,7 +6,8 @@
     {
         Warrior = 1,
         Archar,
-        Magician
+        Magician,
+        TypeEnd,
     }
     internal class Player
     {

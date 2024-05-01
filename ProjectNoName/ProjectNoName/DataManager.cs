@@ -2,6 +2,7 @@
 using ProjectNoName.Data;
 using System.Diagnostics;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 
 namespace ProjectNoName
 {
@@ -47,7 +48,7 @@ namespace ProjectNoName
             Console.WriteLine("\n1. 전사\n2. 궁수\n3. 마법사\n");
             Console.Write(">> ");
             int jobChoice;
-            if (int.TryParse(Console.ReadLine(), out jobChoice) && jobChoice >= 1 && jobChoice <= 3)
+            if (int.TryParse(Console.ReadLine(), out jobChoice) && jobChoice >= (int)ClassType.Warrior && jobChoice < (int)ClassType.TypeEnd)
             {
                 ClassType selectedClass = (ClassType)(jobChoice);
                 Console.WriteLine($"플레이어 {playerName}이(가) {selectedClass}로 생성되었습니다!");
