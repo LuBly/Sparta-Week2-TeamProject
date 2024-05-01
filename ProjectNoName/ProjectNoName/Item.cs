@@ -125,13 +125,13 @@ namespace ProjectNoName
                         if (player.Data.Health + Data.HealthIncrease > 100)
                         {
                             healthRecovered = 100 - player.Data.Health;
-                            player.RecoveryHealth(healthRecovered);
+                            player.RecoverHealth(healthRecovered);
                         }
                         // 체력회복시 100 미만인 경우
                         else
                         {
                             healthRecovered = Data.HealthIncrease;
-                            player.RecoveryHealth(healthRecovered);
+                            player.RecoverHealth(healthRecovered);
                         }
                         // 사용된 아이템 소모처리
                         DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
@@ -150,13 +150,13 @@ namespace ProjectNoName
                         if (player.Data.Mana + Data.ManaIncrease > 100)
                         {
                             manaRecovered = 100 - player.Data.Mana;
-                            player.RecoveryMana(manaRecovered);
+                            player.RecoverMana(manaRecovered);
                         }
                         // 마나 회복시 100 미만인 경우
                         else
                         {
                             manaRecovered = Data.ManaIncrease;
-                            player.RecoveryMana(manaRecovered);
+                            player.RecoverMana(manaRecovered);
                         }
                         //사용된 아이템 소모처리
                         DataManager.Instance().Player.Data.Inventory.RemoveItem(this);

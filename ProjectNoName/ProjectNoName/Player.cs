@@ -83,7 +83,7 @@
         }
 
         // 체력 회복
-        public float RecoveryHealth(float healthRecovered)
+        public float RecoverHealth(float healthRecovered)
         {
             Data.Health += healthRecovered;
             Console.WriteLine($"체력을 {healthRecovered} 회복하였습니다.");
@@ -91,7 +91,7 @@
         }
 
         // 마나 획복
-        public float RecoveryMana(float manaRecovered)
+        public float RecoverMana(float manaRecovered)
         {
             Data.Mana += manaRecovered;
             Console.WriteLine($"마나를 {manaRecovered} 회복하였습니다.");
