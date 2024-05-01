@@ -1,6 +1,4 @@
-﻿using ProjectNoName.Data;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     public enum StoreType
     {

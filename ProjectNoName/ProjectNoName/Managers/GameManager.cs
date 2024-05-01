@@ -23,7 +23,6 @@
 
         public void StartGame()
         {
-
             ShowStart();
             
             DataManager.Instance().InitData();

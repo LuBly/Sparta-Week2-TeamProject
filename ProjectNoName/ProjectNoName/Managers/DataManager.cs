@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using ProjectNoName.Data;
-using System.Diagnostics;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ProjectNoName
 {
