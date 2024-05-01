@@ -342,8 +342,8 @@ namespace ProjectNoName
 
 
             Console.WriteLine("\n[탐험 결과]");
-            Console.WriteLine($"체력 {player.GetPlayerHealth()} -> {ChangeHealth()}");
-            Console.WriteLine($"골드 {player.GetPlayerGold()} -> {ChangeGold(player)}");
+            Console.WriteLine($"체력 {player.Data.Health} -> {ChangeHealth()}");
+            Console.WriteLine($"골드 {player.Data.Gold} -> {ChangeGold(player)}");
             //player.EditLevel();
         }
 
@@ -357,7 +357,7 @@ namespace ProjectNoName
 
 
             Console.WriteLine("\n[탐험 결과]");
-            Console.WriteLine($"체력 {player.GetPlayerHealth()} -> {player.TakeDamage()}");
+            Console.WriteLine($"체력 {player.Data.Health} -> {player.TakeDamage()}");
         }
 
         // stage별 hp 변화량 계산
@@ -371,9 +371,9 @@ namespace ProjectNoName
             float playerDeffence = player.GetPlayerDefence();
             float changeValue = playerDeffence - RecommendedDefense;
             float damage = minusHp + changeValue;
-            player.TakeDamageValue(damage);
+            player.Data.Health -= damage;
 
-            return player.GetPlayerHealth();
+            return player.Data.Health;
         }
 
         // 보상 골드 변화량 계산
@@ -383,8 +383,8 @@ namespace ProjectNoName
             float playerAttack = player.GetPlayerAttack();
             int plusGoldRate = random.Next((int)playerAttack, (int)playerAttack * 2);
             ClearReward += ClearReward * (plusGoldRate / 100f);
-            player.EarnGold(ClearReward);
-            return player.GetPlayerGold();
+            player.Data.Gold += ClearReward;
+            return player.Data.Gold;
         }
     }
 }

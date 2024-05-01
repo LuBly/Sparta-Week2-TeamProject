@@ -1,7 +1,4 @@
-﻿using System.Numerics;
-using static System.Formats.Asn1.AsnWriter;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     public enum MenuType
     {
@@ -10,7 +7,8 @@ namespace ProjectNoName
         Inventory,
         Store,
         Dungeon,
-        Rest,
+        Quit,//저장하는 타입
+        Load,//불러오는 타입
     }
     internal class GameManager
     {
@@ -21,9 +19,16 @@ namespace ProjectNoName
         Dungeon dungeon = DataManager.Instance().Dungeon;
         // [추가 사항]
         //DataManager - 게임의 모든 정보들을 저장하고 있을 Manager (static)
+
+
         public void StartGame()
         {
+            ShowStart();
+            
+            DataManager.Instance().InitData();
             bool isGameOver = false;
+
+
             // 게임화면
             while (!isGameOver)
             {
@@ -51,6 +56,16 @@ namespace ProjectNoName
                         LoadDungeonMenu();
                         break;
 
+                    case MenuType.Quit:
+                        DataManager.Instance().SaveData();
+                        isGameOver = true;
+                        break;
+
+                    case MenuType.Load:
+                        DataManager.Instance().LoadData();
+                        LoadStartMenu();
+                        break;
+
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
                         curMenu = MenuType.Store;
@@ -61,13 +76,63 @@ namespace ProjectNoName
             }
         }
 
+        void ShowStart()
+        {
+            Console.Clear();
+            Console.WriteLine("NoName\n");
+            Console.WriteLine("\n1. 새로운 게임\n2. 계 속 하 기\n3. 게 임 종 료");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">> ");
+
+            string input = Console.ReadLine();
+
+            //숫자 입력이 맞는지 확인
+            if (int.TryParse(input, out int choice))
+            {
+                //입력된 값에 따라 게임 시작 및 종료
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("게임을 시작합니다!");
+                        DataManager.Instance().CreatePlayer();
+                        Thread.Sleep(1000);
+                        break;
+
+                    case 2:
+                        Console.WriteLine("게임을 불러옵니다!");
+                        Thread.Sleep(1000);
+                        curMenu = MenuType.Load;
+                        break;
+
+                    case 3:
+                        Console.WriteLine("게임을 종료합니다.");
+                        Environment.Exit(0);
+                        break;
+
+                    //지정되지 않은 숫자값이 입력되었을 때 재입력
+                    default:
+                        Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
+                        Thread.Sleep(1000);
+                        ShowStart();
+                        break;
+                }
+            }
+            else
+            {
+                // 숫자 이외의 값이 입력될 시 재입력
+                Console.WriteLine("잘못된 입력입니다. 숫자를 입력해주세요.");
+                Thread.Sleep(1000);
+                ShowStart();
+            }
+        }
+
         // StartMenu
         void LoadStartMenu()
         {
             Console.WriteLine("안녕?");
             Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 정할 수 있어\n");
 
-            Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장");
+            Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 저장하기");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
             curMenu = (MenuType)int.Parse(Console.ReadLine());
@@ -76,7 +141,7 @@ namespace ProjectNoName
         // Status 메뉴
         void LoadStatusMenu()
         {
-            player.ShowStatus();
+            DataManager.Instance().Player.ShowStatus();
             curMenu = (MenuType)Utill.EndMenu();
         }
 
@@ -84,7 +149,7 @@ namespace ProjectNoName
         void LoadInventoryMenu()
         {
             // Inventory 초기 화면
-            player.Inventory.ShowInventory();
+            DataManager.Instance().Player.Data.Inventory.ShowInventory();
             while (true)
             {
                 bool isContinue = true;
@@ -107,7 +172,7 @@ namespace ProjectNoName
         // 인벤토리 세부 매뉴
         void LoadEquipMenu()
         {
-            player.Inventory.EquipInventory();
+            DataManager.Instance().Player.Data.Inventory.EquipInventory();
         }
 
         // 상점 메뉴
