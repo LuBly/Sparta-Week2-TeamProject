@@ -116,17 +116,17 @@ namespace ProjectNoName
 
                 case ItemType.HealthPotion:
                     // 체력이 100이면 사용 불가
-                    if (player.Data.Health == 100)
+                    if (player.Data.CurHealth == 100)
                     {
                         Console.WriteLine("체력이 100입니다. 아이템을 사용할 수 없습니다.");
                     }
                     else
                     {
                         // 체력회복시 100을 넘으면 100까지만 회복
-                        if (player.Data.Health + Data.HealthIncrease > 100)
+                        if (player.Data.CurHealth + Data.HealthIncrease > 100)
                         {
-                            healthRecovered = 100 - player.Data.Health;
-                            player.RecoverHealth(healthRecovered);
+                            healthRecovered = 100 - player.Data.CurHealth;
+                            player.RecoveryHealth(healthRecovered);
                         }
                         // 체력회복시 100 미만인 경우
                         else
@@ -211,7 +211,7 @@ namespace ProjectNoName
         /// <summary>
         /// MenuType에 따른 Item 표현 방식을 구분
         /// </summary>
-        /// <param name="menuType">
+        /// <param stageName="menuType">
         /// Item을 보여주는 MenuType이 무엇인지에 따라 보여지는 정보가 다르다.
         /// </param>
         public void ShowItem(MenuType menuType)
