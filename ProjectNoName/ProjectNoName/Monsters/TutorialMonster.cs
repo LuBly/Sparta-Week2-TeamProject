@@ -13,7 +13,7 @@ namespace ProjectNoName
             monsterHealth = health;
             monsterAttackPower = attackPower;
             monsterDefensePower = defensePower;
-            monsterExp = exp;
+            rewardExp = exp;
         }
 
         //몬스터 반격          

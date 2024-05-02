@@ -10,7 +10,8 @@
         public ClassType ClassType;
         public float AttackPower;
         public float DefensePower;
-        public float Health;
+        public float CurHealth;
+        public float MaxHealth;
         public float Mana;
         public float Gold;
 
