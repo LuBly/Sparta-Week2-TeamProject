@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection.Emit;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     enum BattleMenuType
     {
