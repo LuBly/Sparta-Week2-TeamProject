@@ -126,7 +126,7 @@ namespace ProjectNoName
                         if (player.Data.CurHealth + Data.HealthIncrease > 100)
                         {
                             healthRecovered = 100 - player.Data.CurHealth;
-                            player.RecoveryHealth(healthRecovered);
+                            player.RecoverHealth(healthRecovered);
                         }
                         // 체력회복시 100 미만인 경우
                         else
