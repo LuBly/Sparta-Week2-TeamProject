@@ -19,8 +19,6 @@
         Dungeon dungeon = DataManager.Instance().Dungeon;
         // [추가 사항]
         //DataManager - 게임의 모든 정보들을 저장하고 있을 Manager (static)
-
-
         public void StartGame()
         {
             ShowStart();
