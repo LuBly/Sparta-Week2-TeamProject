@@ -41,6 +41,7 @@
             Console.Clear();
 
             ShowItemList(InventoryType.noneIdx, MenuType.Inventory);
+            //Console.WriteLine("\n2. 아이템 사용");
             Console.WriteLine("\n1. 장착관리/아이템 사용");
             Console.WriteLine("0. 나가기\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
@@ -85,6 +86,40 @@
                 Thread.Sleep(500);
             }
         }
+
+        ////소비창
+        //public void ConsumableInventory()
+        //{
+        //    while(true)
+        //    {
+        //        Console.Clear();
+
+        //        ShowConsumableItemList(InventoryType.idx, MenuType.Consumable);
+
+        //        Console.WriteLine("\n사용할 아이템을 선택해주세요. (0 : 뒤로가기)");
+        //        Console.Write(">> ");
+        //        int consumeIdx = int.Parse(Console.ReadLine());
+        //        if(consumeIdx > CountInventory() || consumeIdx < 0)
+        //        {
+        //            Console.WriteLine("잘못된 입력입니다.");
+        //            Thread.Sleep(500);
+        //            continue;
+        //        }
+        //        // 0을 선택했을 때
+        //        else if (consumeIdx == 0)
+        //        {
+        //            ShowInventory();
+        //            break;
+        //        }
+        //        // 장비를 선택했을 때
+        //        else
+        //        {
+        //            Data.InventoryItems[consumeIdx].ManageItem();
+        //        }
+
+        //        Thread.Sleep(500);
+        //    }
+        //}
 
         // 장비 장착 / 해제
         public void EquipInventory()
@@ -139,5 +174,23 @@
                 Data.InventoryItems[i].ShowItem(menuType);
             }
         }
+
+        //// 소비창 ItemList 출력
+        //public void ShowConsumableItemList(InventoryType type, MenuType menuType)
+        //{
+        //    Console.WriteLine("\n[아이템 목록]");
+
+        //    // 아이템 리스트 표기
+        //    for (int i = 1; i < CountInventory(); i++)
+        //    {
+        //        if (Data.InventoryItems[i].Data.ItemType == ItemType.HealthPotion || Data.InventoryItems[i].Data.ItemType == ItemType.ManaPotion)
+        //        {
+        //            Console.Write("-");
+        //            if (type == InventoryType.idx)
+        //                Console.Write($" {i} ");
+        //            Data.InventoryItems[i].ShowItem(MenuType.Consumable);
+        //        }
+        //    }
+        //}
     }
 }

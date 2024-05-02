@@ -9,6 +9,7 @@
         Dungeon,
         Quit,//저장하는 타입
         Load,//불러오는 타입
+        //Consumable, //소비창
     }
     internal class GameManager
     {
@@ -163,11 +164,21 @@
                     case 1:
                         LoadEquipMenu();
                         break;
+                    //// 소비창
+                    //case 2:
+                    //    LoadConsumableMenu();
+                    //    break;
                 }
 
                 if (!isContinue) break;
             }
         }
+
+        //// 소비창 메뉴
+        //void LoadConsumableMenu()
+        //{
+        //    DataManager.Instance().Player.Data.Inventory.ConsumableInventory();
+        //}
 
         // 인벤토리 세부 매뉴
         void LoadEquipMenu()

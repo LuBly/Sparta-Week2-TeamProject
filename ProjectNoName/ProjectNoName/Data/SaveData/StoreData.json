@@ -11,7 +11,8 @@
             "ItemType": 0,
             "AttackPowerIncrease": 0.0,
             "DefencePowerIncrease": 0.0,
-            "Description": null
+            "Description": null,
+            "ItemCount":  0
           }
         },
         {
@@ -23,7 +24,8 @@
             "ItemType": 2,
             "AttackPowerIncrease": 0.0,
             "DefencePowerIncrease": 5.0,
-            "Description": "수련에 도움을 주는 갑옷입니다."
+            "Description": "수련에 도움을 주는 갑옷입니다.",
+            "ItemCount": 0
           }
         },
         {
@@ -35,7 +37,8 @@
             "ItemType": 2,
             "AttackPowerIncrease": 0.0,
             "DefencePowerIncrease": 9.0,
-            "Description": "무쇠로 만들어져 튼튼한 갑옷입니다."
+            "Description": "무쇠로 만들어져 튼튼한 갑옷입니다.",
+            "ItemCount": 0
           }
         },
         {
@@ -47,7 +50,8 @@
             "ItemType": 2,
             "AttackPowerIncrease": 0.0,
             "DefencePowerIncrease": 15.0,
-            "Description": "스파르타의 전사들이 사용했다는 전설의 갑옷입니다."
+            "Description": "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.",
+            "ItemCount": 0
           }
         },
         {
@@ -59,7 +63,8 @@
             "ItemType": 1,
             "AttackPowerIncrease": 2.0,
             "DefencePowerIncrease": 0.0,
-            "Description": "쉽게 볼 수 있는 낡은 검 입니다. "
+            "Description": "쉽게 볼 수 있는 낡은 검 입니다. ",
+            "ItemCount": 0
           }
         },
         {
@@ -71,7 +76,8 @@
             "ItemType": 1,
             "AttackPowerIncrease": 5.0,
             "DefencePowerIncrease": 0.0,
-            "Description": "어디선가 사용됐던거 같은 도끼입니다."
+            "Description": "어디선가 사용됐던거 같은 도끼입니다.",
+            "ItemCount": 0
           }
         },
         {
@@ -83,7 +89,8 @@
             "ItemType": 1,
             "AttackPowerIncrease": 7.0,
             "DefencePowerIncrease": 0.0,
-            "Description": "스파르타의 전사들이 사용했다는 전설의 창입니다."
+            "Description": "스파르타의 전사들이 사용했다는 전설의 창입니다.",
+            "ItemCount": 0
           }
         },
         {
@@ -95,7 +102,86 @@
             "ItemType": 1,
             "AttackPowerIncrease": 47.0,
             "DefencePowerIncrease": 0.0,
-            "Description": "전설의 외할머니가 사용하던 무기입니다."
+            "Description": "전설의 외할머니가 사용하던 무기입니다.",
+            "ItemCount": 0
+          }
+        },
+        {
+          "Data": {
+            "IsPurchased": false,
+            "IsEquiped": false,
+            "Name": "체력포션(小)",
+            "Price": 50.0,
+            "ItemType": 3,
+            "HealthIncrease": 20.0,
+            "ManaIncrease": 0.0,
+            "Description": "체력을 조금 회복합니다.",
+            "ItemCount": 0
+          }
+        },
+        {
+          "Data": {
+            "IsPurchased": false,
+            "IsEquiped": false,
+            "Name": "체력포션(中)",
+            "Price": 125.0,
+            "ItemType": 3,
+            "HealthIncrease": 50.0,
+            "ManaIncrease": 0.0,
+            "Description": "체력을 많이 회복합니다.",
+            "ItemCount": 0
+          }
+        },
+        {
+          "Data": {
+            "IsPurchased": false,
+            "IsEquiped": false,
+            "Name": "체력포션(大)",
+            "Price": 250.0,
+            "ItemType": 3,
+            "HealthIncrease": 100.0,
+            "ManaIncrease": 0.0,
+            "Description": "체력을 완전히 회복합니다.",
+            "ItemCount": 0
+          }
+        },
+        {
+          "Data": {
+            "IsPurchased": false,
+            "IsEquiped": false,
+            "Name": "마나포션(小)",
+            "Price": 50.0,
+            "ItemType": 4,
+            "HealthIncrease": 0.0,
+            "ManaIncrease": 20.0,
+            "Description": "마나를 조금 회복합니다.",
+            "ItemCount": 0
+          }
+        },
+        {
+          "Data": {
+            "IsPurchased": false,
+            "IsEquiped": false,
+            "Name": "마나포션(中)",
+            "Price": 125.0,
+            "ItemType": 4,
+            "HealthIncrease": 0.0,
+            "ManaIncrease": 50.0,
+            "Description": "마나를 많이 회복합니다.",
+            "ItemCount": 0
+          }
+        },
+        {
+          "Data": {
+            "IsPurchased": false,
+            "IsEquiped": false,
+            "Name": "마나포션(大)",
+            "Price": 250.0,
+            "ItemType": 4,
+            "HealthIncrease": 0.0,
+            "ManaIncrease": 100.0,
+            "Description": "마나를 완전히 회복합니다.",
+            "ItemCount": 0
           }
         }
       ]

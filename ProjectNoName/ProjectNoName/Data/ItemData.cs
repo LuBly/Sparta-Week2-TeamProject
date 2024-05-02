@@ -22,5 +22,7 @@
         public float ManaIncrease;
         // 설명
         public string Description;
+        // 보유 갯수
+        public int ItemCount;
     }
 }

@@ -23,7 +23,8 @@
             "ItemType": 0,
             "AttackPowerIncrease": 0.0,
             "DefencePowerIncrease": 0.0,
-            "Description": null
+            "Description": null,
+            "ItemCount":  0
           }
         }
       ]

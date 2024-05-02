@@ -23,7 +23,7 @@ namespace ProjectNoName
 
         // index값을 맞추기 위한 더미데이터 생성용 OverLoading
         public Item() { }
-        public Item(string name, ItemType itemType, int increaseData, string description, float price)
+        public Item(string name, ItemType itemType, int increaseData, string description, float price, int itemCount)
         {
             Data.Name = name;
             Data.ItemType = itemType;
@@ -44,7 +44,8 @@ namespace ProjectNoName
                     // itemType별 적용 데이터 추가
             }
             Data.Description = description;
-            Data.Price = price; 
+            Data.Price = price;
+            Data.ItemCount = itemCount;
         }
 
         // 데이터 저장 및 로드를 위한 함수
@@ -134,7 +135,7 @@ namespace ProjectNoName
                             player.RecoverHealth(healthRecovered);
                         }
                         // 사용된 아이템 소모처리
-                        DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+                        ConsumeItem();
                     }
                     break;
 
@@ -159,7 +160,7 @@ namespace ProjectNoName
                             player.RecoverMana(manaRecovered);
                         }
                         //사용된 아이템 소모처리
-                        DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+                        ConsumeItem();
                     }
                     break;
             }
@@ -255,6 +256,12 @@ namespace ProjectNoName
                 else
                     Console.WriteLine($"| {Data.Price} G");
             }
+            // 소비창에서 아이템 갯수 표시
+            else if (menuType == MenuType.Inventory && (Data.ItemType == ItemType.HealthPotion || Data.ItemType == ItemType.ManaPotion))
+            {
+                Console.SetCursorPosition(70, originRow);
+                Console.WriteLine($"| {Data.ItemCount}개");
+            }
         }
 
         public bool CanBuy()
@@ -276,7 +283,21 @@ namespace ProjectNoName
                 Data.IsPurchased = false;
             }
             DataManager.Instance().Player.Data.Gold -= Data.Price;
-            DataManager.Instance().Player.Data.Inventory.AddItem(this);
+            // 포션 중첩을 위해 처음 구매 할때만 AddItem() 실행
+            if (Data.ItemCount == 0 && (Data.ItemType == ItemType.HealthPotion || Data.ItemType == ItemType.ManaPotion))
+            {
+                DataManager.Instance().Player.Data.Inventory.AddItem(this);
+                Data.ItemCount += 1;
+            }
+            else if (Data.ItemType == ItemType.Weapon || Data.ItemType == ItemType.Armor)
+            {
+                DataManager.Instance().Player.Data.Inventory.AddItem(this);
+            }
+            // 구매 횟수에 따라 ItemCount 증가
+            else
+            {
+                Data.ItemCount += 1;
+            }
             Console.WriteLine($"{Data.Name}를 구매했습니다.");
         }
 
@@ -287,6 +308,16 @@ namespace ProjectNoName
             DataManager.Instance().Player.Data.Gold += Data.Price;
             DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
             Console.WriteLine($"{Data.Name}를 {Data.Price * 0.85f}에 판매했습니다.");
+        }
+
+        // 소모 아이템 소모처리
+        public void ConsumeItem()
+        {
+            Data.ItemCount -= 1;
+            if (Data.ItemCount == 0)
+            {
+                DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+            }
         }
     }
 }
