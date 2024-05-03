@@ -12,15 +12,7 @@ namespace ProjectNoName
         public int rewardExp { get; set; }
         
         public Monster() { }
-        
-        // MonsterData
-        // + MonsterId : int
-        // + MonsterType : string
-        // + Level : int
-        // + Name : string
-        // + Health : float
-        // + AttackPower : float
-        // + rewardExp : int
+
         public Monster CreateMonster(Monster monster)
         {
             Monster newMonster = new Monster();
