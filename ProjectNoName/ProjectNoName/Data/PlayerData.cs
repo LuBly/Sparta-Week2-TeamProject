@@ -10,6 +10,9 @@
         public ClassType ClassType;
         public float AttackPower;
         public float DefensePower;
+        public float CriticalRate;
+        public float CriticalDamage;
+        public float EvasionRate;
         public float CurHealth;
         public float MaxHealth;
         public float Mana;

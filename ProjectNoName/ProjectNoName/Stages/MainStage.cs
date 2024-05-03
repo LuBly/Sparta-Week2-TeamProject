@@ -154,8 +154,8 @@ namespace ProjectNoName
         {
             Console.Clear();
             Monster curMonster = battleMonsters[monsterIdx];
-            int playerDamage = player.GetPlayerDamage();
             Console.WriteLine($"{player.Data.Name} 의 공격!");
+            int playerDamage = player.GetPlayerDamage();  // *치명타 문구 출력*
             Console.WriteLine($"Lv.{curMonster.monsterLv} {curMonster.monsterName} 을(를) 맞췄습니다. [데미지 : {playerDamage}]");
             Console.WriteLine();
             Console.WriteLine($"Lv.{curMonster.monsterLv} {curMonster.monsterName}");
@@ -195,10 +195,11 @@ namespace ProjectNoName
             Console.WriteLine("[EnemyTurn]");
             Console.WriteLine();
             Console.WriteLine($"Lv.{monster.monsterLv} {monster.monsterName} 의 공격!");
-            Console.WriteLine($"{player.Data.Name} 을(를) 맞췄습니다. [데미지 : {monster.monsterAttackPower}]");
-            Console.WriteLine();
-            Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
-            Console.WriteLine($"HP {player.Data.CurHealth} -> {player.TakeDamage(monster.monsterAttackPower)}");
+            player.TakeDamage(monster.monsterAttackPower);
+            //Console.WriteLine($"{player.Data.Name} 을(를) 맞췄습니다. [데미지 : {monster.monsterAttackPower}]");
+            //Console.WriteLine();
+            //Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
+            //Console.WriteLine($"HP {player.Data.CurHealth} -> {player.TakeDamage(monster.monsterAttackPower)}");
             Utill.ShowNextPage();
         }
 
