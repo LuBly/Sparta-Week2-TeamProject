@@ -26,9 +26,9 @@ namespace ProjectNoName
         public Player Player; 
         public Store Store = new Store();
         public Dungeon Dungeon = new Dungeon();
-        string playerDataPath = @"..\..\..\Data\SaveData\PlayerData.json";
-        string storeDataPath = @"..\..\..\Data\SaveData\StoreData.json";
-        string originStoreDataPath = @"..\..\..\Data\InitData\OriginStoreData.json";
+        string playerDataPath = @"..\..\..\Data\SaveData\PlayerDB.json";
+        string storeDataPath = @"..\..\..\Data\SaveData\StoreDB.json";
+        string originStoreDataPath = @"..\..\..\Data\InitData\OriginStoreDB.json";
 
         // 플레이어 생성
         public void CreatePlayer()
