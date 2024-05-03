@@ -1,32 +1,42 @@
-[
-    {
-      "MonsterId": 0,
-      "MonsterType": "Minion",
-      "Level": 2,
-      "Name": "미니언",
-      "Health": 15,
-      "AttackPower": 5,
-      "RewardExp": 10,
-      "RewardItems": []
-    },
-    {
-      "MonsterId": 1,
-      "MonsterType": "Void",
-      "Level": 3,
-      "Name": "공허충",
-      "Health": 10,
-      "AttackPower": 9,
-      "RewardExp": 15,
-      "RewardItems": []
-    },
-    {
-      "MonsterId": 2,
-      "MonsterType": "CannonMinion",
-      "Level": 5,
-      "Name": "대포미니언",
-      "Health": 25,
-      "AttackPower": 8,
-      "RewardExp": 20,
-      "RewardItems": []
-    }
- ]
+[ 
+  {
+    "MonsterId": 0,
+    "MonsterType": "Minion",
+    "Level": 2,
+    "Name": "미니언",
+    "Health": 15,
+    "AttackPower": 5,
+    "RewardExp": 10,
+    "RewardItems": []
+  },
+  {
+    "MonsterId": 1,
+    "MonsterType": "Void",
+    "Level": 3,
+    "Name": "공허충",
+    "Health": 10,
+    "AttackPower": 9,
+    "RewardExp": 15,
+    "RewardItems": []
+  },
+  {
+    "MonsterId": 2,
+    "MonsterType": "CannonMinion",
+    "Level": 5,
+    "Name": "대포미니언",
+    "Health": 25,
+    "AttackPower": 8,
+    "RewardExp": 20,
+    "RewardItems": []
+  },
+  {
+    "MonsterId": 3,
+    "MonsterType": "Varon",
+    "Level": 10,
+    "Name": "바론",
+    "Health": 55,
+    "AttackPower": 20,
+    "RewardExp": 100,
+    "RewardItems": []
+  } 
+]
