@@ -18,12 +18,16 @@
         Player player = DataManager.Instance().Player;
 
         // battle에서 사용할 몬스터 List
-        List<Monster> battleMonsters; 
+        List<Monster> battleMonsters;
 
+        // Player 딴에서 현재 갈수있는 최상 stage를 가지고 있어야 한다.
+        // 1. stageIdx가 가장 높은 stage만 갈 수 있다.
+        // 2. stageIdx가 가장 높은 stage까지 선택해서 들어갈 수 있다. << Dungeon에서 관리해줘야한다.
+        int stageIdx = 1;
         // Stage에서 구현된 StartBattle 함수를 override하여 작성
         public override void StartBattle()
         {
-            battleMonsters = monsterManager.SetStageMonster(1);
+            battleMonsters = monsterManager.SetStageMonster(stageIdx);
             bool isPlayerTurn = true;
             // Battle 시작
             while (true)
@@ -221,7 +225,7 @@
             Console.WriteLine();
             Console.WriteLine("Victory");
             Console.WriteLine();
-            Console.WriteLine($"{stageName}에서 몬스터 {battleMonsters.Count - 1}마리를 잡았습니다.");
+            Console.WriteLine($"{stageName} [{stageIdx}]에서 몬스터 {battleMonsters.Count - 1}마리를 잡았습니다.");
             Console.WriteLine();
             Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");

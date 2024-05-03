@@ -36,7 +36,6 @@
         public void ShowStage(int idx)
         {
             dungeonStage[idx].StartBattle(); 
-            Utill.EndMenu();
         }
     }
 }
