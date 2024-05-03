@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection.Emit;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     enum BattleMenuType
     {
@@ -218,7 +215,7 @@ namespace ProjectNoName
                 // 랜덤 인덱스 생성 (0부터 monster의 저장된 객체들의 수(3)만큼)
                 int monsterIdx = random.Next(0, monsters.Count);
                 // Battle에서 사용할 몬스터 List에 추가
-                battleMonsters.Add(monsters[monsterIdx]);
+                battleMonsters.Add(monsters[monsterIdx].CreateMonster(monsters[monsterIdx]));
             }
         }
 

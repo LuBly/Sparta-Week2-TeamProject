@@ -36,11 +36,6 @@
         public void ShowStage(int idx)
         {
             dungeonStage[idx].StartBattle(); 
-
-            // 기본 형태는 Stage.StartBattle() << virtual이니까 실제 객체가 가지고있는 overrride함수를 찾아서 이 함수를 실행시킨다.
-
-            // ex) idx == 1 << TutorialStage.StartBattle()
-            // idx == 2 << MainStage.StartBattle()
             Utill.EndMenu();
         }
     }

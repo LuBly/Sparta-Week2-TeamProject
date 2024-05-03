@@ -10,9 +10,29 @@ namespace ProjectNoName
         public float monsterAttackPower { get; set; }
         public float monsterDefensePower { get; set; }
         public int rewardExp { get; set; }
-
+        
         public Monster() { }
         
+        // MonsterData
+        // + MonsterType : string
+        // + Level : int
+        // + Name : string
+        // + Health : float
+        // + AttackPower : float
+        // + rewardExp : int
+        public Monster CreateMonster(Monster monster)
+        {
+            Monster newMonster = new Monster();
+            newMonster.monsterLv = monster.monsterLv;
+            newMonster.monsterName = monster.monsterName;
+            newMonster.monsterHealth = monster.monsterHealth;
+            newMonster.monsterAttackPower = monster.monsterAttackPower;
+            newMonster.monsterDefensePower = monster.monsterDefensePower;
+            newMonster.rewardExp = monster.rewardExp;
+
+            return newMonster;
+        }
+
         // 몬스터 각 개체의 정보를 출력하는 함수
         public void ShowMonsterData()
         {

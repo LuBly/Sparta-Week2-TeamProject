@@ -2,6 +2,7 @@
 {
     internal class ItemData
     {
+        public int Id;
         // 구매 여부
         public bool IsPurchased;
         // 장착 여부
