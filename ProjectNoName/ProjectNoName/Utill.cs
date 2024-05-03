@@ -1,6 +1,6 @@
 ﻿namespace ProjectNoName
 {
-    internal class Utill
+    public class Utill
     {
         public static int EndMenu()
         {

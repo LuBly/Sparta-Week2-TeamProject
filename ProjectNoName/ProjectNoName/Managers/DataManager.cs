@@ -3,7 +3,7 @@
 namespace ProjectNoName
 {
     // 싱글톤으로 생성하여 어느 클래스에서든 접근 가능
-    internal class DataManager
+    public class DataManager
     {
         // 필요한 정보들 생성
 

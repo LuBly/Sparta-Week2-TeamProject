@@ -11,7 +11,7 @@
         Load,//불러오는 타입
         //Consumable, //소비창
     }
-    internal class GameManager
+    public class GameManager
     {
         // 초기 화면 설정(맨 처음 실행했을 때)
         MenuType curMenu = MenuType.Start;

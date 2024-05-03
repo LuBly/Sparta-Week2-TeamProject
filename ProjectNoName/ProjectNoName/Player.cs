@@ -12,7 +12,7 @@ namespace ProjectNoName
         Archar,
         Magician
     }
-    internal class Player
+    public class Player
     {
         public PlayerData Data = new PlayerData();
         

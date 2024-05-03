@@ -1,6 +1,6 @@
 ﻿namespace ProjectNoName
 {
-    internal class Dungeon
+    public class Dungeon
     {
         List<Stage> dungeonStage;
         bool isFirst = true;

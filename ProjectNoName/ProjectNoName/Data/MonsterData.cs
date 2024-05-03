@@ -1,6 +1,6 @@
 ﻿namespace ProjectNoName
 {
-    internal class MonsterData
+    public class MonsterData
     {
         public int MonsterId;
         public string MonsterType;

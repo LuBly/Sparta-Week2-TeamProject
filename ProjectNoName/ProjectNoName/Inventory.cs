@@ -5,7 +5,7 @@
         noneIdx,
         idx,
     }
-    internal class Inventory
+    public class Inventory
     {
         // inventory에 보유하고 있는 아이템 
         public InventoryData Data = new InventoryData();
