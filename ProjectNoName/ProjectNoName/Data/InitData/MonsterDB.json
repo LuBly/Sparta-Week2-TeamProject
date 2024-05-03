@@ -1,4 +1,4 @@
-[ 
+[
   {
     "MonsterId": 0,
     "MonsterType": "Minion",
@@ -36,7 +36,37 @@
     "Name": "바론",
     "Health": 55,
     "AttackPower": 20,
+    "RewardExp": 35,
+    "RewardItems": []
+  },
+  {
+    "MonsterId": 4,
+    "MonsterType": "Junn",
+    "Level": 12,
+    "Name": "준준",
+    "Health": 35,
+    "AttackPower": 30,
+    "RewardExp": 45,
+    "RewardItems": []
+  },
+  {
+    "MonsterId": 5,
+    "MonsterType": "JaeH",
+    "Level": 14,
+    "Name": "재재",
+    "Health": 45,
+    "AttackPower": 35,
+    "RewardExp": 55,
+    "RewardItems": []
+  },
+  {
+    "MonsterId": 6,
+    "MonsterType": "Krista",
+    "Level": 20,
+    "Name": "창성",
+    "Health": 65,
+    "AttackPower": 50,
     "RewardExp": 100,
     "RewardItems": []
-  } 
+  }
 ]

@@ -29,7 +29,7 @@ namespace ProjectNoName
         public List<MonsterData> MonsterDB = new List<MonsterData>();
         // 반드시 있어야 하는 DB
         string originStoreDBPath = @"..\..\..\Data\InitData\OriginStoreDB.json";
-        string originMonsterDBPath = @"..\..\..\Data\InitData\OriginMonsterDB.json";
+        string originMonsterDBPath = @"..\..\..\Data\InitData\MonsterDB.json";
 
         // 없어도 상관없는 DB
         string playerDBPath = @"..\..\..\Data\SaveData\PlayerDB.json";
@@ -85,6 +85,7 @@ namespace ProjectNoName
             string originMonsterJson = File.ReadAllText(originMonsterDBPath);
             MonsterDB = JsonConvert.DeserializeObject<List<MonsterData>>(originMonsterJson);
         }
+
         // 데이터 불러오기 함수
         public void LoadData()
         {
