@@ -26,13 +26,15 @@ namespace ProjectNoName
         public Player Player; 
         public Store Store = new Store();
         public Dungeon Dungeon = new Dungeon();
+        public List<MonsterData> MonsterList = new List<MonsterData>();
+        // 반드시 있어야 하는 DB
+        string originStoreDBPath = @"..\..\..\Data\InitData\OriginStoreDB.json";
+        string originMonsterDBPath = @"..\..\..\Data\InitData\OriginMonsterDB.json";
 
-
+        // 없어도 상관없는 DB
         string playerDBPath = @"..\..\..\Data\SaveData\PlayerDB.json";
         string storeDBPath = @"..\..\..\Data\SaveData\StoreDB.json";
 
-        string originStoreDBPath = @"..\..\..\Data\InitData\OriginStoreDB.json";
-        
         // 플레이어 생성
         public void CreatePlayer()
         {
@@ -79,6 +81,9 @@ namespace ProjectNoName
             string originStoreJson = File.ReadAllText(originStoreDBPath);
             StoreData store = JsonConvert.DeserializeObject<StoreData>(originStoreJson);
             Store.Data.StoreInventory = store.StoreInventory;
+
+            string originMonsterJson = File.ReadAllText(originMonsterDBPath);
+            MonsterList = JsonConvert.DeserializeObject<List<MonsterData>>(originMonsterJson);
         }
         // 데이터 불러오기 함수
         public void LoadData()

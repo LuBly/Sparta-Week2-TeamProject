@@ -14,6 +14,7 @@ namespace ProjectNoName
         public Monster() { }
         
         // MonsterData
+        // + MonsterId : int
         // + MonsterType : string
         // + Level : int
         // + Name : string
