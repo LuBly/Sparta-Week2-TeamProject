@@ -1,6 +1,5 @@
 ﻿namespace ProjectNoName
 {
-    [Serializable]
     internal class MonsterData
     {
         public int MonsterId;
