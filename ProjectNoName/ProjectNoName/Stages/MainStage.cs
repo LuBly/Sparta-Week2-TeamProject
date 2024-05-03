@@ -24,7 +24,6 @@
         public override void StartBattle()
         {
             battleMonsters = monsterManager.SetStageMonster(1);
-            //CreateMonster();
             bool isPlayerTurn = true;
             // Battle 시작
             while (true)
@@ -222,7 +221,7 @@
             Console.WriteLine();
             Console.WriteLine("Victory");
             Console.WriteLine();
-            Console.WriteLine($"{stageName}에서 몬스터 {battleMonsters.Count}마리를 잡았습니다.");
+            Console.WriteLine($"{stageName}에서 몬스터 {battleMonsters.Count - 1}마리를 잡았습니다.");
             Console.WriteLine();
             Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");

@@ -7,9 +7,9 @@
         // 몬스터 생성
         Monster CreateMonster(int id)
         {
-            MonsterData curMonsterData = MonsterDB[id];
+            string curMonsterType = MonsterDB[id].MonsterType;
             
-            switch(curMonsterData.MonsterType)
+            switch(curMonsterType)
             {
                 case "Minion":
                     return new Minion();

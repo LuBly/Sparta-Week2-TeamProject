@@ -34,7 +34,8 @@ namespace ProjectNoName
             Data.CriticalRate = 100; //치명타 확률
             Data.CriticalDamage = 50; //치명타 피해
             Data.EvasionRate = 0; // 회피율
-            Data.CurHealth = 100;
+            Data.MaxHealth = 100;
+            Data.CurHealth = Data.MaxHealth;
             Data.Gold = 2500f;
 
             // idx맞추기용 더미데이터 입력.

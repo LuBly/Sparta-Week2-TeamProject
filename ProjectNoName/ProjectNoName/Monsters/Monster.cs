@@ -13,6 +13,7 @@ namespace ProjectNoName
         public int rewardExp { get; set; }
         public MonsterData Data = new MonsterData();
 
+        protected int monsterId;
         public Monster() { }
 
         // 몬스터 각 개체의 정보를 출력하는 함수

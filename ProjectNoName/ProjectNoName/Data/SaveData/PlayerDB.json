@@ -1,7 +1,7 @@
 {
   "Level": 1,
   "LevelPoint": 0,
-  "Name": "현호",
+  "Name": "hyun",
   "ClassType": 2,
   "AttackPower": 10.0,
   "DefensePower": 50.0,
@@ -9,7 +9,7 @@
   "CriticalDamage": 50.0,
   "EvasionRate": 0.0,
   "CurHealth": 100.0,
-  "MaxHealth": 0.0,
+  "MaxHealth": 100.0,
   "Mana": 0.0,
   "Gold": 2500.0,
   "IncreaseAttack": 0.0,
