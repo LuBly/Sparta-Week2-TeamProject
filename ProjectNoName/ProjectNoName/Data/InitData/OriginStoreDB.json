@@ -4,6 +4,7 @@
       "InventoryItems": [
         {
           "Data": {
+            "Id": 0,
             "IsPurchased": false,
             "IsEquiped": false,
             "Name": null,
@@ -16,6 +17,7 @@
         },
         {
           "Data": {
+            "Id": 1,
             "IsPurchased": false,
             "IsEquiped": false,
             "Name": "수련자 갑옷",
@@ -28,6 +30,7 @@
         },
         {
           "Data": {
+            "Id": 2,
             "IsPurchased": false,
             "IsEquiped": false,
             "Name": "무쇠갑옷",
@@ -40,6 +43,7 @@
         },
         {
           "Data": {
+            "Id": 3,
             "IsPurchased": false,
             "IsEquiped": false,
             "Name": "스파르타의 갑옷",
@@ -52,6 +56,7 @@
         },
         {
           "Data": {
+            "Id": 4,
             "IsPurchased": false,
             "IsEquiped": false,
             "Name": "낡은 검",
@@ -64,6 +69,7 @@
         },
         {
           "Data": {
+            "Id": 5,
             "IsPurchased": false,
             "IsEquiped": false,
             "Name": "청동 도끼",
@@ -76,6 +82,7 @@
         },
         {
           "Data": {
+            "Id": 6,
             "IsPurchased": false,
             "IsEquiped": false,
             "Name": "스파르타의 창",
@@ -88,6 +95,7 @@
         },
         {
           "Data": {
+            "Id": 7,
             "IsPurchased": false,
             "IsEquiped": false,
             "Name": "AK47",
