@@ -9,7 +9,7 @@ namespace ProjectNoName
         ManaPotion
     }
 
-    internal class Item
+    public class Item
     {
         //[각 아이템별 정보]
         public ItemData Data = new ItemData();
@@ -23,7 +23,7 @@ namespace ProjectNoName
 
         // index값을 맞추기 위한 더미데이터 생성용 OverLoading
         public Item() { }
-        public Item(string name, ItemType itemType, int increaseData, string description, float price)
+        public Item(string name, ItemType itemType, int increaseData, string description, float price, int itemCount)
         {
             Data.Name = name;
             Data.ItemType = itemType;
@@ -44,7 +44,8 @@ namespace ProjectNoName
                     // itemType별 적용 데이터 추가
             }
             Data.Description = description;
-            Data.Price = price; 
+            Data.Price = price;
+            Data.ItemCount = itemCount;
         }
 
         // 데이터 저장 및 로드를 위한 함수
@@ -125,16 +126,16 @@ namespace ProjectNoName
                         if (player.Data.CurHealth + Data.HealthIncrease > 100)
                         {
                             healthRecovered = 100 - player.Data.CurHealth;
-                            player.RecoveryHealth(healthRecovered);
+                            player.RecoverHealth(healthRecovered);
                         }
                         // 체력회복시 100 미만인 경우
                         else
                         {
                             healthRecovered = Data.HealthIncrease;
-                            player.RecoveryHealth(healthRecovered);
+                            player.RecoverHealth(healthRecovered);
                         }
                         // 사용된 아이템 소모처리
-                        DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+                        ConsumeItem();
                     }
                     break;
 
@@ -150,16 +151,16 @@ namespace ProjectNoName
                         if (player.Data.Mana + Data.ManaIncrease > 100)
                         {
                             manaRecovered = 100 - player.Data.Mana;
-                            player.RecoveryMana(manaRecovered);
+                            player.RecoverMana(manaRecovered);
                         }
                         // 마나 회복시 100 미만인 경우
                         else
                         {
                             manaRecovered = Data.ManaIncrease;
-                            player.RecoveryMana(manaRecovered);
+                            player.RecoverMana(manaRecovered);
                         }
                         //사용된 아이템 소모처리
-                        DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+                        ConsumeItem();
                     }
                     break;
             }
@@ -245,7 +246,7 @@ namespace ProjectNoName
             Console.WriteLine($"| {Data.Description}");
 
             // 스토어에서 구매 및 판매결정을 할 때만 해당 내용 출력
-            if (menuType == MenuType.Store)
+            if (menuType == MenuType.StoreBuy)
             {
                 Console.SetCursorPosition(100, originRow);
                 if (Data.IsPurchased)
@@ -254,6 +255,19 @@ namespace ProjectNoName
                 }
                 else
                     Console.WriteLine($"| {Data.Price} G");
+            }
+            else if (menuType == MenuType.StoreSell)
+            {
+                Console.SetCursorPosition(100, originRow);
+                Console.WriteLine($"| {Data.Price} G");
+                Console.SetCursorPosition(110, originRow);
+                Console.WriteLine($"| {Data.ItemCount}개");
+            }
+            // 소비창에서 아이템 갯수 표시
+            else if (menuType == MenuType.Inventory)
+            {
+                Console.SetCursorPosition(100, originRow);
+                Console.WriteLine($"| {Data.ItemCount}개");
             }
         }
 
@@ -286,7 +300,21 @@ namespace ProjectNoName
             Data.IsPurchased = false;
             DataManager.Instance().Player.Data.Gold += Data.Price;
             DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+            if (Data.ItemCount <= 0)
+            {
+                UnEquipItem(Data.ItemType);
+            }
             Console.WriteLine($"{Data.Name}를 {Data.Price * 0.85f}에 판매했습니다.");
+        }
+
+        // 소모 아이템 소모처리
+        public void ConsumeItem()
+        {
+            Data.ItemCount -= 1;
+            if (Data.ItemCount == 0)
+            {
+                DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+            }
         }
     }
 }

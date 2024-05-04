@@ -9,8 +9,11 @@
         Dungeon,
         Quit,//저장하는 타입
         Load,//불러오는 타입
+        StoreBuy,
+        StoreSell,
+        //Consumable, //소비창
     }
-    internal class GameManager
+    public class GameManager
     {
         // 초기 화면 설정(맨 처음 실행했을 때)
         MenuType curMenu = MenuType.Start;
@@ -19,8 +22,6 @@
         Dungeon dungeon = DataManager.Instance().Dungeon;
         // [추가 사항]
         //DataManager - 게임의 모든 정보들을 저장하고 있을 Manager (static)
-
-
         public void StartGame()
         {
             ShowStart();
@@ -163,11 +164,21 @@
                     case 1:
                         LoadEquipMenu();
                         break;
+                    //// 소비창
+                    //case 2:
+                    //    LoadConsumableMenu();
+                    //    break;
                 }
 
                 if (!isContinue) break;
             }
         }
+
+        //// 소비창 메뉴
+        //void LoadConsumableMenu()
+        //{
+        //    DataManager.Instance().Player.Data.Inventory.ConsumableInventory();
+        //}
 
         // 인벤토리 세부 매뉴
         void LoadEquipMenu()

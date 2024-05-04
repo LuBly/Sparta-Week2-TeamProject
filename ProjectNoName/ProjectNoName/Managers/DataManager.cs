@@ -3,7 +3,7 @@
 namespace ProjectNoName
 {
     // 싱글톤으로 생성하여 어느 클래스에서든 접근 가능
-    internal class DataManager
+    public class DataManager
     {
         // 필요한 정보들 생성
 
@@ -22,14 +22,18 @@ namespace ProjectNoName
             return staticDataManager;
         }
 
-        
+
         public Player Player; 
         public Store Store = new Store();
         public Dungeon Dungeon = new Dungeon();
+        public List<MonsterData> MonsterDB = new List<MonsterData>();
+        // 반드시 있어야 하는 DB
+        string originStoreDBPath = @"..\..\..\Data\InitData\OriginStoreDB.json";
+        string originMonsterDBPath = @"..\..\..\Data\InitData\MonsterDB.json";
 
-        string playerDataPath = @"..\..\..\Data\SaveData\PlayerData.json";
-        string storeDataPath = @"..\..\..\Data\SaveData\StoreData.json";
-        string originStoreDataPath = @"..\..\..\Data\SaveData\OriginStoreData.json";
+        // 없어도 상관없는 DB
+        string playerDBPath = @"..\..\..\Data\SaveData\PlayerDB.json";
+        string storeDBPath = @"..\..\..\Data\SaveData\StoreDB.json";
 
         // 플레이어 생성
         public void CreatePlayer()
@@ -64,34 +68,38 @@ namespace ProjectNoName
         {
             // playerData
             string playerJson = JsonConvert.SerializeObject(Player.Data, Formatting.Indented);
-            File.WriteAllText(playerDataPath, playerJson);
+            File.WriteAllText(playerDBPath, playerJson);
 
             // storeData 저장
             string storeJson = JsonConvert.SerializeObject(Store.Data, Formatting.Indented);
-            File.WriteAllText(storeDataPath, storeJson);
+            File.WriteAllText(storeDBPath, storeJson);
         }
 
         // 게임이 실행될때 무조건 실행되어야 하는 함수
         public void InitData()
         {
-            string originStoreJson = File.ReadAllText(originStoreDataPath);
+            string originStoreJson = File.ReadAllText(originStoreDBPath);
             StoreData store = JsonConvert.DeserializeObject<StoreData>(originStoreJson);
             Store.Data.StoreInventory = store.StoreInventory;
+
+            string originMonsterJson = File.ReadAllText(originMonsterDBPath);
+            MonsterDB = JsonConvert.DeserializeObject<List<MonsterData>>(originMonsterJson);
         }
+
         // 데이터 불러오기 함수
         public void LoadData()
         {
             // 파일이 있는지 찾아보고 있으면 가고
-            if (!File.Exists(playerDataPath) || !File.Exists(storeDataPath))
+            if (!File.Exists(playerDBPath) || !File.Exists(storeDBPath))
             {
                 Console.WriteLine("저장된 데이터가 없습니다.");
                 Thread.Sleep(1000);
             }
             else
             {
-                string? playerJson = File.ReadAllText(playerDataPath);
+                string? playerJson = File.ReadAllText(playerDBPath);
                 PlayerData? playerData = JsonConvert.DeserializeObject<PlayerData>(playerJson);
-                string? storeJson = File.ReadAllText(storeDataPath);
+                string? storeJson = File.ReadAllText(storeDBPath);
                 StoreData? store = JsonConvert.DeserializeObject<StoreData>(storeJson);
 
                 // 저장된 데이터가 있다

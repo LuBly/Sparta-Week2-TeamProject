@@ -1,7 +1,8 @@
 ﻿namespace ProjectNoName
 {
-    internal class ItemData
+    public class ItemData
     {
+        public int Id;
         // 구매 여부
         public bool IsPurchased;
         // 장착 여부
@@ -22,5 +23,7 @@
         public float ManaIncrease;
         // 설명
         public string Description;
+        // 보유 갯수
+        public int ItemCount;
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace ProjectNoName
 {
     // Data Save 및 Load를 위해 사용하는 객체들
-    internal class PlayerData
+    public class PlayerData
     {
         // Player 객체 내에서만 수정해야할 자료들
         public int Level;
@@ -10,6 +10,9 @@
         public ClassType ClassType;
         public float AttackPower;
         public float DefensePower;
+        public float CriticalRate;
+        public float CriticalDamage;
+        public float EvasionRate;
         public float CurHealth;
         public float MaxHealth;
         public float Mana;

@@ -1,6 +1,6 @@
 ﻿namespace ProjectNoName
 {
-    internal class Dungeon
+    public class Dungeon
     {
         List<Stage> dungeonStage;
         bool isFirst = true;
@@ -35,8 +35,7 @@
 
         public void ShowStage(int idx)
         {
-            dungeonStage[idx].StartBattle();            
-            Utill.EndMenu();
+            dungeonStage[idx].StartBattle(); 
         }
     }
 }

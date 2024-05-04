@@ -5,7 +5,7 @@
         Buy = 1,
         Sell = 2,
     }
-    internal class Store
+    public class Store
     {
         public StoreData Data = new StoreData();
 
@@ -15,19 +15,19 @@
             // [임시]DataBase
             List<Item> items = new List<Item>() {
                 new Item(),
-                new Item("수련자 갑옷", ItemType.Armor, 5, "수련에 도움을 주는 갑옷입니다.", 1000),
-                new Item("무쇠갑옷", ItemType.Armor, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 1500),
-                new Item("스파르타의 갑옷", ItemType.Armor, 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500),
-                new Item("낡은 검", ItemType.Weapon, 2, "쉽게 볼 수 있는 낡은 검 입니다. ", 600),
-                new Item("청동 도끼", ItemType.Weapon, 5, "어디선가 사용됐던거 같은 도끼입니다.", 1500),
-                new Item("스파르타의 창", ItemType.Weapon, 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 4000),
-                new Item("AK47", ItemType.Weapon, 47, "전설의 외할머니가 사용하던 무기입니다.", 4747),
-                new Item("체력포션(小)", ItemType.HealthPotion, 20, "체력을 조금 회복합니다.", 50),
-                new Item("체력포션(中)", ItemType.HealthPotion, 50, "체력을 많이 회복합니다.", 125),
-                new Item("체력포션(大)", ItemType.HealthPotion, 100, "체력을 완전히 회복합니다.", 250),
-                new Item("마나포션(小)", ItemType.ManaPotion, 20, "마나를 조금 회복합니다.", 50),
-                new Item("마나포션(中)", ItemType.ManaPotion, 50, "마나를 많이 회복합니다.", 125),
-                new Item("마나포션(大)", ItemType.ManaPotion, 100, "마나를 완전히 회복합니다.", 250),
+                new Item("수련자 갑옷", ItemType.Armor, 5, "수련에 도움을 주는 갑옷입니다.", 1000, 0),
+                new Item("무쇠갑옷", ItemType.Armor, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 1500, 0),
+                new Item("스파르타의 갑옷", ItemType.Armor, 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500, 0),
+                new Item("낡은 검", ItemType.Weapon, 2, "쉽게 볼 수 있는 낡은 검 입니다. ", 600, 0),
+                new Item("청동 도끼", ItemType.Weapon, 5, "어디선가 사용됐던거 같은 도끼입니다.", 1500, 0),
+                new Item("스파르타의 창", ItemType.Weapon, 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 4000, 0),
+                new Item("AK47", ItemType.Weapon, 47, "전설의 외할머니가 사용하던 무기입니다.", 4747, 0),
+                new Item("체력포션(小)", ItemType.HealthPotion, 20, "체력을 조금 회복합니다.", 50, 0),
+                new Item("체력포션(中)", ItemType.HealthPotion, 50, "체력을 많이 회복합니다.", 125, 0),
+                new Item("체력포션(大)", ItemType.HealthPotion, 100, "체력을 완전히 회복합니다.", 250, 0),
+                new Item("마나포션(小)", ItemType.ManaPotion, 20, "마나를 조금 회복합니다.", 50, 0),
+                new Item("마나포션(中)", ItemType.ManaPotion, 50, "마나를 많이 회복합니다.", 125, 0),
+                new Item("마나포션(大)", ItemType.ManaPotion, 100, "마나를 완전히 회복합니다.", 250, 0)
             };
 
             foreach (Item item in items)
@@ -91,15 +91,15 @@
                 Console.WriteLine("[상점]\n");
                 Console.WriteLine("[보유 골드]");
                 Console.WriteLine($"{player.Data.Gold} G\n");
-                Data.StoreInventory.ShowItemList(InventoryType.idx, MenuType.Store);
+                Data.StoreInventory.ShowItemList(InventoryType.idx, MenuType.StoreBuy);
 
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("구매하시려는 아이템을 선택해주세요 (0 : 뒤로가기)");
                 Console.Write(">> ");
-                int choiceIdx = int.Parse(Console.ReadLine());
+                int choiceIdx = int.TryParse(Console.ReadLine(), out choiceIdx) ? choiceIdx : -1;
                 // 범위 밖의 번호를 선택했을 때
-                if (choiceIdx > Data.StoreInventory.CountInventory() || choiceIdx < 0)
+                if (choiceIdx >= Data.StoreInventory.CountInventory() || choiceIdx < 0)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                     Thread.Sleep(500);
@@ -131,6 +131,7 @@
                     {
                         Console.WriteLine("골드가 부족합니다.");
                     }
+                    Utill.ShowNextPage();
                 }
 
                 // 약간의 Delay 부여
@@ -152,13 +153,13 @@
                 Console.WriteLine("[상점]\n");
                 Console.WriteLine("[보유 골드]");
                 Console.WriteLine($"{player.Data.Gold} G\n");
-                player.Data.Inventory.ShowItemList(InventoryType.idx, MenuType.Store);
+                player.Data.Inventory.ShowItemList(InventoryType.idx, MenuType.StoreSell);
 
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("판매하시려는 아이템을 선택해주세요 (0 : 뒤로가기)");
                 Console.Write(">> ");
-                int choiceIdx = int.Parse(Console.ReadLine());
+                int choiceIdx = int.TryParse(Console.ReadLine(),out choiceIdx) ? choiceIdx : -1;
                 // 범위 밖의 번호를 선택했을 때
                 if (choiceIdx > player.Data.Inventory.CountInventory() || choiceIdx < 0)
                 {
