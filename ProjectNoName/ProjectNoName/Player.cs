@@ -9,13 +9,13 @@ namespace ProjectNoName
     public enum ClassType
     {
         Warrior = 1,
-        Archar,
+        Archer,
         Magician
     }
     internal class Player
     {
         public PlayerData Data = new PlayerData();
-        
+
         // 데이터 로드용 
         public Player()
         {
@@ -35,6 +35,7 @@ namespace ProjectNoName
             Data.CriticalDamage = 50; //치명타 피해
             Data.EvasionRate = 0; // 회피율
             Data.CurHealth = 100;
+            Data.Mana = 100;
             Data.Gold = 2500f;
 
             // idx맞추기용 더미데이터 입력.
@@ -79,12 +80,33 @@ namespace ProjectNoName
 
             // 체력
             Console.WriteLine($"체 력 : {Data.CurHealth}");
-            
+
             // 마나
             Console.WriteLine($"마 나 : {Data.Mana}");
 
             // 소유 gold
             Console.WriteLine($"Gold : {Data.Gold}");
+
+            // 직업 스킬
+            Console.WriteLine("\n직업 스킬");
+            switch (Data.ClassType)
+            {
+                case ClassType.Warrior:
+                    Console.WriteLine("1. Power Strike");
+                    Console.WriteLine("2. Power Slam");
+                    Console.WriteLine("3. Double Down");
+                    break;
+                case ClassType.Archer:
+                    Console.WriteLine("1. Make it Rain");
+                    Console.WriteLine("2. Ace in the Hole");
+                    Console.WriteLine("3. Multi Shot");
+                    break;
+                case ClassType.Magician:
+                    Console.WriteLine("1. Chain Lightning");
+                    Console.WriteLine("2. Inferno Bomb");
+                    Console.WriteLine("3. Frost Nova");
+                    break;
+            }
         }
 
         public void ShowBattleStatus()
@@ -113,20 +135,20 @@ namespace ProjectNoName
             if (random.Next(1, 100) <= Data.CriticalRate)
             {
                 Console.WriteLine("CRITICAL!");
-                return random.Next((int)((GetPlayerAttack() - deviation) * (1 + Data.CriticalDamage/100)), (int)((GetPlayerAttack() + deviation) * (1 + Data.CriticalDamage/100)));
+                return random.Next((int)((GetPlayerAttack() - deviation) * (1 + Data.CriticalDamage / 100)), (int)((GetPlayerAttack() + deviation) * (1 + Data.CriticalDamage / 100)));
             }
             //치명타 실패
             else
                 return random.Next((int)GetPlayerAttack() - deviation, (int)GetPlayerAttack() + deviation);
         }
-        
+
         // 기타 함수
         /// 전투 매커니즘에 따라 함수 변형필요
         public float TakeDamage(float damage)
         {
             Random random = new Random();
             //회피 성공, 받는 데미지 0
-            if (random.Next(1,100) <= Data.EvasionRate)
+            if (random.Next(1, 100) <= Data.EvasionRate)
             {
                 damage = 0;
                 Console.WriteLine($"Miss! [데미지 : {damage}]");
