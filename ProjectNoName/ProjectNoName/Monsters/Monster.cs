@@ -21,7 +21,7 @@ namespace ProjectNoName
         {
             int originRow = Console.CursorTop;
             Console.Write($"Lv.{Data.Level} {Data.Name}");
-            Console.SetCursorPosition(18,originRow);
+            Console.SetCursorPosition(25,originRow);
             if(Data.Health <= 0 )
             {
                 Console.WriteLine($"Dead");
@@ -37,9 +37,22 @@ namespace ProjectNoName
             Data.Health -= damage;
             return Data.Health;
         }
+
+        // 각 하위 개체별로 드랍 아이템 및 확률에 따른 드랍
+        public virtual int CreateMonsterGoldReward()
+        {
+            return Data.RewardGold;
+        }
+
+        public virtual List<Item> CreateMonsterItemReward()
+        {
+            List<Item> rewardItemList = new List<Item>();
+            Random random = new Random();
+            int idx = random.Next(0, Data.RewardItems.Count);
+            rewardItemList.Add(Data.RewardItems[idx]);
+            return rewardItemList;
+        }
     }
-
-
 }
 
 

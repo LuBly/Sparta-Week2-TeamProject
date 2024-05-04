@@ -12,6 +12,7 @@
             Data.Name = monsterData.Name;
             Data.Health = monsterData.Health;
             Data.AttackPower = monsterData.AttackPower;
+            Data.RewardGold = monsterData.RewardGold;
             Data.RewardExp = monsterData.RewardExp;
             Data.RewardItems = monsterData.RewardItems;
         }
