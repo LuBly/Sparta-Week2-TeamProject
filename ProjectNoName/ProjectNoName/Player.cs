@@ -26,7 +26,7 @@ namespace ProjectNoName
         public Player(string playerName, ClassType selectClass)
         {
             Data.Level = 1;
-            Data.LevelPoint = 0;
+            Data.Exp = 0;
             Data.Name = playerName;//플레이어 생성창에서 유저가 입력한 이름 값이 들어갈것
             Data.ClassType = selectClass;//플레이어 생성창에서 유저가 선택한 직업 타입이 들어갈것.
             Data.AttackPower = 10;
@@ -46,7 +46,7 @@ namespace ProjectNoName
         {
             Console.WriteLine("[상태 보기]");
             // Lv
-            Console.WriteLine($"Lv. {Data.Level}");
+            Console.WriteLine($"Lv. {Data.Level} [exp. {Data.Exp}]");
             // 직업
             Console.WriteLine($"{Data.Name} : {Data.ClassType}");
             // 공격력

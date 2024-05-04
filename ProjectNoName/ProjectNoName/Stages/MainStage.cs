@@ -240,6 +240,7 @@
             Console.WriteLine();
             Console.WriteLine($"{stageName} [{stageIdx}]에서 몬스터 {battleMonsters.Count - 1}마리를 잡았습니다.");
             Console.WriteLine();
+            Console.WriteLine("[캐릭터 정보]");
             Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
             // 보상 함수 실행
@@ -249,19 +250,19 @@
 
         void CreateStageReward()
         {
-            Console.WriteLine();
-            Console.WriteLine("[획득 아이템]");
-
-
-            List<Item> rewardItems = new List<Item>();
+            int totalRewardExp = 0;
             int totalRewardGold = 0;
+            List<Item> rewardItems = new List<Item>();
 
-            for(int i = 1; i < battleMonsters.Count; i++)
+            for (int i = 1; i < battleMonsters.Count; i++)
             {
+                totalRewardExp += battleMonsters[i].Data.RewardExp;
                 totalRewardGold += battleMonsters[i].CreateMonsterGoldReward();
                 rewardItems.AddRange(battleMonsters[i].CreateMonsterItemReward());
             }
-
+            Console.WriteLine($"EXP : {player.Data.Exp} -> {player.Data.Exp += totalRewardGold}");
+            Console.WriteLine();
+            Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{totalRewardGold} Gold");
             player.Data.Gold += totalRewardGold;
             foreach(var item in rewardItems)

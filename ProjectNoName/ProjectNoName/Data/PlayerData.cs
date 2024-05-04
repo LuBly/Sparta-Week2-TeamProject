@@ -5,7 +5,7 @@
     {
         // Player 객체 내에서만 수정해야할 자료들
         public int Level;
-        public int LevelPoint;
+        public int Exp;
         public string Name;
         public ClassType ClassType;
         public float AttackPower;
