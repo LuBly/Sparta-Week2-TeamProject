@@ -9,6 +9,7 @@
         public float Health;
         public float AttackPower;
         public int RewardExp;
+        public int RewardGold;
         public List<Item> RewardItems = new List<Item>();
     }
 }

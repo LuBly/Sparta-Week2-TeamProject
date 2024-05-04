@@ -91,15 +91,15 @@
                 Console.WriteLine("[상점]\n");
                 Console.WriteLine("[보유 골드]");
                 Console.WriteLine($"{player.Data.Gold} G\n");
-                Data.StoreInventory.ShowItemList(InventoryType.idx, MenuType.Store);
+                Data.StoreInventory.ShowItemList(InventoryType.idx, MenuType.StoreBuy);
 
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("구매하시려는 아이템을 선택해주세요 (0 : 뒤로가기)");
                 Console.Write(">> ");
-                int choiceIdx = int.Parse(Console.ReadLine());
+                int choiceIdx = int.TryParse(Console.ReadLine(), out choiceIdx) ? choiceIdx : -1;
                 // 범위 밖의 번호를 선택했을 때
-                if (choiceIdx > Data.StoreInventory.CountInventory() || choiceIdx < 0)
+                if (choiceIdx >= Data.StoreInventory.CountInventory() || choiceIdx < 0)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                     Thread.Sleep(500);
@@ -131,6 +131,7 @@
                     {
                         Console.WriteLine("골드가 부족합니다.");
                     }
+                    Utill.ShowNextPage();
                 }
 
                 // 약간의 Delay 부여
@@ -152,13 +153,13 @@
                 Console.WriteLine("[상점]\n");
                 Console.WriteLine("[보유 골드]");
                 Console.WriteLine($"{player.Data.Gold} G\n");
-                player.Data.Inventory.ShowItemList(InventoryType.idx, MenuType.Store);
+                player.Data.Inventory.ShowItemList(InventoryType.idx, MenuType.StoreSell);
 
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("판매하시려는 아이템을 선택해주세요 (0 : 뒤로가기)");
                 Console.Write(">> ");
-                int choiceIdx = int.Parse(Console.ReadLine());
+                int choiceIdx = int.TryParse(Console.ReadLine(),out choiceIdx) ? choiceIdx : -1;
                 // 범위 밖의 번호를 선택했을 때
                 if (choiceIdx > player.Data.Inventory.CountInventory() || choiceIdx < 0)
                 {

@@ -1,4 +1,6 @@
-﻿namespace ProjectNoName
+﻿using System.Runtime.CompilerServices;
+
+namespace ProjectNoName
 {
     public enum InventoryType
     {
@@ -18,12 +20,34 @@
 
         public void AddItem(Item item)
         {
-            Data.InventoryItems.Add(item);
+            // 현재 선택한 아이템이 현재 인벤토리에 있는지 Find
+            Item? curItem = Data.InventoryItems.Find(i => i.Data.Id == item.Data.Id);
+
+            // 가지고 있지 않던 아이템이라면 인벤토리에 Add
+            if(curItem == null)
+            {
+                item.Data.ItemCount++;
+                Data.InventoryItems.Add(item);
+            }
+            
+            // 가지고 있던 아이템이라면
+            else
+            {
+                curItem.Data.ItemCount++;
+            }
+            
         }
 
         public void RemoveItem(Item item)
         {
-            Data.InventoryItems.Remove(item);
+            // Player에서 count가 0이면 List에서 삭제
+            // Store의 경우 count가 0 이상일때만 구매가능하게.
+            item.Data.ItemCount--;
+            if (item.Data.ItemCount <= 0)
+            {
+                item.Data.ItemCount = 0;
+                Data.InventoryItems.Remove(item);
+            }
         }
 
         public Item ChooceItem(int idx)

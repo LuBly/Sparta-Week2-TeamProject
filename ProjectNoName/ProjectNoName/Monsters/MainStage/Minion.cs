@@ -12,8 +12,23 @@
             Data.Name = monsterData.Name;
             Data.Health = monsterData.Health;
             Data.AttackPower = monsterData.AttackPower;
+            Data.RewardGold = monsterData.RewardGold;
             Data.RewardExp = monsterData.RewardExp;
             Data.RewardItems = monsterData.RewardItems;
+        }
+
+        public override int CreateMonsterGoldReward()
+        {
+            return Data.RewardGold;
+        }
+
+        public override List<Item> CreateMonsterItemReward()
+        {
+            List<Item> rewardItemList = new List<Item>();
+            Random random = new Random();
+            int idx = random.Next(0, Data.RewardItems.Count);
+            rewardItemList.Add(Data.RewardItems[idx]);
+            return rewardItemList;
         }
     }
 }

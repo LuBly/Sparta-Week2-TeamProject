@@ -21,11 +21,10 @@
         List<Monster> battleMonsters;
 
         // Player 딴에서 현재 갈수있는 최상 stage를 가지고 있어야 한다.
-        // 1. stageIdx가 가장 높은 stage만 갈 수 있다.
-        // 2. stageIdx가 가장 높은 stage까지 선택해서 들어갈 수 있다. << Dungeon에서 관리해줘야한다.
+        // 1. stageIdx가 가장 높은 stage까지 선택해서 들어갈 수 있다. << Dungeon에서 관리
         int stageIdx = 1;
         // Stage에서 구현된 StartBattle 함수를 override하여 작성
-        public override void StartBattle()
+        public override void StartBattle(/*int stageIdx << 던전페이지에서 조절 가능*/)
         {
             battleMonsters = monsterManager.SetStageMonster(stageIdx);
             bool isPlayerTurn = true;
@@ -80,9 +79,10 @@
             Console.WriteLine("\n1. 공격 \n");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
-            BattleMenuType choiceIdx = (BattleMenuType)int.Parse(Console.ReadLine());
+            // 입력한 값이 숫자형태라면 그대로 입력, 아니라면 -1 << default로 갈 수 있는 값
+            int choiceIdx = (int.TryParse(Console.ReadLine(), out choiceIdx)) ? choiceIdx : -1;
 
-            switch (choiceIdx)
+            switch ((BattleMenuType)choiceIdx)
             {
                 case BattleMenuType.Attack:
                     // Attack 페이지 오픈
@@ -90,7 +90,7 @@
                     break;
 
                 default:
-                    Console.WriteLine("잘못된 입력입니다. 다시 ㄱㄱ");
+                    Console.WriteLine("[잘못된 선택입니다!]");
                     Thread.Sleep(500);
                     ShowPlayerTurn();
                     break;
@@ -100,13 +100,15 @@
         void ShowPlayerAttack()
         {
             Console.Clear();
-            Console.WriteLine("Battle!\n");
-
+            Console.WriteLine("Battle!");
+            Console.WriteLine();
+            Console.WriteLine("[몬스터 선택]");
+            Console.WriteLine();
             // 몬스터 정보 출력 _ idx 포함
             Console.WriteLine("[몬스터 정보]");
             for(int i = 1; i < battleMonsters.Count; i++)
             {
-                Console.Write($"{i} ");
+                Console.Write($"[{i}] ");
                 battleMonsters[i].ShowMonsterData();
             }
 
@@ -116,9 +118,9 @@
             Console.WriteLine("\n0. 취소 \n");
             Console.WriteLine("대상을 선택해주세요.");
             Console.Write(">>");
-            int monsterIdx = int.Parse(Console.ReadLine());
+            int monsterIdx = (int.TryParse(Console.ReadLine(), out monsterIdx)) ? monsterIdx : -1;
             // 취소일경우
-            if(monsterIdx == 0)
+            if (monsterIdx == 0)
             {
                 // 다시 PlayerTurn을 보여주는 함수 실행
                 ShowPlayerTurn();
@@ -140,8 +142,13 @@
         void AttackMonster(int monsterIdx)
         {
             Console.Clear();
+            Console.WriteLine("Battle!");
+            Console.WriteLine();
+            Console.WriteLine("[PlayerTurn]");
+            Console.WriteLine();
+            Console.WriteLine("[전투정보]");
             Monster curMonster = battleMonsters[monsterIdx];
-            Console.WriteLine($"{player.Data.Name} 의 공격!");
+            Console.Write($"{player.Data.Name} 의 공격!");
             int playerDamage = player.GetPlayerDamage();  // *치명타 문구 출력*
             Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name} 을(를) 맞췄습니다. [데미지 : {playerDamage}]");
             Console.WriteLine();
@@ -164,25 +171,29 @@
         //Enemy Turn 관련 함수
         void ShowEnemyTurn()
         {
+            Console.Clear();
+            Console.WriteLine("Battle!");
+            Console.WriteLine();
+            Console.WriteLine("[EnemyTurn]");
+            Console.WriteLine();
+            Console.WriteLine("[전투정보]");
             for (int i = 1; i < battleMonsters.Count; i++)
             {
                 // 살아있는 몬스터만 캐릭터를 공격
                 if (battleMonsters[i].Data.Health > 0)
                     AttackPlayer(battleMonsters[i]);
             }
+
+            Utill.ShowNextPage();
         }
 
         void AttackPlayer(Monster monster)
         {
             Player player = DataManager.Instance().Player;
-            Console.Clear();
-            Console.WriteLine("Battle!");
-            Console.WriteLine();
-            Console.WriteLine("[EnemyTurn]");
             Console.WriteLine();
             Console.WriteLine($"Lv.{monster.Data.Level} {monster.Data.Name} 의 공격!");
             player.TakeDamage(monster.Data.AttackPower);
-            Utill.ShowNextPage();
+            Thread.Sleep(500);
         }
 
         // battle이 끝났는지 체크
@@ -221,25 +232,53 @@
         protected override void StageClear()
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - Result");
+            Console.WriteLine("Battle!");
             Console.WriteLine();
-            Console.WriteLine("Victory");
+            Console.WriteLine("[Result]");
+            Console.WriteLine();
+            Console.WriteLine("[Victory]");
             Console.WriteLine();
             Console.WriteLine($"{stageName} [{stageIdx}]에서 몬스터 {battleMonsters.Count - 1}마리를 잡았습니다.");
             Console.WriteLine();
             Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
-            // 보상 출력 추가
+            // 보상 함수 실행
+            CreateStageReward();
             Utill.ShowNextPage();
+        }
+
+        void CreateStageReward()
+        {
+            Console.WriteLine();
+            Console.WriteLine("[획득 아이템]");
+
+
+            List<Item> rewardItems = new List<Item>();
+            int totalRewardGold = 0;
+
+            for(int i = 1; i < battleMonsters.Count; i++)
+            {
+                totalRewardGold += battleMonsters[i].CreateMonsterGoldReward();
+                rewardItems.AddRange(battleMonsters[i].CreateMonsterItemReward());
+            }
+
+            Console.WriteLine($"{totalRewardGold} Gold");
+            player.Data.Gold += totalRewardGold;
+            foreach(var item in rewardItems)
+            {
+                player.Data.Inventory.AddItem(item);
+                Console.WriteLine(item.Data.Name);
+            }
         }
 
         protected override void StageFail()
         {
             Console.Clear();
-            Console.WriteLine("Battle!! - Result");
+            Console.WriteLine("Battle!");
             Console.WriteLine();
-            Console.WriteLine("You Lose");
+            Console.WriteLine("[Result]");
             Console.WriteLine();
+            Console.WriteLine("[Lose]");
             Console.WriteLine();
             Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");

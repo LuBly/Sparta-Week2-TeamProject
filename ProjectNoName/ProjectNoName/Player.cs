@@ -113,12 +113,18 @@ namespace ProjectNoName
             //치명타 성공
             if (random.Next(1, 100) <= Data.CriticalRate)
             {
-                Console.WriteLine("CRITICAL!");
+                Console.Write(" [ CRITICAL! ]");
+                Console.WriteLine();
                 return random.Next((int)((GetPlayerAttack() - deviation) * (1 + Data.CriticalDamage/100)), (int)((GetPlayerAttack() + deviation) * (1 + Data.CriticalDamage/100)));
             }
             //치명타 실패
             else
+            {
+                Console.WriteLine();
                 return random.Next((int)GetPlayerAttack() - deviation, (int)GetPlayerAttack() + deviation);
+            }
+                
+            
         }
         
         // 기타 함수
@@ -145,7 +151,6 @@ namespace ProjectNoName
             if (Data.CurHealth < 0) Data.CurHealth = 0;
             return Data.CurHealth;
         }
-
 
         // 체력 회복
         public float RecoverHealth(float healthRecovered)

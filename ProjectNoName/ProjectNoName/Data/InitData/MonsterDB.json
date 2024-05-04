@@ -6,8 +6,74 @@
     "Name": "미니언",
     "Health": 15,
     "AttackPower": 5,
+    "RewardGold": 100,
     "RewardExp": 10,
-    "RewardItems": []
+    "RewardItems": [
+      {
+        "Data": {
+          "Id": 1,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "수련자 갑옷",
+          "Price": 1000.0,
+          "ItemType": 2,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 5.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "수련에 도움을 주는 갑옷입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 4,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "낡은 검",
+          "Price": 600.0,
+          "ItemType": 1,
+          "AttackPowerIncrease": 2.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "쉽게 볼 수 있는 낡은 검 입니다. ",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 8,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "체력포션(小)",
+          "Price": 50.0,
+          "ItemType": 3,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 20.0,
+          "ManaIncrease": 0.0,
+          "Description": "체력을 조금 회복합니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 11,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "마나포션(小)",
+          "Price": 50.0,
+          "ItemType": 4,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 20.0,
+          "Description": "마나를 조금 회복합니다.",
+          "ItemCount": 0
+        }
+      }
+    ]
   },
   {
     "MonsterId": 1,
@@ -16,8 +82,74 @@
     "Name": "공허충",
     "Health": 10,
     "AttackPower": 9,
+    "RewardGold": 200,
     "RewardExp": 15,
-    "RewardItems": []
+    "RewardItems": [
+      {
+        "Data": {
+          "Id": 2,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "무쇠갑옷",
+          "Price": 1500.0,
+          "ItemType": 2,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 9.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "무쇠로 만들어져 튼튼한 갑옷입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 5,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "청동 도끼",
+          "Price": 1500.0,
+          "ItemType": 1,
+          "AttackPowerIncrease": 5.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "어디선가 사용됐던거 같은 도끼입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 9,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "체력포션(中)",
+          "Price": 125.0,
+          "ItemType": 3,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 50.0,
+          "ManaIncrease": 0.0,
+          "Description": "체력을 많이 회복합니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 12,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "마나포션(中)",
+          "Price": 125.0,
+          "ItemType": 4,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 50.0,
+          "Description": "마나를 많이 회복합니다.",
+          "ItemCount": 0
+        }
+      }
+    ]
   },
   {
     "MonsterId": 2,
@@ -26,8 +158,74 @@
     "Name": "대포미니언",
     "Health": 25,
     "AttackPower": 8,
+    "RewardGold": 300,
     "RewardExp": 20,
-    "RewardItems": []
+    "RewardItems": [
+      {
+        "Data": {
+          "Id": 3,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 갑옷",
+          "Price": 3500.0,
+          "ItemType": 2,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 15.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 6,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 창",
+          "Price": 4000.0,
+          "ItemType": 1,
+          "AttackPowerIncrease": 7.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 창입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 10,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "체력포션(大)",
+          "Price": 250.0,
+          "ItemType": 3,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 100.0,
+          "ManaIncrease": 0.0,
+          "Description": "체력을 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 13,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "마나포션(大)",
+          "Price": 250.0,
+          "ItemType": 4,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 100.0,
+          "Description": "마나를 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      }
+    ]
   },
   {
     "MonsterId": 3,
@@ -36,8 +234,74 @@
     "Name": "바론",
     "Health": 55,
     "AttackPower": 20,
+    "RewardGold": 400,
     "RewardExp": 35,
-    "RewardItems": []
+    "RewardItems": [
+      {
+        "Data": {
+          "Id": 3,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 갑옷",
+          "Price": 3500.0,
+          "ItemType": 2,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 15.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 6,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 창",
+          "Price": 4000.0,
+          "ItemType": 1,
+          "AttackPowerIncrease": 7.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 창입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 10,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "체력포션(大)",
+          "Price": 250.0,
+          "ItemType": 3,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 100.0,
+          "ManaIncrease": 0.0,
+          "Description": "체력을 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 13,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "마나포션(大)",
+          "Price": 250.0,
+          "ItemType": 4,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 100.0,
+          "Description": "마나를 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      }
+    ]
   },
   {
     "MonsterId": 4,
@@ -46,8 +310,74 @@
     "Name": "준준",
     "Health": 35,
     "AttackPower": 30,
+    "RewardGold": 500,
     "RewardExp": 45,
-    "RewardItems": []
+    "RewardItems": [
+      {
+        "Data": {
+          "Id": 3,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 갑옷",
+          "Price": 3500.0,
+          "ItemType": 2,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 15.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 6,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 창",
+          "Price": 4000.0,
+          "ItemType": 1,
+          "AttackPowerIncrease": 7.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 창입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 10,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "체력포션(大)",
+          "Price": 250.0,
+          "ItemType": 3,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 100.0,
+          "ManaIncrease": 0.0,
+          "Description": "체력을 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 13,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "마나포션(大)",
+          "Price": 250.0,
+          "ItemType": 4,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 100.0,
+          "Description": "마나를 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      }
+    ]
   },
   {
     "MonsterId": 5,
@@ -56,8 +386,74 @@
     "Name": "재재",
     "Health": 45,
     "AttackPower": 35,
+    "RewardGold": 600,
     "RewardExp": 55,
-    "RewardItems": []
+    "RewardItems": [
+      {
+        "Data": {
+          "Id": 3,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 갑옷",
+          "Price": 3500.0,
+          "ItemType": 2,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 15.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 6,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 창",
+          "Price": 4000.0,
+          "ItemType": 1,
+          "AttackPowerIncrease": 7.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 창입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 10,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "체력포션(大)",
+          "Price": 250.0,
+          "ItemType": 3,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 100.0,
+          "ManaIncrease": 0.0,
+          "Description": "체력을 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 13,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "마나포션(大)",
+          "Price": 250.0,
+          "ItemType": 4,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 100.0,
+          "Description": "마나를 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      }
+    ]
   },
   {
     "MonsterId": 6,
@@ -66,7 +462,73 @@
     "Name": "창성",
     "Health": 65,
     "AttackPower": 50,
+    "RewardGold": 700,
     "RewardExp": 100,
-    "RewardItems": []
+    "RewardItems": [
+      {
+        "Data": {
+          "Id": 3,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 갑옷",
+          "Price": 3500.0,
+          "ItemType": 2,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 15.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 6,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "스파르타의 창",
+          "Price": 4000.0,
+          "ItemType": 1,
+          "AttackPowerIncrease": 7.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 0.0,
+          "Description": "스파르타의 전사들이 사용했다는 전설의 창입니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 10,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "체력포션(大)",
+          "Price": 250.0,
+          "ItemType": 3,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 100.0,
+          "ManaIncrease": 0.0,
+          "Description": "체력을 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      },
+      {
+        "Data": {
+          "Id": 13,
+          "IsPurchased": false,
+          "IsEquiped": false,
+          "Name": "마나포션(大)",
+          "Price": 250.0,
+          "ItemType": 4,
+          "AttackPowerIncrease": 0.0,
+          "DefencePowerIncrease": 0.0,
+          "HealthIncrease": 0.0,
+          "ManaIncrease": 100.0,
+          "Description": "마나를 완전히 회복합니다.",
+          "ItemCount": 0
+        }
+      }
+    ]
   }
 ]
