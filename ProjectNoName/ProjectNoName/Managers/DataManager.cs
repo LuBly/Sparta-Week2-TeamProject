@@ -3,7 +3,7 @@
 namespace ProjectNoName
 {
     // 싱글톤으로 생성하여 어느 클래스에서든 접근 가능
-    internal class DataManager
+    public class DataManager
     {
         // 필요한 정보들 생성
 
@@ -26,13 +26,15 @@ namespace ProjectNoName
         public Player Player; 
         public Store Store = new Store();
         public Dungeon Dungeon = new Dungeon();
+        public List<MonsterData> MonsterDB = new List<MonsterData>();
+        // 반드시 있어야 하는 DB
+        string originStoreDBPath = @"..\..\..\Data\InitData\OriginStoreDB.json";
+        string originMonsterDBPath = @"..\..\..\Data\InitData\MonsterDB.json";
 
-
+        // 없어도 상관없는 DB
         string playerDBPath = @"..\..\..\Data\SaveData\PlayerDB.json";
         string storeDBPath = @"..\..\..\Data\SaveData\StoreDB.json";
 
-        string originStoreDBPath = @"..\..\..\Data\InitData\OriginStoreDB.json";
-        
         // 플레이어 생성
         public void CreatePlayer()
         {
@@ -79,7 +81,11 @@ namespace ProjectNoName
             string originStoreJson = File.ReadAllText(originStoreDBPath);
             StoreData store = JsonConvert.DeserializeObject<StoreData>(originStoreJson);
             Store.Data.StoreInventory = store.StoreInventory;
+
+            string originMonsterJson = File.ReadAllText(originMonsterDBPath);
+            MonsterDB = JsonConvert.DeserializeObject<List<MonsterData>>(originMonsterJson);
         }
+
         // 데이터 불러오기 함수
         public void LoadData()
         {

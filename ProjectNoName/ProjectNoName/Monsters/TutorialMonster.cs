@@ -6,6 +6,7 @@ namespace ProjectNoName
     public class TutorialMonster : Monster
     {
         public TutorialMonster() { }
+        
         public TutorialMonster(int lv, string name, float health, float attackPower, float defensePower, int exp)
         {
             monsterLv = lv;
@@ -21,6 +22,7 @@ namespace ProjectNoName
         {
             return monsterAttackPower * 0.1f;
         }
+        
         // 필요한 함수들을 생성해주시면 됩니다.
         // 준호님이 작성하던 함수 그래로 뒀으니 주석 푸시고 작업해주셔도 좋아용~
 

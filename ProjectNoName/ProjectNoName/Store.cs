@@ -5,7 +5,7 @@
         Buy = 1,
         Sell = 2,
     }
-    internal class Store
+    public class Store
     {
         public StoreData Data = new StoreData();
 

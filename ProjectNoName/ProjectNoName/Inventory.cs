@@ -5,7 +5,7 @@
         noneIdx,
         idx,
     }
-    internal class Inventory
+    public class Inventory
     {
         // inventory에 보유하고 있는 아이템 
         public InventoryData Data = new InventoryData();
@@ -18,11 +18,15 @@
 
         public void AddItem(Item item)
         {
+            // 만약에 인벤토리에 해당 아이템이 있으면. 그 item.Data.ItemCount++
+            // 없으면 그때 List에 Add
             Data.InventoryItems.Add(item);
         }
 
         public void RemoveItem(Item item)
         {
+            //Player에서 count가 0이면 사용할예정
+            // Store의 경우 count가 0 이상일때만 구매가능하게.
             Data.InventoryItems.Remove(item);
         }
 

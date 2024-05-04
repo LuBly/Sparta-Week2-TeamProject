@@ -1,12 +1,16 @@
 {
   "Level": 1,
   "LevelPoint": 0,
-  "Name": "이창성",
-  "ClassType": 1,
+  "Name": "hyun",
+  "ClassType": 2,
   "AttackPower": 10.0,
-  "DefensePower": 5.0,
+  "DefensePower": 50.0,
+  "CriticalRate": 100.0,
+  "CriticalDamage": 50.0,
+  "EvasionRate": 0.0,
   "CurHealth": 100.0,
   "MaxHealth": 100.0,
+  "Mana": 0.0,
   "Gold": 2500.0,
   "IncreaseAttack": 0.0,
   "IncreaseDefense": 0.0,
@@ -17,6 +21,7 @@
       "InventoryItems": [
         {
           "Data": {
+            "Id": 0,
             "IsPurchased": false,
             "IsEquiped": false,
             "Name": null,
@@ -24,8 +29,10 @@
             "ItemType": 0,
             "AttackPowerIncrease": 0.0,
             "DefencePowerIncrease": 0.0,
+            "HealthIncrease": 0.0,
+            "ManaIncrease": 0.0,
             "Description": null,
-            "ItemCount":  0
+            "ItemCount": 0
           }
         }
       ]

@@ -1,6 +1,6 @@
 ﻿namespace ProjectNoName
 {
-    internal class ItemData
+    public class ItemData
     {
         public int Id;
         // 구매 여부

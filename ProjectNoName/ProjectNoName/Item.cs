@@ -9,7 +9,7 @@ namespace ProjectNoName
         ManaPotion
     }
 
-    internal class Item
+    public class Item
     {
         //[각 아이템별 정보]
         public ItemData Data = new ItemData();
