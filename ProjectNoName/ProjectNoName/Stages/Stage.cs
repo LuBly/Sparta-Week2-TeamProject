@@ -67,6 +67,11 @@
             return isClear;
         }
 
+        /// <summary>
+        ///  아래 함수는 전부 변경 필요
+        ///  참고해서 변경해도 좋고, 아예 새로 작성하셔도 좋습니다.
+        ///  다만 Player의 경우 모두 DataManager에서 불러오는식으로 작성해주시면 됩니다.
+        /// </summary>
         // 성공시 실행 함수
         protected virtual void StageClear()
         {
