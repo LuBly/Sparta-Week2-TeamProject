@@ -128,7 +128,14 @@
             // 범위 내의 값을 선택한 경우
             else if (monsterIdx > 0 && monsterIdx < battleMonsters.Count)
             {
-                AttackMonster(monsterIdx);
+                if (battleMonsters[monsterIdx].Data.Health > 0)
+                    AttackMonster(monsterIdx);
+                else
+                {
+                    Console.WriteLine("\n[이미 죽은 대상입니다!]");
+                    Thread.Sleep(500);
+                    ShowPlayerAttack();
+                }
             }
             // 범위 밖의 값을 선택한 경우
             else
