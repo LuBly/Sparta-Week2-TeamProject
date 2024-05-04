@@ -152,7 +152,6 @@ namespace ProjectNoName
             return Data.CurHealth;
         }
 
-
         // 체력 회복
         public float RecoverHealth(float healthRecovered)
         {

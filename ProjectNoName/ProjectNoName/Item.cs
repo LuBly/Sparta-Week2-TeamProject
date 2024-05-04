@@ -246,7 +246,7 @@ namespace ProjectNoName
             Console.WriteLine($"| {Data.Description}");
 
             // 스토어에서 구매 및 판매결정을 할 때만 해당 내용 출력
-            if (menuType == MenuType.Store)
+            if (menuType == MenuType.StoreBuy)
             {
                 Console.SetCursorPosition(100, originRow);
                 if (Data.IsPurchased)
@@ -256,10 +256,17 @@ namespace ProjectNoName
                 else
                     Console.WriteLine($"| {Data.Price} G");
             }
-            // 소비창에서 아이템 갯수 표시
-            else if (menuType == MenuType.Inventory && (Data.ItemType == ItemType.HealthPotion || Data.ItemType == ItemType.ManaPotion))
+            else if (menuType == MenuType.StoreSell)
             {
-                Console.SetCursorPosition(70, originRow);
+                Console.SetCursorPosition(100, originRow);
+                Console.WriteLine($"| {Data.Price} G");
+                Console.SetCursorPosition(110, originRow);
+                Console.WriteLine($"| {Data.ItemCount}개");
+            }
+            // 소비창에서 아이템 갯수 표시
+            else if (menuType == MenuType.Inventory)
+            {
+                Console.SetCursorPosition(100, originRow);
                 Console.WriteLine($"| {Data.ItemCount}개");
             }
         }
@@ -283,21 +290,7 @@ namespace ProjectNoName
                 Data.IsPurchased = false;
             }
             DataManager.Instance().Player.Data.Gold -= Data.Price;
-            // 포션 중첩을 위해 처음 구매 할때만 AddItem() 실행
-            if (Data.ItemCount == 0 && (Data.ItemType == ItemType.HealthPotion || Data.ItemType == ItemType.ManaPotion))
-            {
-                DataManager.Instance().Player.Data.Inventory.AddItem(this);
-                Data.ItemCount += 1;
-            }
-            else if (Data.ItemType == ItemType.Weapon || Data.ItemType == ItemType.Armor)
-            {
-                DataManager.Instance().Player.Data.Inventory.AddItem(this);
-            }
-            // 구매 횟수에 따라 ItemCount 증가
-            else
-            {
-                Data.ItemCount += 1;
-            }
+            DataManager.Instance().Player.Data.Inventory.AddItem(this);
             Console.WriteLine($"{Data.Name}를 구매했습니다.");
         }
 
@@ -307,6 +300,10 @@ namespace ProjectNoName
             Data.IsPurchased = false;
             DataManager.Instance().Player.Data.Gold += Data.Price;
             DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
+            if (Data.ItemCount <= 0)
+            {
+                UnEquipItem(Data.ItemType);
+            }
             Console.WriteLine($"{Data.Name}를 {Data.Price * 0.85f}에 판매했습니다.");
         }
 

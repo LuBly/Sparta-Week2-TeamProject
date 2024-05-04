@@ -9,6 +9,8 @@
         Dungeon,
         Quit,//저장하는 타입
         Load,//불러오는 타입
+        StoreBuy,
+        StoreSell,
         //Consumable, //소비창
     }
     public class GameManager
