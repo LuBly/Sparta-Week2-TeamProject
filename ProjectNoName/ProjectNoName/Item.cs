@@ -269,6 +269,7 @@ namespace ProjectNoName
                 Console.SetCursorPosition(100, originRow);
                 Console.WriteLine($"| {Data.ItemCount}개");
             }
+            Utill.ShowInventoryLine();
         }
 
         public bool CanBuy()

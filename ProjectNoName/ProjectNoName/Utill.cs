@@ -17,5 +17,10 @@
             Console.Write(">> ");
             Console.ReadLine();
         }
+
+        public static void ShowInventoryLine()
+        {
+            Console.WriteLine("--------------------------------------------------------------------------------------------------------------------");
+        }
     }
 }
