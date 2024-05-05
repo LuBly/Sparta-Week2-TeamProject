@@ -14,6 +14,8 @@
         protected bool isPlayerWin;
         // 기존 체력 저장
         protected float originHealth = DataManager.Instance().Player.Data.CurHealth;
+        // 기존 마나 저장
+        protected float originMana = DataManager.Instance().Player.Data.CurMana;
 
         public Stage() { }
 

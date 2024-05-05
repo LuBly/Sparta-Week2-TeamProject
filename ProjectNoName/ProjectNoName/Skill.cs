@@ -10,7 +10,7 @@ namespace ProjectNoName
 
         public int PlayerDamage()
         {
-            return Player.GetPlayerDamage();
+            return DataManager.Instance().Player.GetPlayerDamage();
         }
 
         // 광역 공격
@@ -40,24 +40,24 @@ namespace ProjectNoName
         // 스킬 시전 메세지
         public void SkillMessage(string skillName)
         {
-            Console.WriteLine($"{Player.Data.Name}이(가) {skillName}을(를) 시전했다!");
+            Player player = DataManager.Instance().Player;
+            Console.WriteLine($"{player.Data.Name}이(가) {skillName}을(를) 시전했다!");
         }
 
         // 스킬 마나 사용
         public int CastSkill(float damageRatio)
         {
+            Player player = DataManager.Instance().Player;
+            // 스킬 시전 성공; 마나 소모
+            if ((player.Data.ManaAfterSkill -= SkillMana) > 0)
+            {
+                return (int)(PlayerDamage() * damageRatio);
+            }
             // 스킬 시전에 필요한 마나 부족
-            if (((Player.Data.Mana == 0) || (Player.Data.Mana -= SkillMana) < 0))
+            else
             {
                 Console.WriteLine("마나가 부족합니다. 스킬을 사용할 수 없습니다.");
                 return 0;
-            }
-            // 스킬 시전 성공; 마나 소모
-            else
-            {
-                Console.WriteLine($"Mana {Player.Data.Mana} -> {Player.Data.Mana - SkillMana}");
-                Player.Data.Mana -= SkillMana;
-                return (int)(PlayerDamage() * damageRatio);
             }
         }
     }

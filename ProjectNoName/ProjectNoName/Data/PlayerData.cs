@@ -15,7 +15,9 @@
         public float EvasionRate;
         public float CurHealth;
         public float MaxHealth;
-        public float Mana;
+        public float CurMana;
+        public float MaxMana;
+        public float ManaAfterSkill; 
         public float Gold;
 
         // 장비 장착 class에서 사용

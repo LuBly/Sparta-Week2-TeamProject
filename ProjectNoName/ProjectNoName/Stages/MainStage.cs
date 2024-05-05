@@ -17,7 +17,9 @@
         }
         MonsterManager monsterManager = new MonsterManager();
         Player player = DataManager.Instance().Player;
-
+        
+        // 스킬 입력 index
+        int skillIdx;
 
         // battle에서 사용할 몬스터 List
         List<Monster> battleMonsters; 
@@ -94,20 +96,10 @@
                     ShowPlayerAttack();
                     break;
 
-                // 직업별 스킬
+                
                 case BattleMenuType.Skill:
-                    if(player.Data.ClassType == ClassType.Warrior)
-                    {
-                        ShowPlayerSkill(ClassType.Warrior);
-                    }
-                    else if (player.Data.ClassType == ClassType.Archer)
-                    {
-                        ShowPlayerSkill(ClassType.Archer);
-                    }
-                    else
-                    {
-                        ShowPlayerSkill(ClassType.Magician);
-                    }
+                    // 스킬 선택창 오픈
+                    ShowPlayerSkill();
                     break;
 
                 default:
@@ -119,7 +111,7 @@
         }
 
         // 스킬 선택창
-        void ShowPlayerSkill(ClassType classType)
+        void ShowPlayerSkill()
         {
             Console.Clear();
             Console.WriteLine("Battle!\n");
@@ -133,29 +125,12 @@
             }
             Console.WriteLine();
 
-            switch (classType)
-            {
-                case ClassType.Warrior:
-                    Console.WriteLine("1. Power Strike");
-                    Console.WriteLine("2. Power Slam");
-                    Console.WriteLine("3. Double Down");
-                    break;
-                case ClassType.Archer:
-                    Console.WriteLine("1. Make it Rain");
-                    Console.WriteLine("2. Ace in the Hole");
-                    Console.WriteLine("3. Multi Shot");
-                    break;
-                case ClassType.Magician:
-                    Console.WriteLine("1. Chain Lightning");
-                    Console.WriteLine("2. Inferno Bomb");
-                    Console.WriteLine("3. Frost Nova");
-                    break;
-            }
+            player.SelectSkill();
 
             Console.WriteLine("\n0. 취소 \n");
             Console.WriteLine("스킬을 선택해주세요.");
             Console.Write(">>");
-            int skillIdx = int.Parse(Console.ReadLine());
+            skillIdx = int.Parse(Console.ReadLine());
             // 취소일경우
             if (skillIdx == 0)
             {
@@ -163,19 +138,20 @@
                 ShowPlayerTurn();
             }
             // 범위 내의 값을 선택한 경우
-            else if (skillIdx > 0 && skillIdx < 4)
+            else if (skillIdx == 1)
             {
-                switch (skillIdx)
-                {
-
-                }
+                AttackMonster_Skill_1(skillIdx);
+            }
+            else if (skillIdx == 2 || skillIdx == 3)
+            {
+                ShowPlayerAttack_Skill_2_3();
             }
             // 범위 밖의 값을 선택한 경우
             else
             {
                 Console.WriteLine("\n[잘못된 선택입니다!]");
                 Thread.Sleep(500);
-                ShowPlayerSkill(classType);
+                ShowPlayerSkill();
             }
         }
 
@@ -269,18 +245,73 @@
             Utill.ShowNextPage();
         }
 
-        // skill
-        void Skill(int monsterIdx)
+        // 2,3번 스킬 선택 후 몬스터 선택
+        void ShowPlayerAttack_Skill_2_3()
         {
             Console.Clear();
-            Monster curMonster = battleMonsters[monsterIdx];
-            Console.WriteLine($"{player.Data.Name} 의 공격!");
-            int playerDamage = player.GetPlayerDamage();  // *치명타 문구 출력*
-            Console.WriteLine($"Lv.{curMonster.monsterLv} {curMonster.monsterName} 을(를) 맞췄습니다. [데미지 : {playerDamage}]");
+            Console.WriteLine("Battle!");
             Console.WriteLine();
-            Console.WriteLine($"Lv.{curMonster.monsterLv} {curMonster.monsterName}");
+            Console.WriteLine("[몬스터 선택]");
+            Console.WriteLine();
+            // 몬스터 정보 출력 _ idx 포함
+            Console.WriteLine("[몬스터 정보]");
+            for (int i = 1; i < battleMonsters.Count; i++)
+            {
+                Console.Write($"[{i}] ");
+                battleMonsters[i].ShowMonsterData();
+            }
 
-            Console.Write($"HP {curMonster.monsterHealth} -> ");
+            Console.WriteLine();
+            player.ShowBattleStatus();
+
+            Console.WriteLine("\n0. 취소 \n");
+            Console.WriteLine("대상을 선택해주세요.");
+            Console.Write(">>");
+            int monsterIdx = (int.TryParse(Console.ReadLine(), out monsterIdx)) ? monsterIdx : -1;
+            // 취소일경우
+            if (monsterIdx == 0)
+            {
+                // 다시 PlayerTurn을 보여주는 함수 실행
+                ShowPlayerTurn();
+            }
+            // 범위 내의 값을 선택한 경우
+            else if (monsterIdx > 0 && monsterIdx < battleMonsters.Count)
+            {
+                AttackMonster_Skill_2_3(monsterIdx, skillIdx);
+            }
+            // 범위 밖의 값을 선택한 경우
+            else
+            {
+                Console.WriteLine("\n[잘못된 선택입니다!]");
+                Thread.Sleep(500);
+                ShowPlayerAttack_Skill_2_3();
+            }
+        }
+
+        // 2,3번 스킬 시전 결과
+        void AttackMonster_Skill_2_3(int monsterIdx, int skillIdx)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!");
+            Console.WriteLine();
+            Console.WriteLine("[PlayerTurn]");
+            Console.WriteLine();
+            Console.WriteLine("[전투정보]");
+            Monster curMonster = battleMonsters[monsterIdx];
+            Console.Write($"{player.Data.Name} 의 공격!\n");
+            int playerDamage = player.GetSkillDamage(skillIdx);  // *치명타 문구 출력*
+            if(playerDamage != 0)
+            {
+                Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name} 을(를) 맞췄습니다. [데미지 : {playerDamage}]");
+            }
+            else
+            {
+                Console.WriteLine($"[데미지 : {playerDamage}]");
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name}");
+
+            Console.Write($"HP {curMonster.Data.Health} -> ");
             // 데미지 처리 이후 체력이 0 이하라면 사망 처리
             if (curMonster.TakeDamage(playerDamage) <= 0)
             {
@@ -289,12 +320,83 @@
             //아니라면 체력 표시
             else
             {
-                Console.WriteLine(curMonster.monsterHealth);
+                Console.WriteLine(curMonster.Data.Health);
+            }
+            // 스킬 시전 성공시 마나 표시
+            Console.WriteLine() ;
+            if(playerDamage != 0)
+            {
+                Console.WriteLine($"MP {player.Data.CurMana} -> {player.Data.ManaAfterSkill}");
+                player.Data.CurMana = player.Data.ManaAfterSkill;
+            }
+            //스킬 시전 실패시 마나 표시
+            else
+            {
+                Console.WriteLine($"MP {player.Data.CurMana} -> {player.Data.CurMana}");
             }
             Utill.ShowNextPage();
         }
 
+        // 1번 스킬 시전 결과
+        void AttackMonster_Skill_1(int skillIdx)
+        {
+            int i;
+            Console.Clear();
+            Console.WriteLine("Battle!");
+            Console.WriteLine();
+            Console.WriteLine("[PlayerTurn]");
+            Console.WriteLine();
+            Console.WriteLine("[전투정보]");
+            Console.Write($"{player.Data.Name} 의 공격!\n");
+            int playerDamage = player.GetSkillDamage(skillIdx);  // *치명타 문구 출력*
+            Console.WriteLine();
 
+            for (i = 1; i < battleMonsters.Count; i++)
+            {
+                Monster curMonster = battleMonsters[i];
+                // 살아있는 몬스터만 공격
+                if (battleMonsters[i].Data.Health > 0)
+                {
+                    if (playerDamage != 0)
+                    {
+                        Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name} 을(를) 맞췄습니다. [데미지 : {playerDamage}]");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"[데미지 : {playerDamage}]");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name}");
+
+                    Console.Write($"HP {curMonster.Data.Health} -> ");
+                    // 데미지 처리 이후 체력이 0 이하라면 사망 처리
+                    if (curMonster.TakeDamage(playerDamage) <= 0)
+                    {
+                        Console.WriteLine("Dead");
+                    }
+                    //아니라면 체력 표시
+                    else
+                    {
+                        Console.WriteLine(curMonster.Data.Health);
+                    }
+                    Console.WriteLine();
+                }
+                Thread.Sleep(500);
+            }
+
+            // 스킬 시전 성공시 마나 표시
+            if (playerDamage != 0)
+            {
+                Console.WriteLine($"MP {player.Data.CurMana} -> {player.Data.ManaAfterSkill}");
+                player.Data.CurMana = player.Data.ManaAfterSkill;
+            }
+            //스킬 시전 실패시 마나 표시
+            else
+            {
+                Console.WriteLine($"MP {player.Data.CurMana} -> {player.Data.CurMana}");
+            }
+            Utill.ShowNextPage();
+        }
 
         //Enemy Turn 관련 함수
         void ShowEnemyTurn()
@@ -311,9 +413,36 @@
                 if (battleMonsters[i].Data.Health > 0)
                     AttackPlayer(battleMonsters[i]);
             }
-
+            
             Utill.ShowNextPage();
         }
+
+        //// 몬스터 별 1번 스킬 피격 결과
+        //void AttackMonster_Skill_1_Result()
+        //{
+        //    if (playerDamage != 0)
+        //    {
+        //        Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name} 을(를) 맞췄습니다. [데미지 : {playerDamage}]");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine($"[데미지 : {playerDamage}]");
+        //    }
+        //    Console.WriteLine();
+        //    Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name}");
+
+        //    Console.Write($"HP {curMonster.Data.Health} -> ");
+        //    // 데미지 처리 이후 체력이 0 이하라면 사망 처리
+        //    if (curMonster.TakeDamage(playerDamage) <= 0)
+        //    {
+        //        Console.WriteLine("Dead");
+        //    }
+        //    //아니라면 체력 표시
+        //    else
+        //    {
+        //        Console.WriteLine(curMonster.Data.Health);
+        //    }
+        //}
 
         void AttackPlayer(Monster monster)
         {
@@ -370,6 +499,7 @@
             Console.WriteLine();
             Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
+            Console.WriteLine($"MP {originMana} -> {player.Data.CurMana}");
             // 보상 함수 실행
             CreateStageReward();
             Utill.ShowNextPage();
@@ -410,6 +540,7 @@
             Console.WriteLine();
             Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
+            Console.WriteLine($"MP {originMana} -> {player.Data.CurMana}");
             Utill.ShowNextPage();
         }
 
