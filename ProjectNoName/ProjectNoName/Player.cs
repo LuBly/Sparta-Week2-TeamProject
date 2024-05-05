@@ -157,6 +157,7 @@
             }
         }
 
+
         public void ShowBattleStatus()
         {
             Console.WriteLine("[내 정보]");
