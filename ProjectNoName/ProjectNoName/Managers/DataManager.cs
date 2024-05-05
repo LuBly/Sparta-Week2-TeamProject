@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-
 namespace ProjectNoName
 {
     // 싱글톤으로 생성하여 어느 클래스에서든 접근 가능
@@ -13,7 +12,10 @@ namespace ProjectNoName
         // Store - Inventory에 활용
         // Dungeon
         private static DataManager staticDataManager;
-        
+        // QuestManager 인스턴스 생성
+        public QuestManager QuestManager { get; } = new QuestManager();
+
+
         public static DataManager Instance()
         {
             if(staticDataManager == null)

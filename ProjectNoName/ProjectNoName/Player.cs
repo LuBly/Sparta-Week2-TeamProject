@@ -1,8 +1,4 @@
-﻿using System.Numerics;
-using System.Runtime.ConstrainedExecution;
-using System.Threading;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     // 직업 종류
     // 차후 클래스 선택

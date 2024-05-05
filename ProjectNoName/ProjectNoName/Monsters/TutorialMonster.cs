@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using System;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     public class TutorialMonster : Monster
     {

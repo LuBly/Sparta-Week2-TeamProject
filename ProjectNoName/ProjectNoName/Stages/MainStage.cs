@@ -233,6 +233,15 @@
                     break;
                 }
             }
+
+            for (int i = 1; i < battleMonsters.Count; i++)
+            {
+                foreach(Quest quest in DataManager.Instance().QuestManager.OnGoingBattleQuest)
+                {
+                    quest.UpdateKillCount(battleMonsters[i].Data.MonsterId);
+                }
+            }
+
             return isAllDie;
         }
 

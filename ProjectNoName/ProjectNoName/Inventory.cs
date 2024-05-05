@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     public enum InventoryType
     {
@@ -53,6 +51,20 @@ namespace ProjectNoName
         public Item ChooceItem(int idx)
         {
             return Data.InventoryItems[idx];
+        }
+
+        // 특정 아이템의 개수 카운트
+        public int CountItems(int targetItemId)
+        {
+            int count = 0;
+            foreach (Item item in Data.InventoryItems)
+            {
+                if (item.Data.Id == targetItemId)
+                {
+                    count += item.Data.ItemCount;
+                }
+            }
+            return count;
         }
 
         /// <summary>
