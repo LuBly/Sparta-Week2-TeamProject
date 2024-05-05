@@ -18,6 +18,9 @@
         public float Mana;
         public float Gold;
 
+        // 던전관련 자료
+        public int MaxStage;
+
         // 장비 장착 class에서 사용
         public float IncreaseAttack;
         public float IncreaseDefense;

@@ -17,17 +17,7 @@
 
         public Stage() { }
 
-        // 아래 내용들은 하위 클래스에 생성
-        /*
-        public Stage(string stageName, int stageRecommendedDefense, float stageClearReward)
-        {
-            this.stageName = stageName;
-            this.stageRecommendedDefense = stageRecommendedDefense;
-            this.stageClearReward = stageClearReward;
-        }
-        */
-
-        public void ShowStageInfo()
+        public virtual void ShowStageInfo()
         {
             int originRow = Console.CursorTop;
             // 이름
