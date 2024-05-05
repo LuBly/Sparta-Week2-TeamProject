@@ -86,7 +86,15 @@ namespace ProjectNoName
 
             // 소유 gold
             Console.WriteLine($"Gold : {Data.Gold}");
+
+            // 내 장착 아이템
+            // ex) [장착 무기] 스파르타의 창 (공격력 + 7)
+            // [장착 방어구] 스파르타의 갑옷 (방어력 + 9)
+            /*
+             {Data.Weapon.Data.Name}
+             */
         }
+
 
         public void ShowBattleStatus()
         {

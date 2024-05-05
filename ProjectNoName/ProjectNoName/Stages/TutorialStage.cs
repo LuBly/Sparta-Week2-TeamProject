@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using System.Threading;
+﻿using System;
 
 namespace ProjectNoName
 {
@@ -33,7 +31,8 @@ namespace ProjectNoName
         {
             BattleLogic();
             //플레이어가 던전에서 패배하고 나왔을 경우
-            //player.Data.CurHealth = 1;
+            if (player.Data.CurHealth <= 0)
+            { player.Data.CurHealth = 1; }
         }
 
         //등장 몬스터 new TutorialMonster
@@ -68,12 +67,20 @@ namespace ProjectNoName
         //랜덤 몬스터 등장
         public void MonsterRandomSlot()
         {
-            //TutorialMonster monsterSlot = new TutorialMonster();
             monsterList.Clear();
             Random random = new Random();
-            monsterList.Add(generateMonster[random.Next(0, 6)]);
-            monsterList.Add(generateMonster[random.Next(6, 12)]);
-            monsterList.Add(generateMonster[random.Next(12, 18)]);           
+
+            TutorialMonster monsterClone1 = new TutorialMonster(0, " ", 0, 0, 0, 0, 0);
+            TutorialMonster monsterClone2 = new TutorialMonster(0, " ", 0, 0, 0, 0, 0);
+            TutorialMonster monsterClone3 = new TutorialMonster(0, " ", 0, 0, 0, 0, 0);
+
+            monsterClone1 = generateMonster[random.Next(0, 6)];
+            monsterClone2 = generateMonster[random.Next(6, 12)];
+            monsterClone3 = generateMonster[random.Next(12, 18)];
+
+            monsterList.Add(monsterClone1);
+            monsterList.Add(monsterClone2);
+            monsterList.Add(monsterClone3);
         }
 
         //전투 페이지
@@ -83,7 +90,7 @@ namespace ProjectNoName
             Console.WriteLine("[Battle!!]\n");
 
             for (int i = 0; i < monsterList.Count; i++)
-            {   
+            {
                 //몬스터 사망 처리
                 if (monsterList[i].tutorialMonsterHealth <= 0)
                 {
@@ -100,7 +107,7 @@ namespace ProjectNoName
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Data.Level}  {player.Data.Name} ({player.Data.ClassType})");
-            Console.WriteLine($"HP 100/{player.Data.CurHealth}");
+            Console.WriteLine($"HP {player.Data.CurHealth} / {player.Data.MaxHealth}"); // Hp : curHp / maxHp<< maxHp
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("1. 공격");
@@ -139,7 +146,7 @@ namespace ProjectNoName
                         case 2:  //Defense:                            
                             if ((player.Data.CurHealth > 0) && (monsterList.Count > 0))
                             {
-                                MonsterCalculateMiddleResult();
+                                MonsterCalculateMiddleResult("def");
                                 if (player.Data.CurHealth <= 0)
                                 { CalculateFinalResult(); }
                             }
@@ -161,7 +168,10 @@ namespace ProjectNoName
         {
             int countNum = monsterList.Count;
             int enemyChoiceIdx;
+            int minAtkValue = (int)Math.Ceiling(player.GetPlayerAttack() * 0.9f);
+            int maxAtkValue = (int)Math.Ceiling(player.GetPlayerAttack() * 1.1f);
             bool loop = true;
+            Random random = new Random();
             while (loop)
             {
                 Console.Clear();
@@ -190,6 +200,8 @@ namespace ProjectNoName
                 Console.WriteLine("\n0. 나가기\n");
                 Console.WriteLine("대상을 선택하세요.");
                 Console.Write(">> ");
+                
+                int resultAtkValue = random.Next(minAtkValue, maxAtkValue + 1);
 
                 enemyChoiceIdx = int.Parse(Console.ReadLine());
                 if (enemyChoiceIdx > 3 || enemyChoiceIdx < 0)
@@ -211,22 +223,22 @@ namespace ProjectNoName
                             continue;
                         }
                         else
-                        {
+                        {      
                             switch (enemyChoiceIdx)
                             {
                                 case 1:
-                                    monsterList[0].TakeHit(player.Data.AttackPower);
+                                    monsterList[0].TakeHit(resultAtkValue); //player.GetPlayerAttack()
                                     break;
                                 case 2:
-                                    monsterList[1].TakeHit(player.Data.AttackPower);
+                                    monsterList[1].TakeHit(resultAtkValue);
                                     break;
                                 case 3:
-                                    monsterList[2].TakeHit(player.Data.AttackPower);
+                                    monsterList[2].TakeHit(resultAtkValue);
                                     break;
                             }
                         }
-                        PlayerCalculateMiddleResult(enemyChoiceIdx - 1, monsterList[enemyChoiceIdx - 1].TakeHit(player.Data.AttackPower));
-                        MonsterCalculateMiddleResult();
+                        PlayerCalculateMiddleResult(enemyChoiceIdx - 1, monsterList[enemyChoiceIdx - 1].TakeHit(resultAtkValue));
+                        MonsterCalculateMiddleResult("atk");
                     }
                 }
 
@@ -236,7 +248,7 @@ namespace ProjectNoName
                     {
                         if (player.Data.CurHealth > 0)
                         {
-                            monsterList.Clear();                            
+                            monsterList.Clear();
                             CalculateFinalResult();
                         }
                         loop = false;
@@ -263,14 +275,14 @@ namespace ProjectNoName
             Console.WriteLine($"Lv.{monsterList[n].tutorialMonsterLv} {monsterList[n].tutorialMonsterName} 을(를) 맞췄습니다. [데미지 : {m}]");
             Console.WriteLine();
             Console.WriteLine($"Lv.{monsterList[n].tutorialMonsterLv} {monsterList[n].tutorialMonsterName}");
-            if (monsterList[n].tutorialMonsterHealth - monsterList[n].TakeHit(player.Data.AttackPower) <= 0)
+            if (monsterList[n].tutorialMonsterHealth - m <= 0)
             {
                 monsterList[n].tutorialMonsterHealth = 0;
                 Console.WriteLine($"HP {monsterList[n].tutorialMonsterMaxHealth} -> 0 ");
                 //player.Data.LevelPoint += monsterList[n].tutorialMonsterrewardExp;
             }
             else
-            { Console.WriteLine($"HP {monsterList[n].tutorialMonsterMaxHealth} -> {monsterList[n].tutorialMonsterHealth -= monsterList[n].TakeHit(player.Data.AttackPower)}"); }
+            { Console.WriteLine($"HP {monsterList[n].tutorialMonsterMaxHealth} -> {monsterList[n].tutorialMonsterHealth -= m}"); }
             Console.WriteLine("0. 다음\n");
             Console.WriteLine();
             Console.WriteLine();
@@ -278,35 +290,69 @@ namespace ProjectNoName
         }
 
         //중간결산창 - 몬스터 턴
-        public void MonsterCalculateMiddleResult()
+        public void MonsterCalculateMiddleResult(string choice)
         {
-            for (int i = 0; i < monsterList.Count; i++)
+            //플레이어 공격시
+            if (choice == "atk")
             {
-                Console.Clear();
-                if (monsterList[i].tutorialMonsterHealth <= 0)
-                { continue; }
-                else
+                for (int i = 0; i < monsterList.Count; i++)
                 {
-                    Console.WriteLine("[Battle!!]\n");
-                    Console.WriteLine($"Lv{monsterList[i].tutorialMonsterLv}. {monsterList[i].tutorialMonsterName}의 공격!");
-                    Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name} 을(를) 맞췄습니다. [데미지 : {monsterList[i].CounterAttack()}])");
-                    Console.WriteLine();
-                    Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
-                    Console.WriteLine($"HP 100 ->{player.Data.CurHealth - monsterList[i].CounterAttack()}");
-                    player.Data.CurHealth -= monsterList[i].CounterAttack();
-                    if (player.Data.CurHealth <= 0)
+                    Console.Clear();
+                    if (monsterList[i].tutorialMonsterHealth <= 0)
+                    { continue; }
+                    else
                     {
-                        player.Data.CurHealth = 0;
-                        break;
+                        Console.WriteLine("[Battle!!]\n");
+                        Console.WriteLine($"Lv{monsterList[i].tutorialMonsterLv}. {monsterList[i].tutorialMonsterName}의 공격!");
+                        Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name} 을(를) 맞췄습니다. [데미지 : {monsterList[i].CounterAttack(choice)}])");
+                        Console.WriteLine();
+                        Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
+                        Console.WriteLine($"HP 100 ->{player.Data.CurHealth - monsterList[i].CounterAttack(choice)}");
+                        player.Data.CurHealth -= monsterList[i].CounterAttack(choice);
+                        if (player.Data.CurHealth <= 0)
+                        {
+                            player.Data.CurHealth = 0;
+                            break;
+                        }
                     }
+                    Console.WriteLine("0. 다음\n");
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    NextButton();
                 }
-                Console.WriteLine("0. 다음\n");
-                Console.WriteLine();
-                Console.WriteLine();
-                NextButton();
             }
-        }
 
+            //플레이어 방어시
+            if (choice == "def")
+            {
+                for (int i = 0; i < monsterList.Count; i++)
+                {
+                    Console.Clear();
+                    if (monsterList[i].tutorialMonsterHealth <= 0)
+                    { continue; }
+                    else
+                    {
+                        Console.WriteLine("[Battle!!]\n");
+                        Console.WriteLine($"Lv{monsterList[i].tutorialMonsterLv}. {monsterList[i].tutorialMonsterName}의 공격!");
+                        Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name} 을(를) 맞췄습니다. [데미지 : {monsterList[i].CounterAttack(choice)}])");
+                        Console.WriteLine();
+                        Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
+                        Console.WriteLine($"HP 100 ->{player.Data.CurHealth - monsterList[i].CounterAttack(choice)}");
+                        player.Data.CurHealth -= monsterList[i].CounterAttack(choice);
+                        if (player.Data.CurHealth <= 0)
+                        {
+                            player.Data.CurHealth = 0;
+                            break;
+                        }
+                    }
+                    Console.WriteLine("0. 다음\n");
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    NextButton();
+                }
+            }
+
+        }
         //최종결산창
         public void CalculateFinalResult()
         {
@@ -365,6 +411,7 @@ namespace ProjectNoName
                 }
             }
         }
+
 
     }
 }
