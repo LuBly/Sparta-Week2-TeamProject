@@ -13,6 +13,33 @@
     {
         public PlayerData Data = new PlayerData();
         
+        public Skill skill = new Skill();
+        // 이거 그냥 
+        /*
+         * public Skill skill; 가능
+         * 그래서 다 바꿔야해요
+         * 
+         * ClassType;
+         * switch(classType)
+         *  case:classType.Warrior 
+         *  skill = new WarriorSkill();
+         * 
+         * 캐릭터를 마법사를 만들었어요..
+         * WarriorSkill, MagicianSkill << 얘네는 그냥 안쓰는 쓰레기 데이터가 됩니다.
+         * 
+         */
+        public WarriorSkill warriorSkill = new WarriorSkill();
+        public ArcherSkill archerSkill = new ArcherSkill();
+        public MagicianSkill magicianSkill = new MagicianSkill();
+
+        public List<int> levelUpData = new List<int>() 
+        {
+            0,
+            10, // Lv 1 -> Lv 2
+            35, // Lv 2 -> Lv 3
+            65, // Lv 3 -> Lv 4
+            100,// Lv 4 -> Lv 5
+        };
         // 데이터 로드용 
         public Player()
         {
@@ -31,6 +58,9 @@
             Data.CriticalRate = 100; //치명타 확률
             Data.CriticalDamage = 50; //치명타 피해
             Data.EvasionRate = 0; // 회피율
+            Data.MaxMana = 100; // 마나
+            Data.CurMana = Data.MaxMana;
+            Data.ManaAfterSkill = Data.CurMana; // 스킬 사용후 마나
             Data.MaxHealth = 100;
             Data.CurHealth = Data.MaxHealth;
             Data.Gold = 2500f;
@@ -41,7 +71,7 @@
 
         public void ShowStatus()
         {
-            Console.WriteLine("[상태 보기]");
+            Console.WriteLine("[내 정보]");
             // Lv
             Console.WriteLine($"Lv. {Data.Level} [exp. {Data.Exp}]");
             // 직업
@@ -77,19 +107,64 @@
 
             // 체력
             Console.WriteLine($"체 력 : {Data.CurHealth}");
-            
+
             // 마나
-            Console.WriteLine($"마 나 : {Data.Mana}");
+            Console.WriteLine($"마 나 : {Data.CurMana}");
 
             // 소유 gold
             Console.WriteLine($"Gold : {Data.Gold}");
+
+            Console.WriteLine();
+            Console.WriteLine("[장착 장비]");
+            // 착용중인 장비
+            if(Data.Weapon != null)
+            {
+                ItemData weaponData = Data.Weapon.Data;
+                Console.Write($"착용 무  기 : {weaponData.Name}");
+                int originRow = Console.CursorTop;
+                Console.SetCursorPosition(30, originRow);
+                Console.WriteLine($"[공격력 + {weaponData.AttackPowerIncrease}]");
+            }
+
+            if (Data.Armor != null)
+            {
+                ItemData armorData = Data.Armor.Data;
+                Console.Write($"착용 방어구 : {armorData.Name}");
+                int originRow = Console.CursorTop;
+                Console.SetCursorPosition(30, originRow);
+                Console.WriteLine($"[방어력 + {armorData.DefencePowerIncrease}]");
+            }
+
+            // 직업 스킬
+            Console.WriteLine();
+            Console.WriteLine("[직업 스킬]");
+            switch (Data.ClassType)
+            {
+                case ClassType.Warrior:
+                    Console.WriteLine("1. Power Strike");
+                    Console.WriteLine("2. Power Slam");
+                    Console.WriteLine("3. Double Down");
+                    break;
+                case ClassType.Archer:
+                    Console.WriteLine("1. Make it Rain");
+                    Console.WriteLine("2. Ace in the Hole");
+                    Console.WriteLine("3. Multi Shot");
+                    break;
+                case ClassType.Magician:
+                    Console.WriteLine("1. Chain Lightning");
+                    Console.WriteLine("2. Inferno Bomb");
+                    Console.WriteLine("3. Frost Nova");
+                    break;
+            }
         }
+
 
         public void ShowBattleStatus()
         {
             Console.WriteLine("[내 정보]");
             Console.WriteLine($"Lv.{Data.Level} {Data.Name} ({Data.ClassType})");
             Console.WriteLine($"HP {Data.CurHealth} / {Data.MaxHealth}");
+            Console.WriteLine($"MP {Data.CurMana} / {Data.MaxMana}");
         }
 
         public float GetPlayerAttack()
@@ -112,7 +187,7 @@
             {
                 Console.Write(" [ CRITICAL! ]");
                 Console.WriteLine();
-                return random.Next((int)((GetPlayerAttack() - deviation) * (1 + Data.CriticalDamage/100)), (int)((GetPlayerAttack() + deviation) * (1 + Data.CriticalDamage/100)));
+                return random.Next((int)((GetPlayerAttack() - deviation) * (1 + Data.CriticalDamage / 100)), (int)((GetPlayerAttack() + deviation) * (1 + Data.CriticalDamage / 100)));
             }
             //치명타 실패
             else
@@ -120,17 +195,18 @@
                 Console.WriteLine();
                 return random.Next((int)GetPlayerAttack() - deviation, (int)GetPlayerAttack() + deviation);
             }
-                
-            
+
+
         }
-        
+
         // 기타 함수
-        /// 전투 매커니즘에 따라 함수 변형필요
+
+        // 데미지 받을 때
         public float TakeDamage(float damage)
         {
             Random random = new Random();
             //회피 성공, 받는 데미지 0
-            if (random.Next(1,100) <= Data.EvasionRate)
+            if (random.Next(1, 100) <= Data.EvasionRate)
             {
                 damage = 0;
                 Console.WriteLine($"Miss! [데미지 : {damage}]");
@@ -160,9 +236,103 @@
         // 마나 획복
         public float RecoverMana(float manaRecovered)
         {
-            Data.Mana += manaRecovered;
+            Data.CurMana += manaRecovered;
             Console.WriteLine($"마나를 {manaRecovered} 회복하였습니다.");
-            return Data.Mana;
+            return Data.CurMana;
+        }
+
+        // 스킬 선택창
+        public void SelectSkill()
+        {
+            switch (Data.ClassType)
+            {
+                case ClassType.Warrior:
+                    Console.WriteLine("1. Power Strike");
+                    Console.WriteLine("2. Power Slam");
+                    Console.WriteLine("3. Double Down");
+                    break;
+                case ClassType.Archer:
+                    Console.WriteLine("1. Make it Rain");
+                    Console.WriteLine("2. Ace in the Hole");
+                    Console.WriteLine("3. Multi Shot");
+                    break;
+                case ClassType.Magician:
+                    Console.WriteLine("1. Chain Lightning");
+                    Console.WriteLine("2. Inferno Bomb");
+                    Console.WriteLine("3. Frost Nova");
+                    break;
+            }
+        }
+
+        // 스킬 데미지
+        public int GetSkillDamage(int skillIndex)
+        {
+            int skillDamage = 0;
+
+            switch (Data.ClassType)
+            {
+                case ClassType.Warrior:
+                    switch (skillIndex)
+                    {
+                        case 1:
+                            skillDamage = warriorSkill.AOEAttack();
+                            break;
+                        case 2:
+                            skillDamage = warriorSkill.EmpoweredAttack();
+                            break;
+                        case 3:
+                            skillDamage = warriorSkill.DoubleAttack();
+                            break;
+                    }
+                    break;
+                case ClassType.Archer:
+                    switch (skillIndex)
+                    {
+                        case 1:
+                            skillDamage = archerSkill.AOEAttack();
+                            break ;
+                        case 2:
+                            skillDamage = archerSkill.EmpoweredAttack();
+                            break;
+                        case 3:
+                            skillDamage = archerSkill.DoubleAttack();
+                            break;
+                    }
+                    break;
+                case ClassType.Magician:
+                    switch (skillIndex)
+                    {
+                        case 1:
+                            skillDamage = magicianSkill.AOEAttack();
+                            break;
+                        case 2:
+                            skillDamage = magicianSkill.EmpoweredAttack();
+                            break;
+                        case 3:
+                            skillDamage = magicianSkill.DoubleAttack();
+                            break;
+                    }
+                    break;
+            }
+            return skillDamage;
+        }
+
+        // LevelUp 체크
+        public bool CheckLevelUp()
+        {
+            bool isLevelUp = false;
+            // 현재 Exp가 레벨업에 필요한 Exp보다 클 때
+            while(Data.Exp > levelUpData[Data.Level])
+            {
+                // 설정 최대 레벨에 도달했을 때 더 레벨업 못하게
+                if (Data.Level == levelUpData.Count) break;
+                isLevelUp = true;
+                // 레벨업 했을 때
+                Data.Exp -= levelUpData[Data.Level++];
+                Data.AttackPower += 0.5f;
+                Data.DefensePower += 1f;
+            }
+            return isLevelUp;
         }
     }
 }

@@ -121,6 +121,29 @@
                     {
                         Console.WriteLine($"이미 구매한 아이템입니다.");
                     }
+                    // 소모 아이템 복수구매
+                    else if (curItem.Data.ItemType == ItemType.HealthPotion || curItem.Data.ItemType == ItemType.ManaPotion)
+                    {
+                        Console.WriteLine("구매 갯수를 입력해주세요");
+                        Console.Write(">> ");
+                        int amountIdx = int.TryParse(Console.ReadLine(), out choiceIdx) ? choiceIdx : -1;
+                        if (amountIdx <= 0)
+                        {
+                            Console.WriteLine("잘못된 입력입니다.");
+                            Thread.Sleep(500);
+                            continue;
+                        }
+                        // 골드가 충분하면 add 및 itemCount++
+                        else if (curItem.CanBuy(amountIdx))
+                        {
+                            curItem.BuyItem(amountIdx);
+                        }
+                        // 골드 부족하면 패스
+                        else
+                        {
+                            Console.WriteLine("골드가 부족합니다.");
+                        }
+                    }
                     // 장비 가격보다 보유 gold가 많으면 add
                     else if (curItem.CanBuy())
                     {
@@ -159,7 +182,7 @@
                 Console.WriteLine();
                 Console.WriteLine("판매하시려는 아이템을 선택해주세요 (0 : 뒤로가기)");
                 Console.Write(">> ");
-                int choiceIdx = int.TryParse(Console.ReadLine(),out choiceIdx) ? choiceIdx : -1;
+                int choiceIdx = int.TryParse(Console.ReadLine(), out choiceIdx) ? choiceIdx : -1;
                 // 범위 밖의 번호를 선택했을 때
                 if (choiceIdx > player.Data.Inventory.CountInventory() || choiceIdx < 0)
                 {
