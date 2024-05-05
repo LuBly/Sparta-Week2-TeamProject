@@ -35,6 +35,14 @@ namespace ProjectNoName
         public ArcherSkill archerSkill = new ArcherSkill();
         public MagicianSkill magicianSkill = new MagicianSkill();
 
+        public List<int> levelUpData = new List<int>() 
+        {
+            0,
+            10, // Lv 1 -> Lv 2
+            35, // Lv 2 -> Lv 3
+            65, // Lv 3 -> Lv 4
+            100,// Lv 4 -> Lv 5
+        };
         // 데이터 로드용 
         public Player()
         {
@@ -45,7 +53,7 @@ namespace ProjectNoName
         public Player(string playerName, ClassType selectClass)
         {
             Data.Level = 1;
-            Data.LevelPoint = 0;
+            Data.Exp = 0;
             Data.Name = playerName;//플레이어 생성창에서 유저가 입력한 이름 값이 들어갈것
             Data.ClassType = selectClass;//플레이어 생성창에서 유저가 선택한 직업 타입이 들어갈것.
             Data.AttackPower = 10;
@@ -68,7 +76,7 @@ namespace ProjectNoName
         {
             Console.WriteLine("[상태 보기]");
             // Lv
-            Console.WriteLine($"Lv. {Data.Level}");
+            Console.WriteLine($"Lv. {Data.Level} [exp. {Data.Exp}]");
             // 직업
             Console.WriteLine($"{Data.Name} : {Data.ClassType}");
             // 공격력
@@ -172,7 +180,8 @@ namespace ProjectNoName
         }
 
         // 기타 함수
-        /// 전투 매커니즘에 따라 함수 변형필요
+
+        // 데미지 받을 때
         public float TakeDamage(float damage)
         {
             Random random = new Random();
@@ -195,7 +204,6 @@ namespace ProjectNoName
             if (Data.CurHealth < 0) Data.CurHealth = 0;
             return Data.CurHealth;
         }
-
 
         // 체력 회복
         public float RecoverHealth(float healthRecovered)
@@ -287,6 +295,24 @@ namespace ProjectNoName
                     break;
             }
             return skillDamage;
+        }
+
+        // LevelUp 체크
+        public bool CheckLevelUp()
+        {
+            bool isLevelUp = false;
+            // 현재 Exp가 레벨업에 필요한 Exp보다 클 때
+            while(Data.Exp > levelUpData[Data.Level])
+            {
+                // 설정 최대 레벨에 도달했을 때 더 레벨업 못하게
+                if (Data.Level == levelUpData.Count) break;
+                isLevelUp = true;
+                // 레벨업 했을 때
+                Data.Exp -= levelUpData[Data.Level++];
+                Data.AttackPower += 0.5f;
+                Data.DefensePower += 1f;
+            }
+            return isLevelUp;
         }
     }
 }

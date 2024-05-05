@@ -5,7 +5,7 @@
     {
         // Player 객체 내에서만 수정해야할 자료들
         public int Level;
-        public int LevelPoint;
+        public int Exp;
         public string Name;
         public ClassType ClassType;
         public float AttackPower;
@@ -19,6 +19,9 @@
         public float MaxMana;
         public float ManaAfterSkill; 
         public float Gold;
+
+        // 던전관련 자료
+        public int MaxStage;
 
         // 장비 장착 class에서 사용
         public float IncreaseAttack;
