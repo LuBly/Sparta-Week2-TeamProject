@@ -1,6 +1,6 @@
 {
   "Level": 1,
-  "LevelPoint": 0,
+  "Exp": 5,
   "Name": "현호",
   "ClassType": 2,
   "AttackPower": 10.0,
@@ -12,7 +12,8 @@
   "MaxHealth": 100.0,
   "CurMana": 80.0,
   "MaxMana": 100.0,
-  "Gold": 625.0,
+  "ManaAfterSkill": 0.0,
+  "Gold": 725.0,
   "MaxStage": 4,
   "IncreaseAttack": 0.0,
   "IncreaseDefense": 0.0,
