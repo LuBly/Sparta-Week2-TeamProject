@@ -189,7 +189,7 @@ namespace ProjectNoName
         {
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine("");
-            Utill.ShowLine();
+            Utill.ShowInventoryLine();
             // 아이템 리스트 표기
             for (int i = 1; i < CountInventory(); i++)
             {
