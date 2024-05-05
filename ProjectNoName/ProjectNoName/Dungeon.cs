@@ -10,7 +10,7 @@
             dungeonStage = new List<Stage>() {
                 new Stage(),
                 new TutorialStage("튜토리얼 던전", 5, 1000f), // << 준호님 담당
-                new MainStage("일반 던전", 11, 1700f), // << 제가 담당해서 만들어 보는것
+                new MainStage("일반 던전"), // << 제가 담당해서 만들어 보는것
             };
         }
         public int ShowDungeon()

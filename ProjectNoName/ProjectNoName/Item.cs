@@ -141,16 +141,16 @@ namespace ProjectNoName
 
                 case ItemType.ManaPotion:
                     // 마나가 100이면 사용 불가
-                    if (player.Data.Mana == 100)
+                    if (player.Data.CurMana == 100)
                     {
                         Console.WriteLine("마나가 100입니다. 아이템을 사용할 수 없습니다.");
                     }
                     else
                     {
                         // 마나 회복시 100을 넘으면 100까지만 회복
-                        if (player.Data.Mana + Data.ManaIncrease > 100)
+                        if (player.Data.CurMana + Data.ManaIncrease > 100)
                         {
-                            manaRecovered = 100 - player.Data.Mana;
+                            manaRecovered = 100 - player.Data.CurMana;
                             player.RecoverMana(manaRecovered);
                         }
                         // 마나 회복시 100 미만인 경우

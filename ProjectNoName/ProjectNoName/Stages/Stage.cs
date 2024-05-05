@@ -14,20 +14,12 @@
         protected bool isPlayerWin;
         // 기존 체력 저장
         protected float originHealth = DataManager.Instance().Player.Data.CurHealth;
+        // 기존 마나 저장
+        protected float originMana = DataManager.Instance().Player.Data.CurMana;
 
         public Stage() { }
 
-        // 아래 내용들은 하위 클래스에 생성
-        /*
-        public Stage(string stageName, int stageRecommendedDefense, float stageClearReward)
-        {
-            this.stageName = stageName;
-            this.stageRecommendedDefense = stageRecommendedDefense;
-            this.stageClearReward = stageClearReward;
-        }
-        */
-
-        public void ShowStageInfo()
+        public virtual void ShowStageInfo()
         {
             int originRow = Console.CursorTop;
             // 이름
