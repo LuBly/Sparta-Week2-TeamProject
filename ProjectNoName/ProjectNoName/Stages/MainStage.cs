@@ -292,6 +292,7 @@ namespace ProjectNoName
             Utill.ShowNextPage();
         }
 
+        // 결과 계산 및 데이터 출력
         void ShowStageReward()
         {
             int totalRewardExp = 0;
