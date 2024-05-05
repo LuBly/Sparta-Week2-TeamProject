@@ -1,8 +1,4 @@
-﻿using System.Numerics;
-using System.Runtime.ConstrainedExecution;
-using System.Threading;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     // 직업 종류
     // 차후 클래스 선택
@@ -74,7 +70,7 @@ namespace ProjectNoName
 
         public void ShowStatus()
         {
-            Console.WriteLine("[상태 보기]");
+            Console.WriteLine("[내 정보]");
             // Lv
             Console.WriteLine($"Lv. {Data.Level} [exp. {Data.Exp}]");
             // 직업
@@ -117,8 +113,30 @@ namespace ProjectNoName
             // 소유 gold
             Console.WriteLine($"Gold : {Data.Gold}");
 
+            Console.WriteLine();
+            Console.WriteLine("[장착 장비]");
+            // 착용중인 장비
+            if(Data.Weapon != null)
+            {
+                ItemData weaponData = Data.Weapon.Data;
+                Console.Write($"착용 무  기 : {weaponData.Name}");
+                int originRow = Console.CursorTop;
+                Console.SetCursorPosition(30, originRow);
+                Console.WriteLine($"[공격력 + {weaponData.AttackPowerIncrease}]");
+            }
+
+            if (Data.Armor != null)
+            {
+                ItemData armorData = Data.Armor.Data;
+                Console.Write($"착용 방어구 : {armorData.Name}");
+                int originRow = Console.CursorTop;
+                Console.SetCursorPosition(30, originRow);
+                Console.WriteLine($"[방어력 + {armorData.DefencePowerIncrease}]");
+            }
+
             // 직업 스킬
-            Console.WriteLine("\n직업 스킬");
+            Console.WriteLine();
+            Console.WriteLine("[직업 스킬]");
             switch (Data.ClassType)
             {
                 case ClassType.Warrior:
@@ -138,6 +156,7 @@ namespace ProjectNoName
                     break;
             }
         }
+
 
         public void ShowBattleStatus()
         {

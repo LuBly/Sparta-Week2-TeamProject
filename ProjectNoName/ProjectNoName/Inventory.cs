@@ -187,10 +187,11 @@ namespace ProjectNoName
         // ItemList 출력
         public void ShowItemList(InventoryType type, MenuType menuType)
         {
-            Console.WriteLine("\n[아이템 목록]");
-
+            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("");
+            Utill.ShowInventoryLine();
             // 아이템 리스트 표기
-            for(int i = 1; i < CountInventory(); i++)
+            for (int i = 1; i < CountInventory(); i++)
             {
                 Console.Write("-");
                 if (type == InventoryType.idx)
