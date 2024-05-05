@@ -5,7 +5,7 @@
     public enum ClassType
     {
         Warrior = 1,
-        Archar,
+        Archer,
         Magician,
         TypeEnd,
     }

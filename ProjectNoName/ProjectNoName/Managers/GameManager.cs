@@ -248,18 +248,23 @@
             Console.WriteLine("퀘스트 목록");
 
             // 전체 퀘스트 목록을 가져옴
-            List<Quest> questList = DataManager.Instance().QuestManager.QuestList;
+            List<Quest> questList = DataManager.Instance()._QuestManager.QuestList;
 
             // 퀘스트 목록 출력
             for (int i = 1; i < questList.Count; i++)
             {
-                if (questList[i].Data.QuestProgress == QuestProgress.Completion)
+                Console.Write($"{questList[i].Data.QuestId}. {questList[i].Data.QuestName}");
+                switch (questList[i].Data.QuestProgress)
                 {
-                    Console.WriteLine($"{questList[i].Data.QuestId}. {questList[i].Data.QuestName}  [완료]");
-                }
-                else
-                {
-                    Console.WriteLine($"{questList[i].Data.QuestId}. {questList[i].Data.QuestName}");
+                    case QuestProgress.OnGoing:
+                        Console.WriteLine(" [진행중]");
+                        break;
+                    case QuestProgress.Completion:
+                        Console.WriteLine(" [완료스]");
+                        break;
+                    default:
+                        Console.WriteLine();
+                        break;
                 }
             }
             Console.WriteLine("\n원하시는 퀘스트를 선택해주세요.");
@@ -326,6 +331,8 @@
             {
                 case QuestProgress.NoStart:
                     Console.WriteLine("1. 수락");
+                    if(quest.Data.QuestType == QuestType.Battle)
+                        quest.AcceptBattleQuest();
                     break;
                 default:
                     if (quest.GetInventoryItemCount() < quest.Data.CompletCondition)
@@ -340,7 +347,7 @@
             }
 
             Console.WriteLine("0. 뒤로가기");
-            Console.WriteLine(">>");
+            Console.Write(">> ");
             string input = Console.ReadLine();
 
             if (int.TryParse(input, out int choice))

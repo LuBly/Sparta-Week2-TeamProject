@@ -45,7 +45,7 @@
         public void AcceptBattleQuest()
         {
             Data.QuestProgress = QuestProgress.OnGoing;
-            DataManager.Instance().QuestManager.OnGoingBattleQuest.Add(this);
+            DataManager.Instance()._QuestManager.OnGoingBattleQuestList.Add(this);
         }
 
         public void UpdateKillCount(int monsterId)
@@ -59,7 +59,7 @@
             Data.QuestProgress = QuestProgress.Completion;
             RewardQuest();
             if(Data.QuestType == QuestType.Battle)
-                DataManager.Instance().QuestManager.OnGoingBattleQuest.Remove(this);
+                DataManager.Instance()._QuestManager.OnGoingBattleQuestList.Remove(this);
         }
 
         void RewardQuest()
