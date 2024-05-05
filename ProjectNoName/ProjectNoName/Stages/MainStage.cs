@@ -590,7 +590,7 @@ namespace ProjectNoName
             foreach(var item in rewardItems)
             {
                 player.Data.Inventory.AddItem(item);
-                Console.WriteLine(item.Data.Name);
+                Console.WriteLine($"-{item.Data.Name}");
             }
         }
 

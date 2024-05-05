@@ -227,21 +227,22 @@ namespace ProjectNoName
             switch (Data.ClassType)
             {
                 case ClassType.Warrior:
-                    Console.WriteLine("1. Power Strike");
-                    Console.WriteLine("2. Power Slam");
-                    Console.WriteLine("3. Double Down");
+                    Console.WriteLine("1. Power Strike(40)");
+                    Console.WriteLine("2. Power Slam(25)");
+                    Console.WriteLine("3. Double Down(20)");
                     break;
                 case ClassType.Archer:
-                    Console.WriteLine("1. Make it Rain");
-                    Console.WriteLine("2. Ace in the Hole");
-                    Console.WriteLine("3. Multi Shot");
+                    Console.WriteLine("1. Make it Rain(40)");
+                    Console.WriteLine("2. Ace in the Hole(10)");
+                    Console.WriteLine("3. Multi Shot(30)");
                     break;
                 case ClassType.Magician:
-                    Console.WriteLine("1. Chain Lightning");
-                    Console.WriteLine("2. Inferno Bomb");
-                    Console.WriteLine("3. Frost Nova");
+                    Console.WriteLine("1. Chain Lightning(50)");
+                    Console.WriteLine("2. Inferno Bomb(10)");
+                    Console.WriteLine("3. Frost Nova(20)");
                     break;
             }
+            Console.WriteLine($"\n{Data.CurMana}/{Data.MaxMana}");
         }
 
         // 스킬 데미지
