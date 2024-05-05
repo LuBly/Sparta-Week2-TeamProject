@@ -7,7 +7,7 @@
     "Health": 15,
     "AttackPower": 5,
     "RewardGold": 100,
-    "RewardExp": 10,
+    "RewardExp": 2,
     "RewardItems": [
       {
         "Data": {
@@ -83,7 +83,7 @@
     "Health": 10,
     "AttackPower": 9,
     "RewardGold": 200,
-    "RewardExp": 15,
+    "RewardExp": 3,
     "RewardItems": [
       {
         "Data": {
@@ -159,7 +159,7 @@
     "Health": 25,
     "AttackPower": 8,
     "RewardGold": 300,
-    "RewardExp": 20,
+    "RewardExp": 5,
     "RewardItems": [
       {
         "Data": {
@@ -235,7 +235,7 @@
     "Health": 55,
     "AttackPower": 20,
     "RewardGold": 400,
-    "RewardExp": 35,
+    "RewardExp": 10,
     "RewardItems": [
       {
         "Data": {
@@ -311,7 +311,7 @@
     "Health": 35,
     "AttackPower": 30,
     "RewardGold": 500,
-    "RewardExp": 45,
+    "RewardExp": 12,
     "RewardItems": [
       {
         "Data": {
@@ -387,7 +387,7 @@
     "Health": 45,
     "AttackPower": 35,
     "RewardGold": 600,
-    "RewardExp": 55,
+    "RewardExp": 14,
     "RewardItems": [
       {
         "Data": {
@@ -463,7 +463,7 @@
     "Health": 65,
     "AttackPower": 50,
     "RewardGold": 700,
-    "RewardExp": 100,
+    "RewardExp": 20,
     "RewardItems": [
       {
         "Data": {

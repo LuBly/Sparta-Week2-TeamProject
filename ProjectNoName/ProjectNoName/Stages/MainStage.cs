@@ -286,20 +286,18 @@ namespace ProjectNoName
             ShowPhase("결과");
             Console.WriteLine("[이겼콩ㅋ]");
             Console.WriteLine();
-            Console.WriteLine($"{stageName} [{stageIdx}]에서 몬스터 {battleMonsters.Count - 1}마리를 잡았습니다.");
-            Console.WriteLine();
-            Console.WriteLine("[캐릭터 정보]");
-            Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
-            Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
+            
             // 보상 함수 실행
-            CreateStageReward();
+            ShowStageReward();
             Utill.ShowNextPage();
         }
 
-        void CreateStageReward()
+        void ShowStageReward()
         {
             int totalRewardExp = 0;
             int totalRewardGold = 0;
+            int originExp = player.Data.Exp;
+            int originLevel = player.Data.Level;
             List<Item> rewardItems = new List<Item>();
 
             for (int i = 1; i < battleMonsters.Count; i++)
@@ -308,11 +306,33 @@ namespace ProjectNoName
                 totalRewardGold += battleMonsters[i].CreateMonsterGoldReward();
                 rewardItems.AddRange(battleMonsters[i].CreateMonsterItemReward());
             }
-            Console.WriteLine($"EXP : {player.Data.Exp} -> {player.Data.Exp += totalRewardGold}");
+
+            // 정보 처리
+            player.Data.Exp += totalRewardExp;
+            player.Data.Gold += totalRewardGold;
+
+
+            // 출력
+            Console.WriteLine($"{stageName} [{stageIdx}]에서 몬스터 {battleMonsters.Count - 1}마리를 잡았습니다.");
+            Console.WriteLine();
+            Console.WriteLine("[캐릭터 정보]");
+                        
+            // 레벨업 했을 때
+            if (player.CheckLevelUp())
+            {
+                Console.WriteLine($"Lv.{originLevel} {player.Data.Name} -> Lv.{player.Data.Level} {player.Data.Name}");
+            }
+            // 레벨업 안했을 때
+            else
+            {
+                Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
+            }
+            Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
+            Console.WriteLine($"EXP : {originExp} / {player.levelUpData[originLevel]} -> {player.Data.Exp} / {player.levelUpData[player.Data.Level]}");
             Console.WriteLine();
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{totalRewardGold} Gold");
-            player.Data.Gold += totalRewardGold;
+            
             foreach(var item in rewardItems)
             {
                 player.Data.Inventory.AddItem(item);
