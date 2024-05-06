@@ -553,8 +553,10 @@ namespace ProjectNoName
             // 정보 처리
             player.Data.Exp += totalRewardExp;
             player.Data.Gold += totalRewardGold;
-
-
+            if(stageIdx == player.Data.MaxStage)
+            {
+                player.Data.MaxStage++;
+            }
             // 출력
             Console.WriteLine($"{stageName} [{stageIdx}]에서 몬스터 {battleMonsters.Count - 1}마리를 잡았습니다.");
             Console.WriteLine();
