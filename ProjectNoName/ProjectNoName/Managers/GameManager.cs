@@ -75,7 +75,6 @@
 
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
-                        curMenu = MenuType.Store;
                         break;
                 }
                 // 각 절차별 약간의 시간 부여
