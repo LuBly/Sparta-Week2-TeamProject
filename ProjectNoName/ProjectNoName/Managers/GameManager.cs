@@ -130,47 +130,84 @@
         // StartMenu
         void LoadStartMenu()
         {
-            Console.WriteLine("안녕?");
-            Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 정할 수 있어\n");
+            while(true)
+            {
+                Console.Clear();
+                Console.WriteLine("안녕?");
+                Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 정할 수 있어\n");
 
-            Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 저장하기");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            curMenu = (MenuType)int.Parse(Console.ReadLine());
+                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 저장하기");
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.Write(">> ");
+                int inputIdx = int.TryParse(Console.ReadLine(), out inputIdx) ? inputIdx : -1;
+                if (inputIdx > System.Enum.GetValues(typeof(MenuType)).Length || inputIdx < 0)
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
+                else if (inputIdx == 0)
+                {
+                    LoadStartMenu();
+                    break;
+                }
+                else
+                {
+                    curMenu = (MenuType)inputIdx;
+                    break;
+                }
+            }
         }
         
         // Status 메뉴
         void LoadStatusMenu()
         {
-            DataManager.Instance().Player.ShowStatus();
-            curMenu = (MenuType)Utill.EndMenu();
+            while (true)
+            {
+                Console.Clear();
+
+                DataManager.Instance().Player.ShowStatus();
+                int input = Utill.EndMenu();
+
+                if (input != 0)
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
+                else
+                {
+                    LoadStartMenu();
+                    break;
+                }
+            }
         }
 
         // 인벤토리 기본 메뉴
         void LoadInventoryMenu()
         {
-            // Inventory 초기 화면
-            DataManager.Instance().Player.Data.Inventory.ShowInventory();
             while (true)
             {
-                bool isContinue = true;
-                int choiceIdx = int.Parse(Console.ReadLine());
-                switch (choiceIdx)
-                {
-                    case 0:
-                        isContinue = false;
-                        curMenu = 0;
-                        break;
-                    case 1:
-                        LoadEquipMenu();
-                        break;
-                    //// 소비창
-                    //case 2:
-                    //    LoadConsumableMenu();
-                    //    break;
-                }
+                // Inventory 초기 화면
+                DataManager.Instance().Player.Data.Inventory.ShowInventory();
 
-                if (!isContinue) break;
+                int choiceIdx = int.TryParse(Console.ReadLine(), out choiceIdx) ? choiceIdx : -1;
+                if(choiceIdx == 0)
+                {
+                    curMenu = 0;
+                    break;
+                }
+                else if (choiceIdx == 1)
+                {
+                    LoadEquipMenu();
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
             }
         }
 
@@ -189,11 +226,11 @@
         // 상점 메뉴
         void LoadStoreMenu()
         {
-            store.ShowStore();
             while (true)
             {
+                store.ShowStore();
                 bool isContinue = true;
-                StoreType choiceIdx = (StoreType)int.Parse(Console.ReadLine());
+                StoreType choiceIdx = (StoreType)(int.TryParse(Console.ReadLine(), out int inputIdx) ? inputIdx : -1);
                 switch (choiceIdx)
                 {
                     case 0:
@@ -206,6 +243,10 @@
                     case StoreType.Sell:
                         store.UseStore(StoreType.Sell);
                         break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Thread.Sleep (500);
+                        continue;
                 }
 
                 if (!isContinue) break;
@@ -217,19 +258,22 @@
             while (true)
             {
                 int choiceIdx = dungeon.ShowDungeon();
-                bool isContinue = true;
-                switch (choiceIdx)
+                if(choiceIdx > dungeon.dungeonStage.Count || choiceIdx < 0)
                 {
-                    case 0:
-                        isContinue = false;
-                        curMenu = 0;
-                        break;
-                    default:
-                        dungeon.ShowStage(choiceIdx);
-                        break;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
                 }
-
-                if (!isContinue) break;
+                else if (choiceIdx == 0)
+                {
+                    curMenu = 0;
+                    break ;
+                }
+                else
+                {
+                    dungeon.ShowStage(choiceIdx);
+                    break;
+                }
             }
         }
     }

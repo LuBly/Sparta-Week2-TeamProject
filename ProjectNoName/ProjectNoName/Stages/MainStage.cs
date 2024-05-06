@@ -184,7 +184,7 @@ namespace ProjectNoName
             Console.WriteLine("\n0. 취소 \n");
             Console.WriteLine("스킬을 선택해주세요.");
             Console.Write(">>");
-            skillIdx = int.Parse(Console.ReadLine());
+            skillIdx = int.TryParse(Console.ReadLine(), out skillIdx) ? skillIdx : -1;
             // 취소일경우
             if (skillIdx == 0)
             {
