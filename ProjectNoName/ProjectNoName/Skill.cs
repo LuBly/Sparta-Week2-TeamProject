@@ -49,7 +49,7 @@ namespace ProjectNoName
         {
             Player player = DataManager.Instance().Player;
             // 스킬 시전 성공; 마나 소모
-            if ((player.Data.CurMana - SkillMana) > 0)
+            if ((player.Data.CurMana - SkillMana) >= 0)
             {
                 player.Data.CurMana -= SkillMana;
                 return (int)(PlayerDamage() * damageRatio);
