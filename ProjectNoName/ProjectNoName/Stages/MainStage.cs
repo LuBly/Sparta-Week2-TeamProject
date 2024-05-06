@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Numerics;
+using System.Security.Cryptography;
 
 namespace ProjectNoName
 {
@@ -575,7 +576,13 @@ namespace ProjectNoName
             // 레벨업 했을 때
             if (player.CheckLevelUp())
             {
+                //레벨업 어드밴티지 체력완전회복
+                //if(player.Data.LevelPoint  ==  필요경험치)
+                //Console.WriteLine($"Lv.{player.Data.Level} -> Lv.{player.Data.Level += 1}\n");
+                Console.WriteLine("\n★LEVEL UP!★");                                            
                 Console.WriteLine($"Lv.{originLevel} {player.Data.Name} -> Lv.{player.Data.Level} {player.Data.Name}");
+                player.Data.CurHealth = player.Data.MaxHealth;
+                player.Data.CurMana = player.Data.MaxMana;
             }
             // 레벨업 안했을 때
             else
@@ -583,6 +590,7 @@ namespace ProjectNoName
                 Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             }
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
+            Console.WriteLine($"HP {originMana} -> {player.Data.CurMana}");
             Console.WriteLine($"EXP : {originExp} / {player.levelUpData[originLevel]} -> {player.Data.Exp} / {player.levelUpData[player.Data.Level]}");
             Console.WriteLine();
             Console.WriteLine("[획득 아이템]");
@@ -603,6 +611,7 @@ namespace ProjectNoName
             Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
             Console.WriteLine($"MP {originMana} -> {player.Data.CurMana}");
+            player.Data.CurHealth = 1;
             Utill.ShowNextPage();
         }
 
