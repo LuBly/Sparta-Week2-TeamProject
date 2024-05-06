@@ -141,7 +141,7 @@
                 Console.WriteLine("안녕?");
                 Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 정할 수 있어\n");
 
-                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 저장하기");
+                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 퀘스트\n6. 저장하기");
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">> ");
                 int inputIdx = int.TryParse(Console.ReadLine(), out inputIdx) ? inputIdx : -1;
