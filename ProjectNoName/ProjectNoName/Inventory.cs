@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     public enum InventoryType
     {
@@ -76,6 +74,20 @@ namespace ProjectNoName
             return Data.InventoryItems[idx];
         }
 
+        // 특정 아이템의 개수 카운트
+        public int CountItems(int targetItemId)
+        {
+            int count = 0;
+            foreach (Item item in Data.InventoryItems)
+            {
+                if (item.Data.Id == targetItemId)
+                {
+                    count += item.Data.ItemCount;
+                }
+            }
+            return count;
+        }
+
         /// <summary>
         /// 페이지 출력 관련 함수
         /// </summary>
@@ -106,7 +118,8 @@ namespace ProjectNoName
 
                 Console.WriteLine("\n장착할 장비 또는 사용할 아이템을 선택해주세요.(0 : 뒤로가기)");
                 Console.Write(">> ");
-                int equipIdx = int.Parse(Console.ReadLine());
+                int equipIdx = int.TryParse(Console.ReadLine(), out equipIdx) ? equipIdx : -1;
+
                 // 범위 밖의 번호를 선택했을 때
                 if (equipIdx > CountInventory() || equipIdx < 0)
                 {
@@ -179,7 +192,7 @@ namespace ProjectNoName
 
                 Console.WriteLine("\n장착할 장비 또는 사용할 아이템을 선택해주세요.(0 : 뒤로가기)");
                 Console.Write(">> ");
-                int equipIdx = int.Parse(Console.ReadLine());
+                int equipIdx = int.TryParse(Console.ReadLine(), out equipIdx) ? equipIdx : -1;
                 // 범위 밖의 번호를 선택했을 때
                 if (equipIdx > CountInventory() || equipIdx < 0)
                 {

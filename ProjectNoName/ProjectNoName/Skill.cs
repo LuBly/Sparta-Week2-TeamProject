@@ -52,7 +52,6 @@ namespace ProjectNoName
             if ((player.Data.CurMana - SkillMana) > 0)
             {
                 player.Data.CurMana -= SkillMana;
-                player.Data.ManaAfterSkill = player.Data.CurMana;
                 return (int)(PlayerDamage() * damageRatio);
             }
             // 스킬 시전에 필요한 마나 부족

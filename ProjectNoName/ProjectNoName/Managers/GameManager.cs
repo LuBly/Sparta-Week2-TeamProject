@@ -7,6 +7,7 @@
         Inventory,
         Store,
         Dungeon,
+        Quest,
         Quit,//저장하는 타입
         Load,//불러오는 타입
         StoreBuy,
@@ -20,12 +21,13 @@
         Player player = DataManager.Instance().Player;
         Store store = DataManager.Instance().Store;
         Dungeon dungeon = DataManager.Instance().Dungeon;
+
         // [추가 사항]
         //DataManager - 게임의 모든 정보들을 저장하고 있을 Manager (static)
         public void StartGame()
         {
             ShowStart();
-            
+
             DataManager.Instance().InitData();
             bool isGameOver = false;
 
@@ -57,6 +59,10 @@
                         LoadDungeonMenu();
                         break;
 
+                    case MenuType.Quest:
+                        LoadQuestMenu();
+                        break;
+
                     case MenuType.Quit:
                         DataManager.Instance().SaveData();
                         isGameOver = true;
@@ -69,7 +75,6 @@
 
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
-                        curMenu = MenuType.Store;
                         break;
                 }
                 // 각 절차별 약간의 시간 부여
@@ -130,47 +135,84 @@
         // StartMenu
         void LoadStartMenu()
         {
-            Console.WriteLine("안녕?");
-            Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 정할 수 있어\n");
+            while(true)
+            {
+                Console.Clear();
+                Console.WriteLine("안녕?");
+                Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 정할 수 있어\n");
 
-            Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 저장하기");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            curMenu = (MenuType)int.Parse(Console.ReadLine());
+                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 퀘스트\n6. 저장하기");
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.Write(">> ");
+                int inputIdx = int.TryParse(Console.ReadLine(), out inputIdx) ? inputIdx : -1;
+                if (inputIdx > System.Enum.GetValues(typeof(MenuType)).Length || inputIdx < 0)
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
+                else if (inputIdx == 0)
+                {
+                    LoadStartMenu();
+                    break;
+                }
+                else
+                {
+                    curMenu = (MenuType)inputIdx;
+                    break;
+                }
+            }
         }
-        
+
         // Status 메뉴
         void LoadStatusMenu()
         {
-            DataManager.Instance().Player.ShowStatus();
-            curMenu = (MenuType)Utill.EndMenu();
+            while (true)
+            {
+                Console.Clear();
+
+                DataManager.Instance().Player.ShowStatus();
+                int input = Utill.EndMenu();
+
+                if (input != 0)
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
+                else
+                {
+                    LoadStartMenu();
+                    break;
+                }
+            }
         }
 
         // 인벤토리 기본 메뉴
         void LoadInventoryMenu()
         {
-            // Inventory 초기 화면
-            DataManager.Instance().Player.Data.Inventory.ShowInventory();
             while (true)
             {
-                bool isContinue = true;
-                int choiceIdx = int.Parse(Console.ReadLine());
-                switch (choiceIdx)
-                {
-                    case 0:
-                        isContinue = false;
-                        curMenu = 0;
-                        break;
-                    case 1:
-                        LoadEquipMenu();
-                        break;
-                    //// 소비창
-                    //case 2:
-                    //    LoadConsumableMenu();
-                    //    break;
-                }
+                // Inventory 초기 화면
+                DataManager.Instance().Player.Data.Inventory.ShowInventory();
 
-                if (!isContinue) break;
+                int choiceIdx = int.TryParse(Console.ReadLine(), out choiceIdx) ? choiceIdx : -1;
+                if(choiceIdx == 0)
+                {
+                    curMenu = 0;
+                    break;
+                }
+                else if (choiceIdx == 1)
+                {
+                    LoadEquipMenu();
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
             }
         }
 
@@ -189,11 +231,11 @@
         // 상점 메뉴
         void LoadStoreMenu()
         {
-            store.ShowStore();
             while (true)
             {
+                store.ShowStore();
                 bool isContinue = true;
-                StoreType choiceIdx = (StoreType)int.Parse(Console.ReadLine());
+                StoreType choiceIdx = (StoreType)(int.TryParse(Console.ReadLine(), out int inputIdx) ? inputIdx : -1);
                 switch (choiceIdx)
                 {
                     case 0:
@@ -206,30 +248,204 @@
                     case StoreType.Sell:
                         store.UseStore(StoreType.Sell);
                         break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Thread.Sleep (500);
+                        continue;
                 }
 
                 if (!isContinue) break;
             }
         }
-
+        
+        // 던전 메뉴
         void LoadDungeonMenu()
         {
             while (true)
             {
                 int choiceIdx = dungeon.ShowDungeon();
-                bool isContinue = true;
-                switch (choiceIdx)
+                if(choiceIdx > dungeon.dungeonStage.Count || choiceIdx < 0)
                 {
-                    case 0:
-                        isContinue = false;
-                        curMenu = 0;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
+                else if (choiceIdx == 0)
+                {
+                    curMenu = 0;
+                    break ;
+                }
+                else
+                {
+                    dungeon.ShowStage(choiceIdx);
+                    break;
+                }
+            }
+        }
+
+        // Quest 메뉴
+        void LoadQuestMenu()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("퀘스트 목록");
+
+            // 전체 퀘스트 목록을 가져옴
+            List<Quest> questList = DataManager.Instance()._QuestManager.QuestList;
+
+            // 퀘스트 목록 출력
+            for (int i = 1; i < questList.Count; i++)
+            {
+                Console.Write($"{questList[i].Data.QuestId}. {questList[i].Data.QuestName}");
+                switch (questList[i].Data.QuestProgress)
+                {
+                    case QuestProgress.OnGoing:
+                        Console.WriteLine(" [진행중]");
+                        break;
+                    case QuestProgress.Completion:
+                        Console.WriteLine(" [완료스]");
                         break;
                     default:
-                        dungeon.ShowStage(choiceIdx);
+                        Console.WriteLine();
                         break;
                 }
+            }
+            Console.WriteLine("\n원하시는 퀘스트를 선택해주세요.");
+            Console.WriteLine("0. 돌아가기");
+            Console.Write(">> ");
+            string input = Console.ReadLine();
 
-                if (!isContinue) break;
+            if (int.TryParse(input, out int choiceIdx))
+            {
+                if (choiceIdx >= 0 && choiceIdx < questList.Count)
+                {
+                    if (questList[choiceIdx].Data.QuestProgress == QuestProgress.Completion)
+                    {
+                        Console.WriteLine("해당 퀘스트는 이미 완료하였습니다.");
+                        Thread.Sleep(500);
+                    }
+                    else
+                    {
+                        switch (choiceIdx)
+                        {
+                            case 0:
+                                curMenu = MenuType.Start;
+                                break;
+                            default:
+                                DetailQuest(questList[choiceIdx]);
+                                // 선택한 퀘스트로 이동하는 로직 추가
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다. 범위 내의 숫자를 입력해주세요.");
+                    LoadQuestMenu(); // 재입력 요구
+                }
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다. 숫자를 입력해주세요.");
+                LoadQuestMenu(); // 재입력 요구
+            }
+        }
+        void DetailQuest(Quest quest)
+        {
+            Console.Clear();
+            Console.WriteLine($"퀘스트 이름 : {quest.Data.QuestName}");
+            Console.WriteLine($"\n{quest.Data.QuestDescription}");
+            switch (quest.Data.QuestType)
+            {
+                case QuestType.Collect:
+                    Console.WriteLine($"\n{quest.GetInventoryItemCount()} / {quest.Data.CompletCondition}");
+                    break;
+                case QuestType.Battle:
+                    Console.WriteLine($"\n{quest.KillCount} / {quest.Data.CompletCondition}");
+                    break;
+            }
+
+            // 보상 정보 출력
+            Console.WriteLine($"\n보상");
+            Console.WriteLine($"Gold : {quest.Data.RewardGold}");
+            Console.WriteLine($"Exp : {quest.Data.RewardExp}\n");
+            // 수락 거절 보상받기
+            switch (quest.Data.QuestProgress)
+            {
+                case QuestProgress.NoStart:
+                    Console.WriteLine("1. 수락");
+                    if(quest.Data.QuestType == QuestType.Battle)
+                        quest.AcceptBattleQuest();
+                    break;
+                default:
+                    if (quest.GetInventoryItemCount() < quest.Data.CompletCondition)
+                    {
+                        Console.WriteLine("1. 완료하기");
+                    }
+                    else
+                    {
+                        Console.WriteLine("1. 완료하기");
+                    }
+                    break;
+            }
+
+            Console.WriteLine("0. 뒤로가기");
+            Console.Write(">> ");
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out int choice))
+            {
+                switch (choice)
+                {
+                    case 0:
+                        LoadQuestMenu();
+                        break;
+                    case 1:
+                        switch (quest.Data.QuestProgress)
+                        {
+                            case QuestProgress.NoStart:
+                                Console.WriteLine("퀘스트를 수락합니다.");
+                                // 퀘스트 진행 상태를 변경하고 다른 작업 수행
+                                quest.Data.QuestProgress = QuestProgress.OnGoing;
+                                Thread.Sleep(500);
+                                break;
+                            default:
+                                if (quest.Data.QuestType == QuestType.Collect)
+                                {
+                                    if (quest.GetInventoryItemCount() < quest.Data.CompletCondition)
+                                    {
+                                        Console.WriteLine("퀘스트를 진행중입니다.");
+                                        Thread.Sleep(500);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("퀘스트 클리어!");
+                                        // 퀘스트 완료 상태로 변경하고 다른 작업 수행
+                                        quest.ClearQuest();
+                                        Thread.Sleep(500);
+                                    }
+                                }
+                                else
+                                {
+                                    if (quest.KillCount < quest.Data.CompletCondition)
+                                    {
+                                        Console.WriteLine("퀘스트를 진행중입니다.");
+                                        Thread.Sleep(500);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("퀘스트 클리어!");
+                                        // 퀘스트 완료 상태로 변경하고 다른 작업 수행
+                                        quest.ClearQuest();
+                                        Thread.Sleep(500);
+                                    }
+                                }
+
+                                break;
+                                
+                        }
+                        break;
+                }
             }
         }
     }

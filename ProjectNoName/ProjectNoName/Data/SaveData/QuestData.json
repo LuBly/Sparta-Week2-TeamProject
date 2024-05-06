@@ -1,0 +1,66 @@
+{
+  "QuestList": [
+    {
+      "Data": {
+        "QuestId": 0,
+        "QuestName": null,
+        "QuestDescription": null,
+        "QuestType": 0,
+        "CompletCondition": 0,
+        "QuestProgress": 0,
+        "RewardExp": 0,
+        "RewardGold": 0,
+        "TargetItemId": 0,
+        "TargetMonsterId": 0
+      },
+      "KillCount": 0
+    },
+    {
+      "Data": {
+        "QuestId": 1,
+        "QuestName": "낡은 검 구매하기",
+        "QuestDescription": "낡은 검 구매하기",
+        "QuestType": 0,
+        "CompletCondition": 1,
+        "QuestProgress": 2,
+        "RewardExp": 5,
+        "RewardGold": 100,
+        "TargetItemId": 4,
+        "TargetMonsterId": 0
+      },
+      "KillCount": 0
+    },
+    {
+      "Data": {
+        "QuestId": 2,
+        "QuestName": "미니언 쳐 부수기",
+        "QuestDescription": "미니언 2마리를 나락보내보자",
+        "QuestType": 1,
+        "CompletCondition": 2,
+        "QuestProgress": 1,
+        "RewardExp": 50,
+        "RewardGold": 50,
+        "TargetItemId": 0,
+        "TargetMonsterId": 0
+      },
+      "KillCount": 0
+    }
+  ],
+  "OnGoingBattleQuestList": [
+    {
+      "Data": {
+        "QuestId": 2,
+        "QuestName": "미니언 쳐 부수기",
+        "QuestDescription": "미니언 2마리를 나락보내보자",
+        "QuestType": 1,
+        "CompletCondition": 2,
+        "QuestProgress": 1,
+        "RewardExp": 50,
+        "RewardGold": 50,
+        "TargetItemId": 0,
+        "TargetMonsterId": 0
+      },
+      "KillCount": 0
+    }
+  ]
+}
