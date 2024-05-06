@@ -6,7 +6,8 @@
     {
         Warrior = 1,
         Archer,
-        Magician
+        Magician,
+        TypeEnd,
     }
     public class Player
     {

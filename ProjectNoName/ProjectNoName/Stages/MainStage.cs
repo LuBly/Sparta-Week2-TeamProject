@@ -467,33 +467,6 @@ namespace ProjectNoName
             Utill.ShowNextPage();
         }
 
-        //// 몬스터 별 1번 스킬 피격 결과
-        //void AttackMonster_Skill_1_Result()
-        //{
-        //    if (playerDamage != 0)
-        //    {
-        //        Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name} 을(를) 맞췄습니다. [데미지 : {playerDamage}]");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"[데미지 : {playerDamage}]");
-        //    }
-        //    Console.WriteLine();
-        //    Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name}");
-
-        //    Console.Write($"HP {curMonster.Data.Health} -> ");
-        //    // 데미지 처리 이후 체력이 0 이하라면 사망 처리
-        //    if (curMonster.TakeDamage(playerDamage) <= 0)
-        //    {
-        //        Console.WriteLine("Dead");
-        //    }
-        //    //아니라면 체력 표시
-        //    else
-        //    {
-        //        Console.WriteLine(curMonster.Data.Health);
-        //    }
-        //}
-
         void AttackPlayer(Monster monster)
         {
             Player player = DataManager.Instance().Player;
@@ -524,16 +497,23 @@ namespace ProjectNoName
         // Monster가 모두 죽었는지 체크
         bool CheckAllMonsterDie()
         {
-            bool isAllDie = true;
             for(int i = 1; i < battleMonsters.Count; i++)
             {
                 if (battleMonsters[i].Data.Health > 0)
                 {
-                    isAllDie = false;
-                    break;
+                    return false;
                 }
             }
-            return isAllDie;
+
+            for (int i = 1; i < battleMonsters.Count; i++)
+            {
+                foreach(Quest quest in DataManager.Instance()._QuestManager.OnGoingBattleQuestList)
+                {
+                    quest.UpdateKillCount(battleMonsters[i].Data.MonsterId);
+                }
+            }
+
+            return true;
         }
 
         protected override void StageClear()
