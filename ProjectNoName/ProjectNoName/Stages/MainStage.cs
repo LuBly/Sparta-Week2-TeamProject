@@ -20,7 +20,7 @@ namespace ProjectNoName
         
         // 스킬 입력 index
         int skillIdx;
-
+        float originMana;
         // battle에서 사용할 몬스터 List
         List<Monster> battleMonsters;
         int stageIdx;
@@ -360,8 +360,8 @@ namespace ProjectNoName
             Console.WriteLine("[전투정보]");
             Monster curMonster = battleMonsters[monsterIdx];
             Console.Write($"{player.Data.Name} 의 공격!\n");
+            originMana = player.Data.CurMana;
             int playerDamage = player.GetSkillDamage(skillIdx);  // *치명타 문구 출력*
-            float originMana = player.Data.CurMana;
             if(playerDamage != 0)
             {
                 Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name} 을(를) 맞췄습니다. [데미지 : {playerDamage}]");
@@ -388,8 +388,7 @@ namespace ProjectNoName
             Console.WriteLine() ;
             if(playerDamage != 0)
             {
-                Console.WriteLine($"MP {originMana} -> {player.Data.ManaAfterSkill}");
-                player.Data.CurMana = player.Data.ManaAfterSkill;
+                Console.WriteLine($"MP {originMana} -> {player.Data.CurMana}");
             }
             //스킬 시전 실패시 마나 표시
             else
@@ -410,6 +409,7 @@ namespace ProjectNoName
             Console.WriteLine();
             Console.WriteLine("[전투정보]");
             Console.Write($"{player.Data.Name} 의 공격!\n");
+            originMana = player.Data.CurMana;
             int playerDamage = player.GetSkillDamage(skillIdx);  // *치명타 문구 출력*
             Console.WriteLine();
 
@@ -449,8 +449,7 @@ namespace ProjectNoName
             // 스킬 시전 성공시 마나 표시
             if (playerDamage != 0)
             {
-                Console.WriteLine($"MP {originMana} -> {player.Data.ManaAfterSkill}");
-                player.Data.CurMana = player.Data.ManaAfterSkill;
+                Console.WriteLine($"MP {originMana} -> {player.Data.CurMana}");
             }
             //스킬 시전 실패시 마나 표시
             else
