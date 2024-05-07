@@ -1,4 +1,6 @@
-﻿namespace ProjectNoName
+﻿using static ProjectNoName.Utill;
+
+namespace ProjectNoName
 {
     // 직업 종류
     // 차후 클래스 선택
@@ -73,14 +75,27 @@
         {
             Console.WriteLine("[내 정보]");
             // Lv
-            Console.WriteLine($"Lv. {Data.Level} [exp. {Data.Exp}]");
+            Console.WriteLine($"Lv. {Data.Level} [exp. " + ConsoleColors.Green + $"{Data.Exp}" + ConsoleColors.Reset + "]");
             // 직업
-            Console.WriteLine($"{Data.Name} : {Data.ClassType}");
+            switch (Data.ClassType)
+            {
+                case ClassType.Warrior:
+                    Console.WriteLine($"{Data.Name} :" + ConsoleColors.Red + $" {Data.ClassType}" + ConsoleColors.Reset);
+                    break;
+
+                case ClassType.Archer:
+                    Console.WriteLine($"{Data.Name} :" + ConsoleColors.Green + $" {Data.ClassType}" + ConsoleColors.Reset);
+                    break;
+
+                case ClassType.Magician:
+                    Console.WriteLine($"{Data.Name} :" + ConsoleColors.Purple + $" {Data.ClassType}" + ConsoleColors.Reset);
+                    break;
+            }
             // 공격력
-            Console.Write($"공격력 : {Data.AttackPower}");
+            Console.Write("공격력 : " + $"{Data.AttackPower}");
             if (Data.IncreaseAttack > 0)
             {
-                Console.WriteLine($" + ({Data.IncreaseAttack})");
+                Console.WriteLine($" + ("+ ConsoleColors.Red + $"{Data.IncreaseAttack}" + ConsoleColors.Reset + ")");
             }
             else
             {
@@ -90,7 +105,7 @@
             Console.Write($"방어력 : {Data.DefensePower}");
             if (Data.IncreaseDefense > 0)
             {
-                Console.WriteLine($" + ({Data.IncreaseDefense})");
+                Console.WriteLine($" + ("+ ConsoleColors.Blue + $"{Data.IncreaseDefense}" + ConsoleColors.Reset + ")");
             }
             else
             {
@@ -106,13 +121,13 @@
             Console.WriteLine($"회피율: {Data.EvasionRate}%");
 
             // 체력
-            Console.WriteLine($"체 력 : {Data.CurHealth}");
+            Console.WriteLine($"체 력 : " + ConsoleColors.Green + $"{Data.CurHealth}" + ConsoleColors.Reset);
 
             // 마나
-            Console.WriteLine($"마 나 : {Data.CurMana}");
+            Console.WriteLine($"마 나 : " + ConsoleColors.Cyan + $"{Data.CurMana}" + ConsoleColors.Reset);
 
             // 소유 gold
-            Console.WriteLine($"Gold : {Data.Gold}");
+            Console.WriteLine($"Gold : " +ConsoleColors.Yellow+ $"{Data.Gold}" + ConsoleColors.Reset);
 
             Console.WriteLine();
             Console.WriteLine("[장착 장비]");

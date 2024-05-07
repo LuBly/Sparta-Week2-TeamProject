@@ -1,4 +1,6 @@
-﻿namespace ProjectNoName
+﻿using static ProjectNoName.Utill;
+
+namespace ProjectNoName
 {
     public enum MenuType
     {
@@ -85,8 +87,40 @@
         void ShowStart()
         {
             Console.Clear();
-            Console.WriteLine("NoName\n");
-            Console.WriteLine("\n1. 새로운 게임\n2. 계 속 하 기\n3. 게 임 종 료");
+            Console.WriteLine(ConsoleColors.Purple + 
+            @"                                                                                                
+                    b.             8     ,o888888o.                                             
+                    888o.          8  . 8888     `88.                                           
+                    Y88888o.       8 ,8 8888       `8b                                          
+                    .`Y888888o.    8 88 8888        `8b                                         
+                    8o. `Y888888o. 8 88 8888         88                                         
+                    8`Y8o. `Y88888o8 88 8888         88                                         
+                    8   `Y8o. `Y8888 88 8888        ,8P                                         
+                    8      `Y8o. `Y8 `8 8888       ,8P     .         .                          
+          b.        8    8    `Y8o.`.8. 8888     ,88'     ,8.       ,8.          8 8888888888   
+          888o.     8    8       `Y.888. `8888888P'      ,888.     ,888.         8 8888         
+          Y88888o.       8        :88888.               .`8888.   .`8888.        8 8888         
+          .`Y888888o.    8       . `88888.             ,8.`8888. ,8.`8888.       8 8888         
+          8o. `Y888888o. 8      .8. `88888.           ,8'8.`8888,8^8.`8888.      8 888888888888 
+          8`Y8o. `Y88888o8     .8`8. `88888.         ,8' `8.`8888' `8.`8888.     8 8888         
+          8   `Y8o. `Y8888    .8' `8. `88888.       ,8'   `8.`88'   `8.`8888.    8 8888         
+          8      `Y8o. `Y8   .8'   `8. `88888.     ,8'     `8.`'     `8.`8888.   8 8888         
+          8         `Y8o.`  .888888888. `88888.   ,8'       `8        `8.`8888.  8 8888         
+          8         8 888888888o.   8`888888888o ,8'   ,o888888o.      `8.`8888. 8 888888888888 
+                    8 8888    `88.  8 8888    `88.    8888     `88.                             
+                    8 8888     `88  8 8888     `88 ,8 8888       `8.                            
+                    8 8888     ,88  8 8888     ,88 88 8888                                      
+                    8 8888.   ,88'  8 8888.   ,88' 88 8888                                      
+                    8 888888888P'   8 888888888P'  88 8888                                      
+                    8 8888`8b       8 8888         88 8888   8888888                            
+                    8 8888 `8b.     8 8888         `8 8888       .8'                            
+                    8 8888   `8b.   8 8888            8888     ,88'                             
+                    8 8888     `88. 8 8888             `8888888P'                               " + ConsoleColors.Reset);
+            Console.WriteLine("");
+            Console.Write("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+            Console.WriteLine("\n                                        1. 새로운 게임\n                                        ㅡㅡㅡㅡㅡㅡㅡ\n                                        2. 계 속 하 기\n                                        ㅡㅡㅡㅡㅡㅡㅡ\n                                        3. 게 임 종 료\n");
+            Console.Write("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+            Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
 
@@ -137,11 +171,11 @@
         {
             while(true)
             {
-                Console.Clear();
-                Console.WriteLine("안녕?");
-                Console.WriteLine("이곳에서 던전으로 들어가기 전 활동을 정할 수 있어\n");
+                Console.WriteLine(ConsoleColors.Red + "                        아!@$#ㄴ%ㄴ#$ㅕ#$%ㅇ?" + ConsoleColors.Reset);
+                Console.WriteLine(ConsoleColors.Red + "             던전!@$%을 클리#^#$%어해서 우리%$게임의 이름을 되#$%#$찾아줘!!" + ConsoleColors.Reset);
+                Console.WriteLine(ConsoleColors.Red + "                                         여기!2는 마$을이@#야... 행#동을 선$%택해줘..\n" + ConsoleColors.Reset);
 
-                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 퀘스트\n6. 저장하기");
+                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 퀘스트\n6. 저장 후 종료하기");
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">> ");
                 int inputIdx = int.TryParse(Console.ReadLine(), out inputIdx) ? inputIdx : -1;
@@ -300,10 +334,10 @@
                 switch (questList[i].Data.QuestProgress)
                 {
                     case QuestProgress.OnGoing:
-                        Console.WriteLine(" [진행중]");
+                        Console.WriteLine(ConsoleColors.Yellow + " [진행중]" + ConsoleColors.Reset);
                         break;
                     case QuestProgress.Completion:
-                        Console.WriteLine(" [완료스]");
+                        Console.WriteLine(ConsoleColors.Green + " [완료]" + ConsoleColors.Reset);
                         break;
                     default:
                         Console.WriteLine();
