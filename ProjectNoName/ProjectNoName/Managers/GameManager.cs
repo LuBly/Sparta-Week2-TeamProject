@@ -171,9 +171,9 @@ namespace ProjectNoName
         {
             while(true)
             {
-                Console.WriteLine("아!@$#ㄴ%ㄴ#$ㅕ#$%ㅇ?");
-                Console.WriteLine("던전!@$%을 클리#^#$%어해서 우리%$게임의 이름을 되#$%#$찾아줘!!");
-                Console.WriteLine("여기!2는 마$을이@#야... 행#동을 선$%택해줘..");
+                Console.WriteLine(ConsoleColors.Red + "                        아!@$#ㄴ%ㄴ#$ㅕ#$%ㅇ?" + ConsoleColors.Reset);
+                Console.WriteLine(ConsoleColors.Red + "             던전!@$%을 클리#^#$%어해서 우리%$게임의 이름을 되#$%#$찾아줘!!" + ConsoleColors.Reset);
+                Console.WriteLine(ConsoleColors.Red + "                                         여기!2는 마$을이@#야... 행#동을 선$%택해줘..\n" + ConsoleColors.Reset);
 
                 Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 퀘스트\n6. 저장 후 종료하기");
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
