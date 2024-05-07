@@ -169,6 +169,7 @@ namespace ProjectNoName
         // StartMenu
         void LoadStartMenu()
         {
+            Console.Clear ();
             while(true)
             {
                 Console.WriteLine(ConsoleColors.Red + "                        아!@$#ㄴ%ㄴ#$ㅕ#$%ㅇ?" + ConsoleColors.Reset);
