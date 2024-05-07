@@ -166,6 +166,13 @@ namespace ProjectNoName
         //적 선택지 + 전투 진행 여부 파악
         public void ChoiceEnemy()
         {
+            //몬스터 생존 여부 판단
+            bool[] monsterSurvive = new bool[monsterList.Count];
+            for (int j = 0; j < monsterList.Count; j++)
+            {
+                monsterSurvive[j] = false;   //몬스터 생존시 false               
+            }
+
             int countNum = monsterList.Count;
             int enemyChoiceIdx;
             int minAtkValue = (int)Math.Ceiling(player.GetPlayerAttack() * 0.9f);
@@ -183,8 +190,7 @@ namespace ProjectNoName
                     {
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.Write($"Lv.{monsterList[i].tutorialMonsterLv} {monsterList[i].tutorialMonsterName} ");
-                        Console.WriteLine("[DEAD]");
-                        countNum--;
+                        Console.WriteLine("[DEAD]");                       
                         Console.ResetColor();
                     }
                     else
@@ -196,7 +202,7 @@ namespace ProjectNoName
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
                 Console.WriteLine($"Lv.{player.Data.Level}  {player.Data.Name} ({player.Data.ClassType})");
-                Console.WriteLine($"HP 100/{player.Data.CurHealth}");
+                Console.WriteLine($"HP {player.Data.CurHealth} / {player.Data.MaxHealth} ");
                 Console.WriteLine("\n0. 나가기\n");
                 Console.WriteLine("대상을 선택하세요.");
                 Console.Write(">> ");
@@ -239,6 +245,19 @@ namespace ProjectNoName
                         }
                         PlayerCalculateMiddleResult(enemyChoiceIdx - 1, monsterList[enemyChoiceIdx - 1].TakeHit(resultAtkValue));
                         MonsterCalculateMiddleResult("atk");
+
+                        for (int i = 0; i < monsterList.Count; i++)
+                        {
+                            if (monsterList[i].tutorialMonsterHealth <= 0)
+                            {
+                                if (monsterSurvive[i] == true)
+                                {
+                                    continue;
+                                }
+                                monsterSurvive[i] = true;
+                                countNum--;
+                            }
+                        }
                     }
                 }
 
@@ -369,7 +388,7 @@ namespace ProjectNoName
                 //{Console.WriteLine("축하합니다 레벨업하셨습니다.\n");
                 //Console.WriteLine($"Lv.{player.Data.Level} -> Lv.{player.Data.Level += 1}\n");
                 //player.Data.CurHealth = 100;} //레벨업 어드밴티지 체력완전회복
-                Console.WriteLine($"HP 100/{player.Data.CurHealth}");
+                Console.WriteLine($"HP {player.Data.CurHealth} / {player.Data.MaxHealth} ");
                 Console.WriteLine("보상: 1000G \n");
                 Console.WriteLine($"{player.Data.Gold}G -> {player.Data.Gold += 1000f}G\n");
                 Console.WriteLine("0. 다음\n");
