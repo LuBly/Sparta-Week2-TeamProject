@@ -22,7 +22,8 @@
 
 우선 순위를 기반으로 개발을 진행
 
-[게임 동영상을 넣을 예정입니다.]
+https://www.youtube.com/watch?v=w_qAetz0Ti4
+
 
 - 개발 내역
     - 필수 구현 과제
