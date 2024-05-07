@@ -37,30 +37,14 @@
         "QuestDescription": "미니언 2마리를 나락보내보자",
         "QuestType": 1,
         "CompletCondition": 2,
-        "QuestProgress": 1,
+        "QuestProgress": 2,
         "RewardExp": 50,
         "RewardGold": 50,
         "TargetItemId": 0,
         "TargetMonsterId": 0
       },
-      "KillCount": 0
+      "KillCount": 3
     }
   ],
-  "OnGoingBattleQuestList": [
-    {
-      "Data": {
-        "QuestId": 2,
-        "QuestName": "미니언 쳐 부수기",
-        "QuestDescription": "미니언 2마리를 나락보내보자",
-        "QuestType": 1,
-        "CompletCondition": 2,
-        "QuestProgress": 1,
-        "RewardExp": 50,
-        "RewardGold": 50,
-        "TargetItemId": 0,
-        "TargetMonsterId": 0
-      },
-      "KillCount": 0
-    }
-  ]
+  "OnGoingBattleQuestList": []
 }
