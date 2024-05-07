@@ -118,7 +118,8 @@
 
                 Console.WriteLine("\n장착할 장비 또는 사용할 아이템을 선택해주세요.(0 : 뒤로가기)");
                 Console.Write(">> ");
-                int equipIdx = int.Parse(Console.ReadLine());
+                int equipIdx = int.TryParse(Console.ReadLine(), out equipIdx) ? equipIdx : -1;
+
                 // 범위 밖의 번호를 선택했을 때
                 if (equipIdx > CountInventory() || equipIdx < 0)
                 {
@@ -191,7 +192,7 @@
 
                 Console.WriteLine("\n장착할 장비 또는 사용할 아이템을 선택해주세요.(0 : 뒤로가기)");
                 Console.Write(">> ");
-                int equipIdx = int.Parse(Console.ReadLine());
+                int equipIdx = int.TryParse(Console.ReadLine(), out equipIdx) ? equipIdx : -1;
                 // 범위 밖의 번호를 선택했을 때
                 if (equipIdx > CountInventory() || equipIdx < 0)
                 {

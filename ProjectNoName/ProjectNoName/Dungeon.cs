@@ -2,7 +2,7 @@
 {
     public class Dungeon
     {
-        List<Stage> dungeonStage;
+        public List<Stage> dungeonStage;
         bool isFirst = true;
         // 던전 스테이지 정보 입력 DB 생성
         void CreateStage()

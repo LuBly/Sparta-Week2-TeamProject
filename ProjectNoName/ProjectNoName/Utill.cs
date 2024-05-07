@@ -7,7 +7,7 @@
             Console.WriteLine("\n0. 나가기");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
-            return int.Parse(Console.ReadLine());
+            return int.TryParse(Console.ReadLine(), out int inputIdx) ? inputIdx : -1;
         }
 
         public static void ShowNextPage()

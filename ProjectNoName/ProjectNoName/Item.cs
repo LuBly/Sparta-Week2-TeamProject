@@ -325,7 +325,7 @@ namespace ProjectNoName
             Data.IsPurchased = false;
             DataManager.Instance().Player.Data.Gold += Data.Price;
             DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
-            if (Data.ItemCount <= 0)
+            if ((Data.ItemCount <= 0) && (Data.IsEquiped == true))
             {
                 UnEquipItem(Data.ItemType);
             }

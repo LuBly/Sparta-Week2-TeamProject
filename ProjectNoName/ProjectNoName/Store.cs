@@ -126,7 +126,7 @@
                     {
                         Console.WriteLine("구매 갯수를 입력해주세요");
                         Console.Write(">> ");
-                        int amountIdx = int.TryParse(Console.ReadLine(), out choiceIdx) ? choiceIdx : -1;
+                        int amountIdx = int.TryParse(Console.ReadLine(), out amountIdx) ? amountIdx : -1;
                         if (amountIdx <= 0)
                         {
                             Console.WriteLine("잘못된 입력입니다.");
@@ -184,11 +184,12 @@
                 Console.Write(">> ");
                 int choiceIdx = int.TryParse(Console.ReadLine(), out choiceIdx) ? choiceIdx : -1;
                 // 범위 밖의 번호를 선택했을 때
-                if (choiceIdx > player.Data.Inventory.CountInventory() || choiceIdx < 0)
+                if (choiceIdx < player.Data.Inventory.CountInventory() && choiceIdx > 0)
                 {
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Thread.Sleep(500);
-                    continue;
+                    Item curItem = player.Data.Inventory.ChooceItem(choiceIdx);
+                    curItem.SellItem();
+                    Thread.Sleep(1000);
+                    break;
                 }
                 // 0을 선택했을 때
                 else if (choiceIdx == 0)
@@ -200,12 +201,10 @@
                 // 장비를 선택했을 때
                 else
                 {
-                    Item curItem = player.Data.Inventory.ChooceItem(choiceIdx);
-                    curItem.SellItem();
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
                 }
-
-                // 약간의 Delay 부여
-                Thread.Sleep(500);
             }
         }
     }

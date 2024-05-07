@@ -77,7 +77,6 @@ namespace ProjectNoName
 
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
-                        curMenu = MenuType.Store;
                         break;
                 }
                 // 각 절차별 약간의 시간 부여
@@ -170,48 +169,84 @@ namespace ProjectNoName
         // StartMenu
         void LoadStartMenu()
         {
-            Console.WriteLine("아!@$#ㄴ%ㄴ#$ㅕ#$%ㅇ?");
-            Console.WriteLine("던전!@$%을 클리#^#$%어해서 우리%$게임의 이름을 되#$%#$찾아줘!!");
-            Console.WriteLine("여기!2는 마$을이@#야... 행#동을 선$%택해줘..");
+            while(true)
+            {
+                Console.WriteLine("아!@$#ㄴ%ㄴ#$ㅕ#$%ㅇ?");
+                Console.WriteLine("던전!@$%을 클리#^#$%어해서 우리%$게임의 이름을 되#$%#$찾아줘!!");
+                Console.WriteLine("여기!2는 마$을이@#야... 행#동을 선$%택해줘..");
 
-            Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 퀘스트\n6. 저장 후 종료하기");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.Write(">> ");
-            curMenu = (MenuType)int.Parse(Console.ReadLine());
+                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전입장\n5. 퀘스트\n6. 저장 후 종료하기");
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.Write(">> ");
+                int inputIdx = int.TryParse(Console.ReadLine(), out inputIdx) ? inputIdx : -1;
+                if (inputIdx > System.Enum.GetValues(typeof(MenuType)).Length || inputIdx < 0)
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
+                else if (inputIdx == 0)
+                {
+                    LoadStartMenu();
+                    break;
+                }
+                else
+                {
+                    curMenu = (MenuType)inputIdx;
+                    break;
+                }
+            }
         }
 
         // Status 메뉴
         void LoadStatusMenu()
         {
-            DataManager.Instance().Player.ShowStatus();
-            curMenu = (MenuType)Utill.EndMenu();
+            while (true)
+            {
+                Console.Clear();
+
+                DataManager.Instance().Player.ShowStatus();
+                int input = Utill.EndMenu();
+
+                if (input != 0)
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
+                else
+                {
+                    LoadStartMenu();
+                    break;
+                }
+            }
         }
 
         // 인벤토리 기본 메뉴
         void LoadInventoryMenu()
         {
-            // Inventory 초기 화면
-            DataManager.Instance().Player.Data.Inventory.ShowInventory();
             while (true)
             {
-                bool isContinue = true;
-                int choiceIdx = int.Parse(Console.ReadLine());
-                switch (choiceIdx)
-                {
-                    case 0:
-                        isContinue = false;
-                        curMenu = 0;
-                        break;
-                    case 1:
-                        LoadEquipMenu();
-                        break;
-                        //// 소비창
-                        //case 2:
-                        //    LoadConsumableMenu();
-                        //    break;
-                }
+                // Inventory 초기 화면
+                DataManager.Instance().Player.Data.Inventory.ShowInventory();
 
-                if (!isContinue) break;
+                int choiceIdx = int.TryParse(Console.ReadLine(), out choiceIdx) ? choiceIdx : -1;
+                if(choiceIdx == 0)
+                {
+                    curMenu = 0;
+                    break;
+                }
+                else if (choiceIdx == 1)
+                {
+                    LoadEquipMenu();
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
             }
         }
 
@@ -230,11 +265,11 @@ namespace ProjectNoName
         // 상점 메뉴
         void LoadStoreMenu()
         {
-            store.ShowStore();
             while (true)
             {
+                store.ShowStore();
                 bool isContinue = true;
-                StoreType choiceIdx = (StoreType)int.Parse(Console.ReadLine());
+                StoreType choiceIdx = (StoreType)(int.TryParse(Console.ReadLine(), out int inputIdx) ? inputIdx : -1);
                 switch (choiceIdx)
                 {
                     case 0:
@@ -247,6 +282,10 @@ namespace ProjectNoName
                     case StoreType.Sell:
                         store.UseStore(StoreType.Sell);
                         break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        Thread.Sleep (500);
+                        continue;
                 }
 
                 if (!isContinue) break;
@@ -259,19 +298,22 @@ namespace ProjectNoName
             while (true)
             {
                 int choiceIdx = dungeon.ShowDungeon();
-                bool isContinue = true;
-                switch (choiceIdx)
+                if(choiceIdx > dungeon.dungeonStage.Count || choiceIdx < 0)
                 {
-                    case 0:
-                        isContinue = false;
-                        curMenu = 0;
-                        break;
-                    default:
-                        dungeon.ShowStage(choiceIdx);
-                        break;
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
+                    continue;
                 }
-
-                if (!isContinue) break;
+                else if (choiceIdx == 0)
+                {
+                    curMenu = 0;
+                    break ;
+                }
+                else
+                {
+                    dungeon.ShowStage(choiceIdx);
+                    break;
+                }
             }
         }
 
