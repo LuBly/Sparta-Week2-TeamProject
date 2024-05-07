@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Numerics;
+using System.Security.Cryptography;
 
 namespace ProjectNoName
 {
@@ -20,7 +21,7 @@ namespace ProjectNoName
         
         // 스킬 입력 index
         int skillIdx;
-
+        float originMana;
         // battle에서 사용할 몬스터 List
         List<Monster> battleMonsters;
         int stageIdx;
@@ -184,7 +185,7 @@ namespace ProjectNoName
             Console.WriteLine("\n0. 취소 \n");
             Console.WriteLine("스킬을 선택해주세요.");
             Console.Write(">>");
-            skillIdx = int.Parse(Console.ReadLine());
+            skillIdx = int.TryParse(Console.ReadLine(), out skillIdx) ? skillIdx : -1;
             // 취소일경우
             if (skillIdx == 0)
             {
@@ -330,7 +331,15 @@ namespace ProjectNoName
             // 범위 내의 값을 선택한 경우
             else if (monsterIdx > 0 && monsterIdx < battleMonsters.Count)
             {
-                AttackMonster_Skill_2_3(monsterIdx, skillIdx);
+                if (battleMonsters[monsterIdx].Data.Health > 0) 
+                    AttackMonster_Skill_2_3(monsterIdx, skillIdx);
+                else
+                {
+                    Console.WriteLine("\n[이미 죽은 대상입니다!]");
+                    Thread.Sleep(500);
+                    ShowPlayerAttack();
+                }
+                
             }
             // 범위 밖의 값을 선택한 경우
             else
@@ -352,6 +361,7 @@ namespace ProjectNoName
             Console.WriteLine("[전투정보]");
             Monster curMonster = battleMonsters[monsterIdx];
             Console.Write($"{player.Data.Name} 의 공격!\n");
+            originMana = player.Data.CurMana;
             int playerDamage = player.GetSkillDamage(skillIdx);  // *치명타 문구 출력*
             if(playerDamage != 0)
             {
@@ -379,8 +389,7 @@ namespace ProjectNoName
             Console.WriteLine() ;
             if(playerDamage != 0)
             {
-                Console.WriteLine($"MP {player.Data.CurMana} -> {player.Data.ManaAfterSkill}");
-                player.Data.CurMana = player.Data.ManaAfterSkill;
+                Console.WriteLine($"MP {originMana} -> {player.Data.CurMana}");
             }
             //스킬 시전 실패시 마나 표시
             else
@@ -401,6 +410,7 @@ namespace ProjectNoName
             Console.WriteLine();
             Console.WriteLine("[전투정보]");
             Console.Write($"{player.Data.Name} 의 공격!\n");
+            originMana = player.Data.CurMana;
             int playerDamage = player.GetSkillDamage(skillIdx);  // *치명타 문구 출력*
             Console.WriteLine();
 
@@ -440,8 +450,7 @@ namespace ProjectNoName
             // 스킬 시전 성공시 마나 표시
             if (playerDamage != 0)
             {
-                Console.WriteLine($"MP {player.Data.CurMana} -> {player.Data.ManaAfterSkill}");
-                player.Data.CurMana = player.Data.ManaAfterSkill;
+                Console.WriteLine($"MP {originMana} -> {player.Data.CurMana}");
             }
             //스킬 시전 실패시 마나 표시
             else
@@ -465,33 +474,6 @@ namespace ProjectNoName
             
             Utill.ShowNextPage();
         }
-
-        //// 몬스터 별 1번 스킬 피격 결과
-        //void AttackMonster_Skill_1_Result()
-        //{
-        //    if (playerDamage != 0)
-        //    {
-        //        Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name} 을(를) 맞췄습니다. [데미지 : {playerDamage}]");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"[데미지 : {playerDamage}]");
-        //    }
-        //    Console.WriteLine();
-        //    Console.WriteLine($"Lv.{curMonster.Data.Level} {curMonster.Data.Name}");
-
-        //    Console.Write($"HP {curMonster.Data.Health} -> ");
-        //    // 데미지 처리 이후 체력이 0 이하라면 사망 처리
-        //    if (curMonster.TakeDamage(playerDamage) <= 0)
-        //    {
-        //        Console.WriteLine("Dead");
-        //    }
-        //    //아니라면 체력 표시
-        //    else
-        //    {
-        //        Console.WriteLine(curMonster.Data.Health);
-        //    }
-        //}
 
         void AttackPlayer(Monster monster)
         {
@@ -523,16 +505,23 @@ namespace ProjectNoName
         // Monster가 모두 죽었는지 체크
         bool CheckAllMonsterDie()
         {
-            bool isAllDie = true;
             for(int i = 1; i < battleMonsters.Count; i++)
             {
                 if (battleMonsters[i].Data.Health > 0)
                 {
-                    isAllDie = false;
-                    break;
+                    return false;
                 }
             }
-            return isAllDie;
+
+            for (int i = 1; i < battleMonsters.Count; i++)
+            {
+                foreach(Quest quest in DataManager.Instance()._QuestManager.OnGoingBattleQuestList)
+                {
+                    quest.UpdateKillCount(battleMonsters[i].Data.MonsterId);
+                }
+            }
+
+            return true;
         }
 
         protected override void StageClear()
@@ -564,8 +553,10 @@ namespace ProjectNoName
             // 정보 처리
             player.Data.Exp += totalRewardExp;
             player.Data.Gold += totalRewardGold;
-
-
+            if(stageIdx == player.Data.MaxStage)
+            {
+                player.Data.MaxStage++;
+            }
             // 출력
             Console.WriteLine($"{stageName} [{stageIdx}]에서 몬스터 {battleMonsters.Count - 1}마리를 잡았습니다.");
             Console.WriteLine();
@@ -574,7 +565,13 @@ namespace ProjectNoName
             // 레벨업 했을 때
             if (player.CheckLevelUp())
             {
+                //레벨업 어드밴티지 체력완전회복
+                //if(player.Data.LevelPoint  ==  필요경험치)
+                //Console.WriteLine($"Lv.{player.Data.Level} -> Lv.{player.Data.Level += 1}\n");
+                Console.WriteLine("\n★LEVEL UP!★");                                            
                 Console.WriteLine($"Lv.{originLevel} {player.Data.Name} -> Lv.{player.Data.Level} {player.Data.Name}");
+                player.Data.CurHealth = player.Data.MaxHealth;
+                player.Data.CurMana = player.Data.MaxMana;
             }
             // 레벨업 안했을 때
             else
@@ -582,6 +579,7 @@ namespace ProjectNoName
                 Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             }
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
+            Console.WriteLine($"HP {originMana} -> {player.Data.CurMana}");
             Console.WriteLine($"EXP : {originExp} / {player.levelUpData[originLevel]} -> {player.Data.Exp} / {player.levelUpData[player.Data.Level]}");
             Console.WriteLine();
             Console.WriteLine("[획득 아이템]");
@@ -590,7 +588,7 @@ namespace ProjectNoName
             foreach(var item in rewardItems)
             {
                 player.Data.Inventory.AddItem(item);
-                Console.WriteLine(item.Data.Name);
+                Console.WriteLine($"-{item.Data.Name}");
             }
         }
 
@@ -602,6 +600,7 @@ namespace ProjectNoName
             Console.WriteLine($"Lv.{player.Data.Level} {player.Data.Name}");
             Console.WriteLine($"HP {originHealth} -> {player.Data.CurHealth}");
             Console.WriteLine($"MP {originMana} -> {player.Data.CurMana}");
+            player.Data.CurHealth = 1;
             Utill.ShowNextPage();
         }
 

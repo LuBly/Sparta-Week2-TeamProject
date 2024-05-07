@@ -126,7 +126,7 @@ namespace ProjectNoName
             {
                 BattleScene();
 
-                int batlleChoiceIdx = int.Parse(Console.ReadLine());
+                int batlleChoiceIdx = int.TryParse(Console.ReadLine(), out batlleChoiceIdx) ? batlleChoiceIdx : -1;
                 if (batlleChoiceIdx > 2 || batlleChoiceIdx < 0)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
@@ -209,7 +209,7 @@ namespace ProjectNoName
                 
                 int resultAtkValue = random.Next(minAtkValue, maxAtkValue + 1);
 
-                enemyChoiceIdx = int.Parse(Console.ReadLine());
+                enemyChoiceIdx = int.TryParse(Console.ReadLine(), out enemyChoiceIdx) ? enemyChoiceIdx : -1;
                 if (enemyChoiceIdx > 3 || enemyChoiceIdx < 0)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
@@ -417,7 +417,7 @@ namespace ProjectNoName
         {
             while (true)
             {
-                int nextButton = int.Parse(Console.ReadLine());
+                int nextButton = int.TryParse(Console.ReadLine(), out nextButton) ? nextButton : -1;
                 if (nextButton == 0)
                 {
                     break;

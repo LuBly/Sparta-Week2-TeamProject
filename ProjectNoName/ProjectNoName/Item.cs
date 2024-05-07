@@ -269,11 +269,18 @@ namespace ProjectNoName
                 Console.SetCursorPosition(100, originRow);
                 Console.WriteLine($"| {Data.ItemCount}개");
             }
+            Utill.ShowInventoryLine();
         }
 
         public bool CanBuy()
         {
             return DataManager.Instance().Player.Data.Gold >= Data.Price;
+        }
+
+        // 표션 복수구매 확인용
+        public bool CanBuy(int amountIdx)
+        {
+            return DataManager.Instance().Player.Data.Gold >= amountIdx * Data.Price;
         }
 
         // 구매 관련
@@ -291,7 +298,25 @@ namespace ProjectNoName
             }
             DataManager.Instance().Player.Data.Gold -= Data.Price;
             DataManager.Instance().Player.Data.Inventory.AddItem(this);
-            Console.WriteLine($"{Data.Name}를 구매했습니다.");
+            Console.WriteLine($"{Data.Name}을(를) 구매했습니다.");
+        }
+
+        public void BuyItem(int amountIdx)
+        {
+            // 장비이면 중복구매 불가
+            if (Data.ItemType == ItemType.Weapon || Data.ItemType == ItemType.Armor)
+            {
+                Data.IsPurchased = true;
+            }
+            // 이외 포션은 중복구매 가능
+            else
+            {
+                Data.IsPurchased = false;
+            }
+            // 포션 복수구매
+            DataManager.Instance().Player.Data.Gold -= amountIdx * Data.Price;
+            DataManager.Instance().Player.Data.Inventory.AddItem(this, amountIdx);
+            Console.WriteLine($"{Data.Name}을(를) {amountIdx}개 구매했습니다.");
         }
 
         // 판매 관련
@@ -300,7 +325,7 @@ namespace ProjectNoName
             Data.IsPurchased = false;
             DataManager.Instance().Player.Data.Gold += Data.Price;
             DataManager.Instance().Player.Data.Inventory.RemoveItem(this);
-            if (Data.ItemCount <= 0)
+            if ((Data.ItemCount <= 0) && (Data.IsEquiped == true))
             {
                 UnEquipItem(Data.ItemType);
             }

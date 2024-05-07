@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-using System.Runtime.ConstrainedExecution;
-using System.Threading;
+﻿using static ProjectNoName.Utill;
 
 namespace ProjectNoName
 {
@@ -10,7 +8,8 @@ namespace ProjectNoName
     {
         Warrior = 1,
         Archer,
-        Magician
+        Magician,
+        TypeEnd,
     }
     public class Player
     {
@@ -67,23 +66,36 @@ namespace ProjectNoName
             Data.MaxHealth = 100;
             Data.CurHealth = Data.MaxHealth;
             Data.Gold = 2500f;
-
+            Data.MaxStage = 1;
             // idx맞추기용 더미데이터 입력.
             Data.Inventory.AddItem(new Item());
         }
 
         public void ShowStatus()
         {
-            Console.WriteLine("[상태 보기]");
+            Console.WriteLine("[내 정보]");
             // Lv
-            Console.WriteLine($"Lv. {Data.Level} [exp. {Data.Exp}]");
+            Console.WriteLine($"Lv. {Data.Level} [exp. " + ConsoleColors.Green + $"{Data.Exp}" + ConsoleColors.Reset + "]");
             // 직업
-            Console.WriteLine($"{Data.Name} : {Data.ClassType}");
+            switch (Data.ClassType)
+            {
+                case ClassType.Warrior:
+                    Console.WriteLine($"{Data.Name} :" + ConsoleColors.Red + $" {Data.ClassType}" + ConsoleColors.Reset);
+                    break;
+
+                case ClassType.Archer:
+                    Console.WriteLine($"{Data.Name} :" + ConsoleColors.Green + $" {Data.ClassType}" + ConsoleColors.Reset);
+                    break;
+
+                case ClassType.Magician:
+                    Console.WriteLine($"{Data.Name} :" + ConsoleColors.Purple + $" {Data.ClassType}" + ConsoleColors.Reset);
+                    break;
+            }
             // 공격력
-            Console.Write($"공격력 : {Data.AttackPower}");
+            Console.Write("공격력 : " + $"{Data.AttackPower}");
             if (Data.IncreaseAttack > 0)
             {
-                Console.WriteLine($" + ({Data.IncreaseAttack})");
+                Console.WriteLine($" + ("+ ConsoleColors.Red + $"{Data.IncreaseAttack}" + ConsoleColors.Reset + ")");
             }
             else
             {
@@ -93,7 +105,7 @@ namespace ProjectNoName
             Console.Write($"방어력 : {Data.DefensePower}");
             if (Data.IncreaseDefense > 0)
             {
-                Console.WriteLine($" + ({Data.IncreaseDefense})");
+                Console.WriteLine($" + ("+ ConsoleColors.Blue + $"{Data.IncreaseDefense}" + ConsoleColors.Reset + ")");
             }
             else
             {
@@ -109,16 +121,38 @@ namespace ProjectNoName
             Console.WriteLine($"회피율: {Data.EvasionRate}%");
 
             // 체력
-            Console.WriteLine($"체 력 : {Data.CurHealth}");
+            Console.WriteLine($"체 력 : " + ConsoleColors.Green + $"{Data.CurHealth}" + ConsoleColors.Reset);
 
             // 마나
-            Console.WriteLine($"마 나 : {Data.CurMana}");
+            Console.WriteLine($"마 나 : " + ConsoleColors.Cyan + $"{Data.CurMana}" + ConsoleColors.Reset);
 
             // 소유 gold
-            Console.WriteLine($"Gold : {Data.Gold}");
+            Console.WriteLine($"Gold : " +ConsoleColors.Yellow+ $"{Data.Gold}" + ConsoleColors.Reset);
+
+            Console.WriteLine();
+            Console.WriteLine("[장착 장비]");
+            // 착용중인 장비
+            if(Data.Weapon != null)
+            {
+                ItemData weaponData = Data.Weapon.Data;
+                Console.Write($"착용 무  기 : {weaponData.Name}");
+                int originRow = Console.CursorTop;
+                Console.SetCursorPosition(30, originRow);
+                Console.WriteLine($"[공격력 + {weaponData.AttackPowerIncrease}]");
+            }
+
+            if (Data.Armor != null)
+            {
+                ItemData armorData = Data.Armor.Data;
+                Console.Write($"착용 방어구 : {armorData.Name}");
+                int originRow = Console.CursorTop;
+                Console.SetCursorPosition(30, originRow);
+                Console.WriteLine($"[방어력 + {armorData.DefencePowerIncrease}]");
+            }
 
             // 직업 스킬
-            Console.WriteLine("\n직업 스킬");
+            Console.WriteLine();
+            Console.WriteLine("[직업 스킬]");
             switch (Data.ClassType)
             {
                 case ClassType.Warrior:
@@ -228,21 +262,22 @@ namespace ProjectNoName
             switch (Data.ClassType)
             {
                 case ClassType.Warrior:
-                    Console.WriteLine("1. Power Strike");
-                    Console.WriteLine("2. Power Slam");
-                    Console.WriteLine("3. Double Down");
+                    Console.WriteLine("1. Power Strike(소모MP: 40)");
+                    Console.WriteLine("2. Power Slam(소모MP: 25)");
+                    Console.WriteLine("3. Double Down(소모MP: 20)");
                     break;
                 case ClassType.Archer:
-                    Console.WriteLine("1. Make it Rain");
-                    Console.WriteLine("2. Ace in the Hole");
-                    Console.WriteLine("3. Multi Shot");
+                    Console.WriteLine("1. Make it Rain(소모MP: 40)");
+                    Console.WriteLine("2. Ace in the Hole(소모MP: 10)");
+                    Console.WriteLine("3. Multi Shot(소모MP: 30)");
                     break;
                 case ClassType.Magician:
-                    Console.WriteLine("1. Chain Lightning");
-                    Console.WriteLine("2. Inferno Bomb");
-                    Console.WriteLine("3. Frost Nova");
+                    Console.WriteLine("1. Chain Lightning(소모MP: 50)");
+                    Console.WriteLine("2. Inferno Bomb(소모MP: 10)");
+                    Console.WriteLine("3. Frost Nova(소모MP: 20)");
                     break;
             }
+            Console.WriteLine($"\nMP {Data.CurMana}/{Data.MaxMana}");
         }
 
         // 스킬 데미지

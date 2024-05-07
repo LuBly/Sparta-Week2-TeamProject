@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace ProjectNoName
+﻿namespace ProjectNoName
 {
     public enum InventoryType
     {
@@ -38,6 +36,27 @@ namespace ProjectNoName
             
         }
 
+        // 포션 복수구매시 ItemCount 증가 변화
+        public void AddItem(Item item, int amountIdx)
+        {
+            // 현재 선택한 아이템이 현재 인벤토리에 있는지 Find
+            Item? curItem = Data.InventoryItems.Find(i => i.Data.Id == item.Data.Id);
+
+            // 가지고 있지 않던 아이템이라면 인벤토리에 Add
+            if (curItem == null)
+            {
+                item.Data.ItemCount += amountIdx;
+                Data.InventoryItems.Add(item);
+            }
+
+            // 가지고 있던 아이템이라면
+            else
+            {
+                curItem.Data.ItemCount += amountIdx;
+            }
+
+        }
+
         public void RemoveItem(Item item)
         {
             // Player에서 count가 0이면 List에서 삭제
@@ -53,6 +72,20 @@ namespace ProjectNoName
         public Item ChooceItem(int idx)
         {
             return Data.InventoryItems[idx];
+        }
+
+        // 특정 아이템의 개수 카운트
+        public int CountItems(int targetItemId)
+        {
+            int count = 0;
+            foreach (Item item in Data.InventoryItems)
+            {
+                if (item.Data.Id == targetItemId)
+                {
+                    count += item.Data.ItemCount;
+                }
+            }
+            return count;
         }
 
         /// <summary>
@@ -85,7 +118,8 @@ namespace ProjectNoName
 
                 Console.WriteLine("\n장착할 장비 또는 사용할 아이템을 선택해주세요.(0 : 뒤로가기)");
                 Console.Write(">> ");
-                int equipIdx = int.Parse(Console.ReadLine());
+                int equipIdx = int.TryParse(Console.ReadLine(), out equipIdx) ? equipIdx : -1;
+
                 // 범위 밖의 번호를 선택했을 때
                 if (equipIdx > CountInventory() || equipIdx < 0)
                 {
@@ -158,7 +192,7 @@ namespace ProjectNoName
 
                 Console.WriteLine("\n장착할 장비 또는 사용할 아이템을 선택해주세요.(0 : 뒤로가기)");
                 Console.Write(">> ");
-                int equipIdx = int.Parse(Console.ReadLine());
+                int equipIdx = int.TryParse(Console.ReadLine(), out equipIdx) ? equipIdx : -1;
                 // 범위 밖의 번호를 선택했을 때
                 if (equipIdx > CountInventory() || equipIdx < 0)
                 {
@@ -187,10 +221,11 @@ namespace ProjectNoName
         // ItemList 출력
         public void ShowItemList(InventoryType type, MenuType menuType)
         {
-            Console.WriteLine("\n[아이템 목록]");
-
+            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("");
+            Utill.ShowInventoryLine();
             // 아이템 리스트 표기
-            for(int i = 1; i < CountInventory(); i++)
+            for (int i = 1; i < CountInventory(); i++)
             {
                 Console.Write("-");
                 if (type == InventoryType.idx)
