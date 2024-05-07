@@ -172,6 +172,7 @@ namespace ProjectNoName
             Console.Clear ();
             while(true)
             {
+                Console.WriteLine(ConsoleColors.Red + "                     ERROR___" + ConsoleColors.Reset);
                 Console.WriteLine(ConsoleColors.Red + "                        아!@$#ㄴ%ㄴ#$ㅕ#$%ㅇ?" + ConsoleColors.Reset);
                 Console.WriteLine(ConsoleColors.Red + "             던전!@$%을 클리#^#$%어해서 우리%$게임의 이름을 되#$%#$찾아줘!!" + ConsoleColors.Reset);
                 Console.WriteLine(ConsoleColors.Red + "                                         여기!2는 마$을이@#야... 행#동을 선$%택해줘..\n" + ConsoleColors.Reset);
