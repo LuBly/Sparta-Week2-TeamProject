@@ -341,12 +341,14 @@
                 else
                 {
                     Console.WriteLine("잘못된 입력입니다. 범위 내의 숫자를 입력해주세요.");
+                    Thread.Sleep(500);
                     LoadQuestMenu(); // 재입력 요구
                 }
             }
             else
             {
                 Console.WriteLine("잘못된 입력입니다. 숫자를 입력해주세요.");
+                Thread.Sleep(500);
                 LoadQuestMenu(); // 재입력 요구
             }
         }
@@ -374,8 +376,6 @@
             {
                 case QuestProgress.NoStart:
                     Console.WriteLine("1. 수락");
-                    if(quest.Data.QuestType == QuestType.Battle)
-                        quest.AcceptBattleQuest();
                     break;
                 default:
                     if (quest.GetInventoryItemCount() < quest.Data.CompletCondition)
@@ -405,6 +405,8 @@
                         {
                             case QuestProgress.NoStart:
                                 Console.WriteLine("퀘스트를 수락합니다.");
+                                if (quest.Data.QuestType == QuestType.Battle)
+                                    quest.AcceptBattleQuest();
                                 // 퀘스트 진행 상태를 변경하고 다른 작업 수행
                                 quest.Data.QuestProgress = QuestProgress.OnGoing;
                                 Thread.Sleep(500);
