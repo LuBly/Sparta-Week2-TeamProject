@@ -66,7 +66,7 @@ namespace ProjectNoName
             Data.MaxHealth = 100;
             Data.CurHealth = Data.MaxHealth;
             Data.Gold = 2500f;
-
+            Data.MaxStage = 1;
             // idx맞추기용 더미데이터 입력.
             Data.Inventory.AddItem(new Item());
         }
