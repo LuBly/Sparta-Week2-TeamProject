@@ -87,7 +87,7 @@ namespace ProjectNoName
         void ShowStart()
         {
             Console.Clear();
-            Console.WriteLine(ConsoleColors.Purple + 
+            Console.WriteLine(ConsoleColors.Red + 
             @"                                                                                                
                     b.             8     ,o888888o.                                             
                     888o.          8  . 8888     `88.                                           
